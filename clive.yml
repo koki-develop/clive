@@ -1,0 +1,8 @@
+actions:
+  - type: echo Hello World
+    time: 100
+  - pause
+  - key: enter
+    count: 10
+    time: 500
+  - sleep: 5000
