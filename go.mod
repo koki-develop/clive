@@ -3,6 +3,7 @@ module github.com/koki-develop/clive
 go 1.19
 
 require (
+	github.com/briandowns/spinner v1.19.0
 	github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203
 	github.com/go-rod/rod v0.112.0
 	github.com/spf13/cobra v1.6.1
@@ -10,7 +11,10 @@ require (
 )
 
 require (
+	github.com/fatih/color v1.7.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/mattn/go-colorable v0.1.2 // indirect
+	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/ysmood/goob v0.4.0 // indirect
 	github.com/ysmood/gson v0.7.1 // indirect
