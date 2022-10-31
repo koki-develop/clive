@@ -6,14 +6,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var runCmd = &cobra.Command{
-	Use:   "run",
+var startCmd = &cobra.Command{
+	Use:   "start",
 	Short: "", // TODO
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("run called")
+		fmt.Println("start called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(runCmd)
+	rootCmd.AddCommand(startCmd)
 }
