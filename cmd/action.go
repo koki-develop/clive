@@ -10,7 +10,7 @@ import (
 )
 
 type action interface {
-	IsAction()
+	String() string
 }
 
 type typeAction struct {
@@ -18,7 +18,9 @@ type typeAction struct {
 	Time time.Duration
 }
 
-func (action *typeAction) IsAction() {}
+func (action *typeAction) String() string {
+	return fmt.Sprintf("type: %s", action.Type)
+}
 
 type keyAction struct {
 	Key   input.Key
@@ -26,17 +28,25 @@ type keyAction struct {
 	Time  time.Duration
 }
 
-func (action *keyAction) IsAction() {}
+func (action *keyAction) String() string {
+	return fmt.Sprintf("key: %s", map[input.Key]string{
+		input.Enter: "enter",
+	}[action.Key])
+}
 
 type sleepAction struct {
 	Time time.Duration
 }
 
-func (action sleepAction) IsAction() {}
+func (action sleepAction) String() string {
+	return fmt.Sprintf("sleep: %dms\n", action.Time.Microseconds())
+}
 
 type pauseAction struct{}
 
-func (action pauseAction) IsAction() {}
+func (action pauseAction) String() string {
+	return "press enter to continue"
+}
 
 func loadConfig(p string) (*config, error) {
 	f, err := os.Open(p)

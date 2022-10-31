@@ -1,8 +1,10 @@
 actions:
-  - type: echo Hello World
-    # time: 100
   - pause
+  - type: echo Hello World
   - key: enter
-    count: 10
-    time: 500
-  - sleep: 5000
+  - pause
+  - type: ls
+  - key: enter
+  - type: date && pwd
+  - key: enter
+  - pause

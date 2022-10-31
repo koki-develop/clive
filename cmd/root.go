@@ -41,20 +41,28 @@ var rootCmd = &cobra.Command{
 			return err
 		}
 
-		for _, action := range cfg.Actions {
+		for i, action := range cfg.Actions {
 			switch action := action.(type) {
 			case *typeAction:
+				fmt.Println(action.String())
 				for _, c := range action.Type {
 					_ = page.MustElement("textarea").Input(string(c))
 					_ = page.MustWaitIdle()
 					time.Sleep(action.Time)
 				}
 			case *keyAction:
+				fmt.Println(action.String())
 				for i := 0; i < action.Count; i++ {
 					_ = page.Keyboard.MustType(action.Key)
 					time.Sleep(action.Time)
 				}
 			case *pauseAction:
+				next := "quit"
+				if i+1 < len(cfg.Actions) {
+					next = cfg.Actions[i+1].String()
+				}
+				fmt.Printf("%s (next: %s)\n", action.String(), next)
+
 				for {
 					_, key, err := keyboard.GetSingleKey()
 					if err != nil {
@@ -65,6 +73,7 @@ var rootCmd = &cobra.Command{
 					}
 				}
 			case *sleepAction:
+				fmt.Println(action.String())
 				time.Sleep(action.Time)
 			}
 		}
