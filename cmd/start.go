@@ -8,6 +8,7 @@ import (
 
 	"github.com/briandowns/spinner"
 	"github.com/eiannone/keyboard"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -55,7 +56,7 @@ var startCmd = &cobra.Command{
 			switch action := action.(type) {
 			case *typeAction:
 				s.Start()
-				s.Suffix = " " + action.String()
+				s.Suffix = " " + color.New(color.Bold).Sprint(action)
 
 				for _, c := range action.Type {
 					_ = page.MustElement("textarea").Input(string(c))
@@ -65,10 +66,10 @@ var startCmd = &cobra.Command{
 
 				s.Suffix = ""
 				s.Stop()
-				fmt.Println(action.String())
+				fmt.Println(action)
 			case *keyAction:
 				s.Start()
-				s.Suffix = " " + action.String()
+				s.Suffix = " " + color.New(color.Bold).Sprint(action)
 
 				for i := 0; i < action.Count; i++ {
 					_ = page.Keyboard.MustType(action.Key)
@@ -77,13 +78,13 @@ var startCmd = &cobra.Command{
 
 				s.Suffix = ""
 				s.Stop()
-				fmt.Println(action.String())
+				fmt.Println(action)
 			case *pauseAction:
 				next := "quit"
 				if i+1 < len(cfg.Actions) {
 					next = cfg.Actions[i+1].String()
 				}
-				log := fmt.Sprintf("%s (next: %s)", action.String(), next)
+				log := fmt.Sprintf("%s (next: %s)", color.New(color.Bold).Sprint(action), next)
 				fmt.Fprintf(os.Stderr, "> %s", log)
 
 				for {
@@ -97,16 +98,15 @@ var startCmd = &cobra.Command{
 				}
 
 				fmt.Fprintf(os.Stderr, "\r%s\r", strings.Repeat(" ", len(log)+2))
-				fmt.Println(log)
 			case *sleepAction:
 				s.Start()
-				s.Suffix = " " + action.String()
+				s.Suffix = " " + color.New(color.Bold).Sprint(action)
 
 				time.Sleep(action.Time)
 
 				s.Suffix = ""
 				s.Stop()
-				fmt.Println(action.String())
+				fmt.Println(action)
 			}
 		}
 
