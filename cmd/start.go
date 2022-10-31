@@ -21,7 +21,13 @@ var startCmd = &cobra.Command{
 			return err
 		}
 
+		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond, spinner.WithWriter(os.Stderr))
+		defer s.Stop()
+
+		s.Suffix = fmt.Sprintf(" loading %s", cfgname)
+		s.Start()
 		cfg, err := loadConfig(cfgname)
+		s.Stop()
 		if err != nil {
 			return err
 		}
@@ -31,32 +37,38 @@ var startCmd = &cobra.Command{
 			return err
 		}
 
+		s.Suffix = " starting ttyd"
+		s.Start()
 		ttyd := ttyd(port)
 		if err := ttyd.Start(); err != nil {
 			return err
 		}
 		defer ttyd.Process.Kill()
+		s.Stop()
 
+		s.Suffix = " launching browser"
+		s.Start()
 		browser, err := launchBrowser()
 		if err != nil {
 			return err
 		}
+		s.Stop()
 
+		s.Suffix = " opening page"
+		s.Start()
 		page := browser.
 			NoDefaultDevice().
 			MustPage(fmt.Sprintf("http://localhost:%d", port)).
 			MustWaitIdle()
-
 		_ = page.MustEval("() => term.options.fontSize = 22")
 		_ = page.MustEval("term.fit")
-
-		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond, spinner.WithWriter(os.Stderr))
+		s.Stop()
 
 		for i, action := range cfg.Actions {
 			switch action := action.(type) {
 			case *typeAction:
-				s.Start()
 				s.Suffix = " " + color.New(color.Bold).Sprint(action)
+				s.Start()
 
 				for _, c := range action.Type {
 					_ = page.MustElement("textarea").Input(string(c))
@@ -64,19 +76,17 @@ var startCmd = &cobra.Command{
 					time.Sleep(action.Time)
 				}
 
-				s.Suffix = ""
 				s.Stop()
 				fmt.Println(action)
 			case *keyAction:
-				s.Start()
 				s.Suffix = " " + color.New(color.Bold).Sprint(action)
+				s.Start()
 
 				for i := 0; i < action.Count; i++ {
 					_ = page.Keyboard.MustType(action.Key)
 					time.Sleep(action.Time)
 				}
 
-				s.Suffix = ""
 				s.Stop()
 				fmt.Println(action)
 			case *pauseAction:
@@ -99,12 +109,11 @@ var startCmd = &cobra.Command{
 
 				fmt.Fprintf(os.Stderr, "\r%s\r", strings.Repeat(" ", len(log)+2))
 			case *sleepAction:
-				s.Start()
 				s.Suffix = " " + color.New(color.Bold).Sprint(action)
+				s.Start()
 
 				time.Sleep(action.Time)
 
-				s.Suffix = ""
 				s.Stop()
 				fmt.Println(action)
 			}
