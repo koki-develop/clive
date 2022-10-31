@@ -3,9 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"time"
 
-	"github.com/go-rod/rod/lib/input"
 	"github.com/spf13/cobra"
 )
 
@@ -19,42 +17,49 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		port, err := randomUnusedPort()
+		cfg, err := loadConfig("clive.yml")
 		if err != nil {
 			return err
 		}
 
-		fmt.Printf("port: %d\n", port)
+		fmt.Printf("%#v", cfg)
 
-		ttyd := ttyd(port)
-		if err := ttyd.Start(); err != nil {
-			return err
-		}
-		defer ttyd.Process.Kill()
+		// port, err := randomUnusedPort()
+		// if err != nil {
+		// 	return err
+		// }
 
-		browser, err := launchBrowser()
-		if err != nil {
-			return err
-		}
+		// fmt.Printf("port: %d\n", port)
 
-		page := browser.MustPage(fmt.Sprintf("http://localhost:%d", port))
-		_ = page.MustWaitIdle()
+		// ttyd := ttyd(port)
+		// if err := ttyd.Start(); err != nil {
+		// 	return err
+		// }
+		// defer ttyd.Process.Kill()
 
-		if _, err := page.Eval("() => term.options.fontSize = 32"); err != nil {
-			return err
-		}
+		// browser, err := launchBrowser()
+		// if err != nil {
+		// 	return err
+		// }
 
-		for _, c := range "echo こんにちは" {
-			_ = page.MustElement("textarea").Input(string(c))
-			_ = page.MustWaitIdle()
-			time.Sleep(100 * time.Millisecond)
-		}
+		// page := browser.MustPage(fmt.Sprintf("http://localhost:%d", port))
+		// _ = page.MustWaitIdle()
 
-		if err := page.Keyboard.Type(input.Enter); err != nil {
-			return err
-		}
+		// if _, err := page.Eval("() => term.options.fontSize = 32"); err != nil {
+		// 	return err
+		// }
 
-		time.Sleep(10 * time.Second)
+		// for _, c := range "echo こんにちは" {
+		// 	_ = page.MustElement("textarea").Input(string(c))
+		// 	_ = page.MustWaitIdle()
+		// 	time.Sleep(100 * time.Millisecond)
+		// }
+
+		// if err := page.Keyboard.Type(input.Enter); err != nil {
+		// 	return err
+		// }
+
+		// time.Sleep(10 * time.Second)
 
 		return nil
 	},
