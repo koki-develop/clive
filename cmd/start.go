@@ -14,7 +14,8 @@ import (
 
 var startCmd = &cobra.Command{
 	Use:   "start",
-	Short: "", // TODO
+	Short: "Start clive actions",
+	Long:  "Start clive actions.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfgname, err := cmd.Flags().GetString("config")
 		if err != nil {

@@ -17,7 +17,8 @@ const configInitTemplate = `actions:
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "", // TODO
+	Short: "Create a config file",
+	Long:  "Create a config file.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfgname, err := cmd.Flags().GetString("config")
 		if err != nil {
