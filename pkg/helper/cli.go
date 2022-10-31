@@ -1,7 +1,9 @@
 package helper
 
 import (
+	"fmt"
 	"net"
+	"os/exec"
 )
 
 func RandomUnusedPort() (int, error) {
@@ -15,4 +17,17 @@ func RandomUnusedPort() (int, error) {
 	}
 
 	return addr.Addr().(*net.TCPAddr).Port, nil
+}
+
+func TTYD(port int) *exec.Cmd {
+	args := []string{
+		fmt.Sprintf("--port=%d", port),
+		"-t", "rendererType=canvas",
+		"-t", "disableResizeOverlay=true",
+		"-t", "cursorBlink=true",
+		"-t", "customGlyphs=true",
+		"bash", "--login",
+	}
+
+	return exec.Command("ttyd", args...)
 }

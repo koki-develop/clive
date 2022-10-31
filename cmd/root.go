@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/koki-develop/clive/pkg/helper"
 	"github.com/spf13/cobra"
@@ -24,6 +25,14 @@ to quickly create a Cobra application.`,
 		}
 
 		fmt.Printf("port: %d\n", port)
+
+		ttyd := helper.TTYD(port)
+		if err := ttyd.Start(); err != nil {
+			return err
+		}
+		defer ttyd.Process.Kill()
+
+		time.Sleep(10 * time.Second)
 
 		return nil
 	},
