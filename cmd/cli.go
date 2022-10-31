@@ -6,7 +6,7 @@ import (
 	"os/exec"
 )
 
-func RandomUnusedPort() (int, error) {
+func randomUnusedPort() (int, error) {
 	addr, err := net.Listen("tcp", ":0")
 	if err != nil {
 		return 0, err
@@ -19,7 +19,7 @@ func RandomUnusedPort() (int, error) {
 	return addr.Addr().(*net.TCPAddr).Port, nil
 }
 
-func TTYD(port int) *exec.Cmd {
+func ttyd(port int) *exec.Cmd {
 	args := []string{
 		fmt.Sprintf("--port=%d", port),
 		"-t", "rendererType=canvas",

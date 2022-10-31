@@ -7,7 +7,7 @@ import (
 	"github.com/go-rod/rod/lib/launcher"
 )
 
-func LaunchBrowser() (*rod.Browser, error) {
+func launchBrowser() (*rod.Browser, error) {
 	path, ok := launcher.LookPath()
 	if !ok {
 		return nil, errors.New("no executable browser was found")
