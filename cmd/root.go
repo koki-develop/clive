@@ -32,6 +32,20 @@ to quickly create a Cobra application.`,
 		}
 		defer ttyd.Process.Kill()
 
+		browser, err := helper.LaunchBrowser()
+		if err != nil {
+			return err
+		}
+
+		page := browser.MustPage(fmt.Sprintf("http://localhost:%d", port))
+		if err := page.WaitIdle(time.Minute); err != nil {
+			return err
+		}
+
+		if _, err := page.Eval("() => term.options.fontSize = 32"); err != nil {
+			return err
+		}
+
 		time.Sleep(10 * time.Second)
 
 		return nil
