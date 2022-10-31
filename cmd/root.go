@@ -36,12 +36,10 @@ var rootCmd = &cobra.Command{
 
 		page := browser.
 			MustPage(fmt.Sprintf("http://localhost:%d", port)).
-			MustSetViewport(1200, 600, 0, false).
 			MustWaitIdle()
 
-		if _, err := page.Eval("() => term.options.fontSize = 22"); err != nil {
-			return err
-		}
+		_ = page.MustEval("() => term.options.fontSize = 22")
+		_ = page.MustEval("term.fit")
 
 		for i, action := range cfg.Actions {
 			switch action := action.(type) {
