@@ -19,12 +19,17 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "", // TODO
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if _, err := os.Stat(defaultConfigPath); err != nil {
+		config, err := cmd.Flags().GetString("config")
+		if err != nil {
+			return err
+		}
+
+		if _, err := os.Stat(config); err != nil {
 			if !errors.Is(err, os.ErrNotExist) {
 				return err
 			}
 
-			f, err := os.Create(defaultConfigPath)
+			f, err := os.Create(config)
 			if err != nil {
 				return err
 			}
@@ -34,11 +39,11 @@ var initCmd = &cobra.Command{
 				return err
 			}
 
-			fmt.Printf("created %s\n", defaultConfigPath)
+			fmt.Printf("created %s\n", config)
 			return nil
 		}
 
-		return fmt.Errorf("%s already exists", defaultConfigPath)
+		return fmt.Errorf("%s already exists", config)
 	},
 }
 
