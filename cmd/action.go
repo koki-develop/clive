@@ -30,7 +30,8 @@ type keyAction struct {
 
 func (action *keyAction) String() string {
 	return fmt.Sprintf("key: %s", map[input.Key]string{
-		input.Enter: "enter",
+		input.Enter:  "enter",
+		input.Escape: "esc",
 	}[action.Key])
 }
 
@@ -142,6 +143,7 @@ func parseKeyAction(m map[string]interface{}) (*keyAction, error) {
 
 	k, ok := map[string]input.Key{
 		"enter": input.Enter,
+		"esc":   input.Escape,
 	}[m["key"].(string)]
 	if !ok {
 		return nil, fmt.Errorf("invalid action: %#v", m)
