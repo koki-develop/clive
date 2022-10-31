@@ -12,7 +12,12 @@ var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "", // TODO
 	RunE: func(cmd *cobra.Command, args []string) error {
-		cfg, err := loadConfig("clive.yml")
+		cfgname, err := cmd.Flags().GetString("config")
+		if err != nil {
+			return err
+		}
+
+		cfg, err := loadConfig(cfgname)
 		if err != nil {
 			return err
 		}
