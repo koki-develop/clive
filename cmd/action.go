@@ -39,7 +39,7 @@ type sleepAction struct {
 }
 
 func (action sleepAction) String() string {
-	return fmt.Sprintf("sleep: %dms\n", action.Time.Microseconds())
+	return fmt.Sprintf("sleep: %dms", action.Time.Milliseconds())
 }
 
 type pauseAction struct{}
