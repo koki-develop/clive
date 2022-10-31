@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/eiannone/keyboard"
 	"github.com/spf13/cobra"
 )
 
@@ -54,7 +55,15 @@ var rootCmd = &cobra.Command{
 					time.Sleep(action.Time)
 				}
 			case *pauseAction:
-				fmt.Println("pause")
+				for {
+					_, key, err := keyboard.GetSingleKey()
+					if err != nil {
+						return err
+					}
+					if key == keyboard.KeyEnter {
+						break
+					}
+				}
 			case *sleepAction:
 				time.Sleep(action.Time)
 			}
