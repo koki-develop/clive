@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/koki-develop/clive/pkg/helper"
+	"github.com/go-rod/rod/lib/input"
 	"github.com/spf13/cobra"
 )
 
@@ -19,30 +19,38 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		port, err := helper.RandomUnusedPort()
+		port, err := RandomUnusedPort()
 		if err != nil {
 			return err
 		}
 
 		fmt.Printf("port: %d\n", port)
 
-		ttyd := helper.TTYD(port)
+		ttyd := TTYD(port)
 		if err := ttyd.Start(); err != nil {
 			return err
 		}
 		defer ttyd.Process.Kill()
 
-		browser, err := helper.LaunchBrowser()
+		browser, err := LaunchBrowser()
 		if err != nil {
 			return err
 		}
 
 		page := browser.MustPage(fmt.Sprintf("http://localhost:%d", port))
-		if err := page.WaitIdle(time.Minute); err != nil {
+		_ = page.MustWaitIdle()
+
+		if _, err := page.Eval("() => term.options.fontSize = 32"); err != nil {
 			return err
 		}
 
-		if _, err := page.Eval("() => term.options.fontSize = 32"); err != nil {
+		for _, c := range "echo こんにちは" {
+			_ = page.MustElement("textarea").Input(string(c))
+			_ = page.MustWaitIdle()
+			time.Sleep(100 * time.Millisecond)
+		}
+
+		if err := page.Keyboard.Type(input.Enter); err != nil {
 			return err
 		}
 
