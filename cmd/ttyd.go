@@ -12,6 +12,7 @@ func ttyd(port int) *exec.Cmd {
 		"-t", "disableResizeOverlay=true",
 		"-t", "cursorBlink=true",
 		"-t", "customGlyphs=true",
+		"--",
 		"bash", "--login",
 	}
 
