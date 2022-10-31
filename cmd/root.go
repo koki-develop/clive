@@ -35,6 +35,7 @@ var rootCmd = &cobra.Command{
 		}
 
 		page := browser.
+			NoDefaultDevice().
 			MustPage(fmt.Sprintf("http://localhost:%d", port)).
 			MustWaitIdle()
 
