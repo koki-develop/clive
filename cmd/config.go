@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/go-rod/rod/lib/input"
 	"gopkg.in/yaml.v3"
 )
 
@@ -13,24 +14,37 @@ type configYaml struct {
 }
 
 type config struct {
-	Actions action
+	Actions []action
 }
 
-type action interface{}
+type action interface {
+	IsAction()
+}
 
 type typeAction struct {
-	String string
-	Time   time.Duration
+	Type string
+	Time time.Duration
 }
+
+func (action *typeAction) IsAction() {}
+
 type keyAction struct {
-	Key   string
+	Key   input.Key
 	Count int
 	Time  time.Duration
 }
+
+func (action *keyAction) IsAction() {}
+
 type sleepAction struct {
 	Time time.Duration
 }
+
+func (action sleepAction) IsAction() {}
+
 type pauseAction struct{}
+
+func (action pauseAction) IsAction() {}
 
 func loadConfig(p string) (*config, error) {
 	f, err := os.Open(p)
@@ -63,13 +77,13 @@ func parseAction(v interface{}) (action, error) {
 	case string:
 		switch v {
 		case "pause":
-			return pauseAction{}, nil
+			return &pauseAction{}, nil
 		}
 	case map[string]interface{}:
 		for k := range v {
 			switch k {
 			case "pause":
-				return pauseAction{}, nil
+				return &pauseAction{}, nil
 			case "type":
 				return parseTypeAction(v)
 			case "key":
@@ -100,8 +114,8 @@ func parseTypeAction(m map[string]interface{}) (*typeAction, error) {
 	}
 
 	return &typeAction{
-		String: m["type"].(string),
-		Time:   t,
+		Type: m["type"].(string),
+		Time: t,
 	}, nil
 }
 
@@ -124,8 +138,15 @@ func parseKeyAction(m map[string]interface{}) (*keyAction, error) {
 		t = time.Duration(v.(int)) * time.Millisecond
 	}
 
+	k, ok := map[string]input.Key{
+		"enter": input.Enter,
+	}[m["key"].(string)]
+	if !ok {
+		return nil, fmt.Errorf("invalid action: %#v", m)
+	}
+
 	return &keyAction{
-		Key:   m["key"].(string),
+		Key:   k,
 		Count: c,
 		Time:  t,
 	}, nil

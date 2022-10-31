@@ -1,6 +1,6 @@
 actions:
   - type: echo Hello World
-    time: 100
+    # time: 100
   - pause
   - key: enter
     count: 10
