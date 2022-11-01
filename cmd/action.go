@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 	"unicode/utf8"
 
@@ -21,8 +22,19 @@ type typeAction struct {
 
 func (action *typeAction) String() string {
 	t := action.Type
+	truncated := false
+
+	rows := strings.Split(t, "\n")
+	if len(rows) > 1 {
+		t = rows[0]
+		truncated = true
+	}
 	if utf8.RuneCountInString(t) > 37 {
-		t = string([]rune(t)[:37]) + "..."
+		t = string([]rune(t)[:37])
+		truncated = true
+	}
+	if truncated {
+		t += "..."
 	}
 
 	return fmt.Sprintf("Type: %s", t)
