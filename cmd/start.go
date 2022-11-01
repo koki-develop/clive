@@ -8,6 +8,7 @@ import (
 	"github.com/briandowns/spinner"
 	"github.com/eiannone/keyboard"
 	"github.com/fatih/color"
+	"github.com/go-rod/rod/lib/input"
 	"github.com/spf13/cobra"
 )
 
@@ -121,6 +122,20 @@ var startCmd = &cobra.Command{
 				s.Start()
 
 				time.Sleep(action.Time)
+
+				s.Stop()
+				fmt.Println(action)
+			case *ctrlAction:
+				s.Suffix = " " + color.New(color.Bold).Sprint(action)
+				s.Start()
+
+				_ = page.Keyboard.Press(input.ControlLeft)
+				for _, r := range action.Ctrl {
+					if k, ok := keymap[r]; ok {
+						_ = page.Keyboard.Type(k)
+					}
+				}
+				_ = page.Keyboard.Release(input.ControlLeft)
 
 				s.Stop()
 				fmt.Println(action)
