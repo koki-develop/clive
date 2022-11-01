@@ -17,14 +17,26 @@ type typeAction struct {
 	Time time.Duration
 }
 
-func (action *typeAction) String() string {
-	return fmt.Sprintf("Type: %s", truncateString(action.Type, 37))
-}
-
 type keyAction struct {
 	Key   input.Key
 	Count int
 	Time  time.Duration
+}
+
+type sleepAction struct {
+	Time time.Duration
+}
+
+type pauseAction struct{}
+
+type ctrlAction struct {
+	Ctrl  string
+	Count int
+	Time  time.Duration
+}
+
+func (action *typeAction) String() string {
+	return fmt.Sprintf("Type: %s", truncateString(action.Type, 37))
 }
 
 func (action *keyAction) String() string {
@@ -38,24 +50,12 @@ func (action *keyAction) String() string {
 	return fmt.Sprintf("Key: %s", txt)
 }
 
-type sleepAction struct {
-	Time time.Duration
-}
-
 func (action *sleepAction) String() string {
 	return fmt.Sprintf("Sleep: %dms", action.Time.Milliseconds())
 }
 
-type pauseAction struct{}
-
 func (action *pauseAction) String() string {
 	return "Press enter to continue"
-}
-
-type ctrlAction struct {
-	Ctrl  string
-	Count int
-	Time  time.Duration
 }
 
 func (action *ctrlAction) String() string {
