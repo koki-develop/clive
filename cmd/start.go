@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/briandowns/spinner"
@@ -24,6 +23,8 @@ var startCmd = &cobra.Command{
 
 		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond, spinner.WithWriter(os.Stderr))
 		defer s.Stop()
+		ps := spinner.New([]string{">"}, 100*time.Millisecond, spinner.WithWriter(os.Stderr))
+		defer ps.Stop()
 
 		s.Suffix = fmt.Sprintf(" loading %s", cfgname)
 		s.Start()
@@ -96,7 +97,8 @@ var startCmd = &cobra.Command{
 					next = cfg.Actions[i+1].String()
 				}
 				log := fmt.Sprintf("%s (next: %s)", color.New(color.Bold).Sprint(action), next)
-				fmt.Fprintf(os.Stderr, "> %s", log)
+				ps.Suffix = " " + log
+				ps.Start()
 
 				for {
 					_, key, err := keyboard.GetSingleKey()
@@ -108,7 +110,7 @@ var startCmd = &cobra.Command{
 					}
 				}
 
-				fmt.Fprintf(os.Stderr, "\r%s\r", strings.Repeat(" ", len(log)+2))
+				ps.Stop()
 			case *sleepAction:
 				s.Suffix = " " + color.New(color.Bold).Sprint(action)
 				s.Start()
