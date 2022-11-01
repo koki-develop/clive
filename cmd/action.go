@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"time"
+	"unicode/utf8"
 
 	"github.com/go-rod/rod/lib/input"
 	"gopkg.in/yaml.v3"
@@ -19,7 +20,12 @@ type typeAction struct {
 }
 
 func (action *typeAction) String() string {
-	return fmt.Sprintf("Type: %s", action.Type)
+	t := action.Type
+	if utf8.RuneCountInString(t) > 37 {
+		t = string([]rune(t)[:37]) + "..."
+	}
+
+	return fmt.Sprintf("Type: %s", t)
 }
 
 type keyAction struct {
