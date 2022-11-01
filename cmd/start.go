@@ -73,8 +73,13 @@ var startCmd = &cobra.Command{
 				s.Start()
 
 				for _, c := range action.Type {
-					_ = page.MustElement("textarea").Input(string(c))
-					_ = page.MustWaitIdle()
+					k, ok := keymap[c]
+					if ok {
+						_ = page.Keyboard.MustType(k)
+					} else {
+						_ = page.MustElement("textarea").Input(string(c))
+						_ = page.MustWaitIdle()
+					}
 					time.Sleep(action.Time)
 				}
 
