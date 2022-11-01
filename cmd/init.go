@@ -20,17 +20,12 @@ var initCmd = &cobra.Command{
 	Short: "Create a config file",
 	Long:  "Create a config file.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		cfgname, err := cmd.Flags().GetString("config")
-		if err != nil {
-			return err
-		}
-
-		if _, err := os.Stat(cfgname); err != nil {
+		if _, err := os.Stat(configFilename); err != nil {
 			if !errors.Is(err, os.ErrNotExist) {
 				return err
 			}
 
-			f, err := os.Create(cfgname)
+			f, err := os.Create(configFilename)
 			if err != nil {
 				return err
 			}
@@ -40,11 +35,11 @@ var initCmd = &cobra.Command{
 				return err
 			}
 
-			fmt.Printf("created %s\n", cfgname)
+			fmt.Printf("created %s\n", configFilename)
 			return nil
 		}
 
-		return fmt.Errorf("%s already exists", cfgname)
+		return fmt.Errorf("%s already exists", configFilename)
 	},
 }
 

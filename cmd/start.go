@@ -2,64 +2,163 @@ package cmd
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/fatih/color"
+	"github.com/go-rod/rod"
 	"github.com/spf13/cobra"
 )
 
 type startModel struct {
-	config             *config
-	currentActionIndex int
+	err                error
 	spinner            spinner.Model
+	config             *config
+	browser            *rod.Browser
+	currentActionIndex int
+	pausing            bool
 }
 
-func newStartModel(cfg *config) startModel {
+func newStartModel() startModel {
 	s := spinner.New(
 		spinner.WithSpinner(spinner.Dot),
 		spinner.WithStyle(lipgloss.NewStyle().Foreground(lipgloss.Color("#ff00ff"))),
 	)
 
 	return startModel{
-		config:             cfg,
-		currentActionIndex: 0,
+		err:                nil,
 		spinner:            s,
+		config:             nil,
+		browser:            nil,
+		currentActionIndex: 0,
+	}
+}
+
+type configLoadedMsg struct {
+	config *config
+}
+
+type browserLaunchedMsg struct {
+	browser *rod.Browser
+}
+
+type actionDoneMsg struct{}
+
+type pauseActionMsg struct{}
+
+type errMsg struct {
+	err error
+}
+
+func (m startModel) loadConfig() tea.Msg {
+	cfg, err := loadConfig(configFilename)
+	if err != nil {
+		return errMsg{err}
+	}
+
+	return configLoadedMsg{cfg}
+}
+
+func (m startModel) launchBrowser() tea.Msg {
+	browser, err := launchBrowser()
+	if err != nil {
+		return errMsg{err}
+	}
+
+	return browserLaunchedMsg{browser}
+}
+
+func (m startModel) runAction() tea.Msg {
+	action := m.config.Actions[m.currentActionIndex]
+
+	switch action.(type) {
+	case *pauseAction:
+		return pauseActionMsg{}
+	default:
+		time.Sleep(time.Second)
+		return actionDoneMsg{}
 	}
 }
 
 func (m startModel) Init() tea.Cmd {
-	return m.spinner.Tick
+	return tea.Batch(
+		m.spinner.Tick,
+		m.loadConfig,
+	)
 }
 
 func (m startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
-		switch msg.String() {
-		case "enter":
-			m.currentActionIndex++
-			if m.currentActionIndex == len(m.config.Actions) {
-				return m, tea.Quit
+		switch msg.Type {
+		case tea.KeyCtrlC:
+			return m, tea.Quit
+		case tea.KeyEnter:
+			if m.pausing {
+				m.pausing = false
+				m.currentActionIndex++
+				if m.currentActionIndex == len(m.config.Actions) {
+					return m, tea.Quit
+				}
+				return m, m.runAction
 			}
-			return m, nil
 		}
+	case pauseActionMsg:
+		m.pausing = true
+		return m, nil
+	case configLoadedMsg:
+		m.config = msg.config
+		return m, m.launchBrowser
+	case browserLaunchedMsg:
+		m.browser = msg.browser
+		return m, m.runAction
+	case actionDoneMsg:
+		m.currentActionIndex++
+		if m.currentActionIndex == len(m.config.Actions) {
+			return m, tea.Quit
+		}
+		return m, m.runAction
 	case spinner.TickMsg:
 		var cmd tea.Cmd
 		m.spinner, cmd = m.spinner.Update(msg)
 		return m, cmd
+	case errMsg:
+		m.err = msg.err
+		return m, tea.Quit
 	}
 
 	return m, nil
 }
 
 func (m startModel) View() string {
+	if m.err != nil {
+		return fmt.Sprintf("error: %s", m.err)
+	}
+
+	if m.config == nil {
+		return fmt.Sprintf("%s Loading config", m.spinner.View())
+	}
+
+	if m.browser == nil {
+		return fmt.Sprintf("%s Launching browser", m.spinner.View())
+	}
+
 	s := ""
+
 	for i, action := range m.config.Actions {
 		cursor := "  "
+		text := action.String()
 		if m.currentActionIndex == i {
-			cursor = m.spinner.View()
+			text = color.New(color.Bold).Sprint(text)
+			if m.pausing {
+				cursor = "> "
+			} else {
+				cursor = m.spinner.View()
+			}
 		}
-		s += fmt.Sprintf("%s%s\n", cursor, action)
+		s += fmt.Sprintf("%s%s\n", cursor, text)
 	}
 
 	return s
@@ -70,17 +169,7 @@ var startCmd = &cobra.Command{
 	Short: "Start clive actions",
 	Long:  "Start clive actions.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		cfgname, err := cmd.Flags().GetString("config")
-		if err != nil {
-			return err
-		}
-
-		cfg, err := loadConfig(cfgname)
-		if err != nil {
-			return err
-		}
-
-		p := tea.NewProgram(newStartModel(cfg))
+		p := tea.NewProgram(newStartModel())
 		if err := p.Start(); err != nil {
 			return err
 		}

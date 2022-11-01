@@ -2,8 +2,12 @@ package cmd
 
 import "github.com/spf13/cobra"
 
+var (
+	configFilename string
+)
+
 func init() {
 	for _, cmd := range []*cobra.Command{startCmd, initCmd} {
-		cmd.Flags().StringP("config", "c", defaultConfigPath, "config file name")
+		cmd.Flags().StringVarP(&configFilename, "config", "c", defaultConfigPath, "config file name")
 	}
 }
