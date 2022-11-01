@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/spinner"
@@ -10,6 +11,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/fatih/color"
 	"github.com/go-rod/rod"
+	"github.com/go-rod/rod/lib/input"
 	"github.com/spf13/cobra"
 )
 
@@ -101,13 +103,40 @@ func (m startModel) launchBrowser() tea.Msg {
 func (m startModel) runAction() tea.Msg {
 	action := m.config.Actions[m.currentActionIndex]
 
-	switch action.(type) {
+	switch action := action.(type) {
 	case *pauseAction:
 		return pauseActionMsg{}
-	default:
-		time.Sleep(time.Second)
-		return actionDoneMsg{}
+	case *typeAction:
+		for _, c := range action.Type {
+			k, ok := keymap[c]
+			if ok {
+				_ = m.page.Keyboard.MustType(k)
+			} else {
+				_ = m.page.MustElement("textarea").Input(string(c))
+				_ = m.page.MustWaitIdle()
+			}
+			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		}
+	case *keyAction:
+		k, ok := specialkeymap[strings.ToLower(action.Key)]
+		for i := 0; i < action.Count; i++ {
+			if ok {
+				_ = m.page.Keyboard.MustType(k)
+			}
+			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		}
+	case *sleepAction:
+		time.Sleep(time.Duration(action.Time) * time.Millisecond)
+	case *ctrlAction:
+		_ = m.page.Keyboard.Press(input.ControlLeft)
+		for _, r := range action.Ctrl {
+			if k, ok := keymap[r]; ok {
+				_ = m.page.Keyboard.Type(k)
+			}
+		}
+		_ = m.page.Keyboard.Release(input.ControlLeft)
 	}
+	return actionDoneMsg{}
 }
 
 func (m startModel) Init() tea.Cmd {
