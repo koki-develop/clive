@@ -172,7 +172,7 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case browserLaunchedMsg:
 		m.browser = msg.browser
 		m.page = msg.page
-		return m, m.runAction
+		return m, tea.Batch(tea.EnterAltScreen, m.runAction)
 	case pauseActionMsg:
 		m.pausing = true
 		return m, nil
