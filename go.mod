@@ -7,6 +7,7 @@ require (
 	github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203
 	github.com/fatih/color v1.7.0
 	github.com/go-rod/rod v0.112.0
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/spf13/cobra v1.6.1
 	gopkg.in/yaml.v3 v3.0.1
 	gotest.tools/v3 v3.4.0

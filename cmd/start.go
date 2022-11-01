@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/briandowns/spinner"
@@ -87,7 +88,7 @@ var startCmd = &cobra.Command{
 						_ = page.MustElement("textarea").Input(string(c))
 						_ = page.MustWaitIdle()
 					}
-					time.Sleep(action.Time)
+					time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 				}
 
 				s.Stop()
@@ -96,9 +97,12 @@ var startCmd = &cobra.Command{
 				s.Suffix = " " + color.New(color.Bold).Sprint(action)
 				s.Start()
 
+				k, ok := specialkeymap[strings.ToLower(action.Key)]
 				for i := 0; i < action.Count; i++ {
-					_ = page.Keyboard.MustType(action.Key)
-					time.Sleep(action.Time)
+					if ok {
+						_ = page.Keyboard.MustType(k)
+					}
+					time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 				}
 
 				s.Stop()
@@ -127,7 +131,7 @@ var startCmd = &cobra.Command{
 				s.Suffix = " " + color.New(color.Bold).Sprint(action)
 				s.Start()
 
-				time.Sleep(action.Time)
+				time.Sleep(time.Duration(action.Time) * time.Millisecond)
 
 				s.Stop()
 				fmt.Println(action)

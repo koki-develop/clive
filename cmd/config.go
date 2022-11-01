@@ -9,7 +9,7 @@ import (
 const defaultConfigPath = "./clive.yml"
 
 type configYaml struct {
-	Actions []interface{}
+	Actions []interface{} `yaml:"actions"`
 }
 
 type config struct {

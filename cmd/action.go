@@ -2,10 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
-	"time"
 
-	"github.com/go-rod/rod/lib/input"
+	"github.com/mitchellh/mapstructure"
 )
 
 type action interface {
@@ -13,26 +11,27 @@ type action interface {
 }
 
 type typeAction struct {
-	Type string
-	Time time.Duration
+	Type  string `mapstructure:"type"`
+	Count int    `mapstructure:"count"`
+	Speed int    `mapstructure:"speed"`
 }
 
 type keyAction struct {
-	Key   input.Key
-	Count int
-	Time  time.Duration
+	Key   string `mapstructure:"key"`
+	Count int    `mapstructure:"count"`
+	Speed int    `mapstructure:"speed"`
 }
 
 type sleepAction struct {
-	Time time.Duration
+	Time int `mapstructure:"time"`
 }
 
 type pauseAction struct{}
 
 type ctrlAction struct {
-	Ctrl  string
-	Count int
-	Time  time.Duration
+	Ctrl  string `mapstructure:"ctrl"`
+	Count int    `mapstructure:"count"`
+	Speed int    `mapstructure:"speed"`
 }
 
 func (action *typeAction) String() string {
@@ -40,18 +39,11 @@ func (action *typeAction) String() string {
 }
 
 func (action *keyAction) String() string {
-	txt := ""
-	for k, v := range specialkeymap {
-		if v == action.Key {
-			txt = k
-		}
-	}
-
-	return fmt.Sprintf("Key: %s", txt)
+	return fmt.Sprintf("Key: %s", action.Key)
 }
 
 func (action *sleepAction) String() string {
-	return fmt.Sprintf("Sleep: %dms", action.Time.Milliseconds())
+	return fmt.Sprintf("Sleep: %dms", action.Time)
 }
 
 func (action *pauseAction) String() string {
@@ -71,7 +63,7 @@ func parseAction(v interface{}) (action, error) {
 		}
 	case map[string]interface{}:
 		if _, ok := v["pause"]; ok {
-			return &pauseAction{}, nil
+			return parsePauseAction(v)
 		}
 		if _, ok := v["type"]; ok {
 			return parseTypeAction(v)
@@ -91,96 +83,64 @@ func parseAction(v interface{}) (action, error) {
 }
 
 func parseTypeAction(m map[string]interface{}) (*typeAction, error) {
-	for k := range m {
-		switch k {
-		case "type", "time":
-		default:
-			return nil, fmt.Errorf("invalid action: %#v", m)
-		}
+	if _, ok := m["speed"]; !ok {
+		m["speed"] = 10
 	}
 
-	var t time.Duration
-	if v, ok := m["time"]; ok {
-		t = time.Duration(v.(int)) * time.Millisecond
-	} else {
-		t = 10 * time.Millisecond
+	var action typeAction
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, err
 	}
 
-	return &typeAction{
-		Type: m["type"].(string),
-		Time: t,
-	}, nil
+	return &action, nil
 }
 
 func parseKeyAction(m map[string]interface{}) (*keyAction, error) {
-	for k := range m {
-		switch k {
-		case "key", "count", "time":
-		default:
-			return nil, fmt.Errorf("invalid action: %#v", m)
-		}
+	if _, ok := m["count"]; !ok {
+		m["count"] = 1
+	}
+	if _, ok := m["speed"]; !ok {
+		m["speed"] = 10
 	}
 
-	c := 1
-	if v, ok := m["count"]; ok {
-		c = v.(int)
+	var action keyAction
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, err
 	}
 
-	t := 10 * time.Millisecond
-	if v, ok := m["time"]; ok {
-		t = time.Duration(v.(int)) * time.Millisecond
-	}
-
-	k, ok := specialkeymap[strings.ToLower(m["key"].(string))]
-	if !ok {
-		return nil, fmt.Errorf("invalid action: %#v", m)
-	}
-
-	return &keyAction{
-		Key:   k,
-		Count: c,
-		Time:  t,
-	}, nil
+	return &action, nil
 }
 
 func parseSleepAction(m map[string]interface{}) (*sleepAction, error) {
-	for k := range m {
-		switch k {
-		case "sleep":
-		default:
-			return nil, fmt.Errorf("invalid action: %#v", m)
-		}
+	var action sleepAction
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, err
 	}
 
-	return &sleepAction{
-		Time: time.Duration(m["sleep"].(int)) * time.Millisecond,
-	}, nil
+	return &action, nil
+}
+
+func parsePauseAction(m map[string]interface{}) (*pauseAction, error) {
+	var action pauseAction
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, err
+	}
+
+	return &action, nil
 }
 
 func parseCtrlAction(m map[string]interface{}) (*ctrlAction, error) {
-	for k := range m {
-		switch k {
-		case "ctrl", "time", "count":
-		default:
-			return nil, fmt.Errorf("invalid action: %#v", m)
-		}
+	if _, ok := m["count"]; !ok {
+		m["count"] = 1
+	}
+	if _, ok := m["speed"]; !ok {
+		m["speed"] = 10
 	}
 
-	ctrl := m["ctrl"].(string)
-
-	c := 1
-	if v, ok := m["count"]; ok {
-		c = v.(int)
+	var action ctrlAction
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, err
 	}
 
-	t := 10 * time.Millisecond
-	if v, ok := m["time"]; ok {
-		t = time.Duration(v.(int)) * time.Millisecond
-	}
-
-	return &ctrlAction{
-		Ctrl:  ctrl,
-		Count: c,
-		Time:  t,
-	}, nil
+	return &action, nil
 }
