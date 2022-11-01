@@ -26,7 +26,7 @@ var startCmd = &cobra.Command{
 		ps := spinner.New([]string{">"}, 100*time.Millisecond, spinner.WithWriter(os.Stderr))
 		defer ps.Stop()
 
-		s.Suffix = fmt.Sprintf(" loading %s", cfgname)
+		s.Suffix = fmt.Sprintf(" Loading %s", cfgname)
 		s.Start()
 		cfg, err := loadConfig(cfgname)
 		s.Stop()
@@ -39,7 +39,7 @@ var startCmd = &cobra.Command{
 			return err
 		}
 
-		s.Suffix = " starting ttyd"
+		s.Suffix = " Starting ttyd"
 		s.Start()
 		ttyd := ttyd(port)
 		if err := ttyd.Start(); err != nil {
@@ -48,7 +48,7 @@ var startCmd = &cobra.Command{
 		defer ttyd.Process.Kill()
 		s.Stop()
 
-		s.Suffix = " launching browser"
+		s.Suffix = " Launching browser"
 		s.Start()
 		browser, err := launchBrowser()
 		if err != nil {
@@ -56,7 +56,7 @@ var startCmd = &cobra.Command{
 		}
 		s.Stop()
 
-		s.Suffix = " opening page"
+		s.Suffix = " Opening page"
 		s.Start()
 		page := browser.
 			NoDefaultDevice().
@@ -96,7 +96,7 @@ var startCmd = &cobra.Command{
 				if i+1 < len(cfg.Actions) {
 					next = cfg.Actions[i+1].String()
 				}
-				log := fmt.Sprintf("%s (next: %s)", color.New(color.Bold).Sprint(action), next)
+				log := fmt.Sprintf("%s (Next: %s)", color.New(color.Bold).Sprint(action), next)
 				ps.Suffix = " " + log
 				ps.Start()
 

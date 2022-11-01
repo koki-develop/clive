@@ -19,7 +19,7 @@ type typeAction struct {
 }
 
 func (action *typeAction) String() string {
-	return fmt.Sprintf("type: %s", action.Type)
+	return fmt.Sprintf("Type: %s", action.Type)
 }
 
 type keyAction struct {
@@ -29,7 +29,7 @@ type keyAction struct {
 }
 
 func (action *keyAction) String() string {
-	return fmt.Sprintf("key: %s", map[input.Key]string{
+	return fmt.Sprintf("Key: %s", map[input.Key]string{
 		input.Enter:  "enter",
 		input.Escape: "esc",
 	}[action.Key])
@@ -40,13 +40,13 @@ type sleepAction struct {
 }
 
 func (action sleepAction) String() string {
-	return fmt.Sprintf("sleep: %dms", action.Time.Milliseconds())
+	return fmt.Sprintf("Sleep: %dms", action.Time.Milliseconds())
 }
 
 type pauseAction struct{}
 
 func (action pauseAction) String() string {
-	return "press enter to continue"
+	return "Press enter to continue"
 }
 
 func loadConfig(p string) (*config, error) {
