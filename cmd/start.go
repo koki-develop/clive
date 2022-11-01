@@ -196,7 +196,7 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m *startModel) View() string {
 	if m.err != nil {
-		return fmt.Sprintf("error: %s", m.err)
+		return ""
 	}
 
 	if m.config == nil {
@@ -241,6 +241,10 @@ var startCmd = &cobra.Command{
 		p := tea.NewProgram(m)
 		if err := p.Start(); err != nil {
 			return err
+		}
+
+		if m.err != nil {
+			return m.err
 		}
 
 		return nil
