@@ -23,10 +23,14 @@ var startCmd = &cobra.Command{
 		}
 
 		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond, spinner.WithWriter(os.Stderr))
-		s.Color("magenta")
+		if err := s.Color("magenta"); err != nil {
+			return err
+		}
 		defer s.Stop()
 		ps := spinner.New([]string{">"}, 100*time.Millisecond, spinner.WithWriter(os.Stderr))
-		ps.Color("magenta")
+		if err := ps.Color("magenta"); err != nil {
+			return err
+		}
 		defer ps.Stop()
 
 		s.Suffix = fmt.Sprintf(" Loading %s", cfgname)
