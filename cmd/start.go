@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os/exec"
 	"time"
 
 	"github.com/charmbracelet/bubbles/spinner"
@@ -16,7 +17,10 @@ type startModel struct {
 	err                error
 	spinner            spinner.Model
 	config             *config
+	port               int
+	ttyd               *exec.Cmd
 	browser            *rod.Browser
+	page               *rod.Page
 	currentActionIndex int
 	pausing            bool
 }
@@ -28,10 +32,7 @@ func newStartModel() startModel {
 	)
 
 	return startModel{
-		err:                nil,
 		spinner:            s,
-		config:             nil,
-		browser:            nil,
 		currentActionIndex: 0,
 	}
 }
@@ -40,8 +41,14 @@ type configLoadedMsg struct {
 	config *config
 }
 
+type ttydStartedMsg struct {
+	port int
+	ttyd *exec.Cmd
+}
+
 type browserLaunchedMsg struct {
 	browser *rod.Browser
+	page    *rod.Page
 }
 
 type actionDoneMsg struct{}
@@ -61,13 +68,34 @@ func (m startModel) loadConfig() tea.Msg {
 	return configLoadedMsg{cfg}
 }
 
+func (m startModel) startTtyd() tea.Msg {
+	port, err := randomUnusedPort()
+	if err != nil {
+		return errMsg{err}
+	}
+
+	ttyd := ttyd(port)
+	if err := ttyd.Start(); err != nil {
+		return errMsg{err}
+	}
+
+	return ttydStartedMsg{port, ttyd}
+}
+
 func (m startModel) launchBrowser() tea.Msg {
 	browser, err := launchBrowser()
 	if err != nil {
 		return errMsg{err}
 	}
 
-	return browserLaunchedMsg{browser}
+	page := browser.
+		NoDefaultDevice().
+		MustPage(fmt.Sprintf("http://localhost:%d", m.port)).
+		MustWaitIdle()
+	_ = page.MustEval("() => term.options.fontSize = 22")
+	_ = page.MustEval("term.fit")
+
+	return browserLaunchedMsg{browser, page}
 }
 
 func (m startModel) runAction() tea.Msg {
@@ -105,15 +133,20 @@ func (m startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				return m, m.runAction
 			}
 		}
-	case pauseActionMsg:
-		m.pausing = true
-		return m, nil
 	case configLoadedMsg:
 		m.config = msg.config
+		return m, m.startTtyd
+	case ttydStartedMsg:
+		m.ttyd = msg.ttyd
+		m.port = msg.port
 		return m, m.launchBrowser
 	case browserLaunchedMsg:
 		m.browser = msg.browser
+		m.page = msg.page
 		return m, m.runAction
+	case pauseActionMsg:
+		m.pausing = true
+		return m, nil
 	case actionDoneMsg:
 		m.currentActionIndex++
 		if m.currentActionIndex == len(m.config.Actions) {
@@ -169,7 +202,14 @@ var startCmd = &cobra.Command{
 	Short: "Start clive actions",
 	Long:  "Start clive actions.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		p := tea.NewProgram(newStartModel())
+		m := newStartModel()
+		defer func() {
+			if m.ttyd != nil {
+				_ = m.ttyd.Process.Kill()
+			}
+		}()
+
+		p := tea.NewProgram(m)
 		if err := p.Start(); err != nil {
 			return err
 		}
