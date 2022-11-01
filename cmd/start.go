@@ -27,13 +27,13 @@ type startModel struct {
 	pausing            bool
 }
 
-func newStartModel() startModel {
+func newStartModel() *startModel {
 	s := spinner.New(
 		spinner.WithSpinner(spinner.Dot),
 		spinner.WithStyle(lipgloss.NewStyle().Foreground(lipgloss.Color("#ff00ff"))),
 	)
 
-	return startModel{
+	return &startModel{
 		spinner:            s,
 		currentActionIndex: 0,
 	}
@@ -61,7 +61,7 @@ type errMsg struct {
 	err error
 }
 
-func (m startModel) loadConfig() tea.Msg {
+func (m *startModel) loadConfig() tea.Msg {
 	cfg, err := loadConfig(configFilename)
 	if err != nil {
 		return errMsg{err}
@@ -70,7 +70,7 @@ func (m startModel) loadConfig() tea.Msg {
 	return configLoadedMsg{cfg}
 }
 
-func (m startModel) startTtyd() tea.Msg {
+func (m *startModel) startTtyd() tea.Msg {
 	port, err := randomUnusedPort()
 	if err != nil {
 		return errMsg{err}
@@ -84,7 +84,7 @@ func (m startModel) startTtyd() tea.Msg {
 	return ttydStartedMsg{port, ttyd}
 }
 
-func (m startModel) launchBrowser() tea.Msg {
+func (m *startModel) launchBrowser() tea.Msg {
 	browser, err := launchBrowser()
 	if err != nil {
 		return errMsg{err}
@@ -100,7 +100,7 @@ func (m startModel) launchBrowser() tea.Msg {
 	return browserLaunchedMsg{browser, page}
 }
 
-func (m startModel) runAction() tea.Msg {
+func (m *startModel) runAction() tea.Msg {
 	action := m.config.Actions[m.currentActionIndex]
 
 	switch action := action.(type) {
@@ -139,14 +139,14 @@ func (m startModel) runAction() tea.Msg {
 	return actionDoneMsg{}
 }
 
-func (m startModel) Init() tea.Cmd {
+func (m *startModel) Init() tea.Cmd {
 	return tea.Batch(
 		m.spinner.Tick,
 		m.loadConfig,
 	)
 }
 
-func (m startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.Type {
@@ -194,7 +194,7 @@ func (m startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m startModel) View() string {
+func (m *startModel) View() string {
 	if m.err != nil {
 		return fmt.Sprintf("error: %s", m.err)
 	}
