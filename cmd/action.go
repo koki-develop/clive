@@ -47,10 +47,14 @@ type keyAction struct {
 }
 
 func (action *keyAction) String() string {
-	return fmt.Sprintf("Key: %s", map[input.Key]string{
-		input.Enter:  "enter",
-		input.Escape: "esc",
-	}[action.Key])
+	txt := ""
+	for k, v := range specialkeymap {
+		if v == action.Key {
+			txt = k
+		}
+	}
+
+	return fmt.Sprintf("Key: %s", txt)
 }
 
 type sleepAction struct {
@@ -159,10 +163,7 @@ func parseKeyAction(m map[string]interface{}) (*keyAction, error) {
 		t = time.Duration(v.(int)) * time.Millisecond
 	}
 
-	k, ok := map[string]input.Key{
-		"enter": input.Enter,
-		"esc":   input.Escape,
-	}[m["key"].(string)]
+	k, ok := specialkeymap[strings.ToLower(m["key"].(string))]
 	if !ok {
 		return nil, fmt.Errorf("invalid action: %#v", m)
 	}

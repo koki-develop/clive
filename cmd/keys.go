@@ -113,3 +113,14 @@ var keymap = map[rune]input.Key{
 	// other
 	'\n': input.Enter,
 }
+
+var specialkeymap = map[string]input.Key{
+	"esc":       input.Escape,
+	"backspace": input.Backspace,
+	"tab":       input.Tab,
+	"enter":     input.Enter,
+	"left":      input.ArrowLeft,
+	"up":        input.ArrowUp,
+	"right":     input.ArrowRight,
+	"down":      input.ArrowDown,
+}
