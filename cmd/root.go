@@ -8,7 +8,8 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "clive",
-	Short: "", // TODO
+	Short: "Automates terminal operations and lets you view them live via a browser",
+	Long:  "Automates terminal operations and lets you view them live via a browser.",
 }
 
 func Execute() {
