@@ -7,11 +7,57 @@ import (
 	"time"
 
 	"github.com/briandowns/spinner"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/eiannone/keyboard"
 	"github.com/fatih/color"
 	"github.com/go-rod/rod/lib/input"
 	"github.com/spf13/cobra"
 )
+
+type startModel struct {
+	config             *config
+	currentActionIndex int
+}
+
+func newStartModel(cfg *config) startModel {
+	return startModel{
+		config:             cfg,
+		currentActionIndex: 0,
+	}
+}
+
+func (m startModel) Init() tea.Cmd {
+	return nil
+}
+
+func (m startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "enter":
+			m.currentActionIndex++
+			if m.currentActionIndex == len(m.config.Actions) {
+				return m, tea.Quit
+			}
+			return m, nil
+		}
+	}
+
+	return m, nil
+}
+
+func (m startModel) View() string {
+	s := ""
+	for i, action := range m.config.Actions {
+		cursor := " "
+		if m.currentActionIndex == i {
+			cursor = ">"
+		}
+		s += fmt.Sprintf("%s %s\n", cursor, action)
+	}
+
+	return s
+}
 
 var startCmd = &cobra.Command{
 	Use:   "start",
@@ -23,6 +69,18 @@ var startCmd = &cobra.Command{
 			return err
 		}
 
+		cfg, err := loadConfig(cfgname)
+		if err != nil {
+			return err
+		}
+
+		p := tea.NewProgram(newStartModel(cfg))
+		if err := p.Start(); err != nil {
+			return err
+		}
+
+		return nil
+
 		s := spinner.New(spinner.CharSets[11], 100*time.Millisecond, spinner.WithWriter(os.Stderr))
 		if err := s.Color("magenta"); err != nil {
 			return err
@@ -33,14 +91,6 @@ var startCmd = &cobra.Command{
 			return err
 		}
 		defer ps.Stop()
-
-		s.Suffix = fmt.Sprintf(" Loading %s", cfgname)
-		s.Start()
-		cfg, err := loadConfig(cfgname)
-		s.Stop()
-		if err != nil {
-			return err
-		}
 
 		port, err := randomUnusedPort()
 		if err != nil {
