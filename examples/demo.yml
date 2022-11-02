@@ -41,4 +41,3 @@ actions:
   - sleep: 2000
 
   - type: Enjoy cLive!
-  - pause

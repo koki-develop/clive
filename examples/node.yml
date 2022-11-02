@@ -33,4 +33,3 @@ actions:
   - type: node ./hello.js
   - sleep: 500
   - key: enter
-  - pause
