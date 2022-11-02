@@ -86,3 +86,41 @@ func Test_max(t *testing.T) {
 		})
 	}
 }
+
+func Test_paddingRight(t *testing.T) {
+	type args struct {
+		s string
+		l int
+	}
+	tests := []struct {
+		args args
+		want string
+	}{
+		{
+			args{"a", 4},
+			"a   ",
+		},
+		{
+			args{"aa", 4},
+			"aa  ",
+		},
+		{
+			args{"aaa", 4},
+			"aaa ",
+		},
+		{
+			args{"aaaa", 4},
+			"aaaa",
+		},
+		{
+			args{"aaaaa", 4},
+			"aaaaa",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			got := paddingRight(tt.args.s, tt.args.l)
+			assert.Equal(t, got, tt.want)
+		})
+	}
+}
