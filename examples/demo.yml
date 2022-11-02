@@ -1,0 +1,44 @@
+actions:
+  - pause
+
+  - type: Welcome to cLive!
+  - ctrl: c
+  - sleep: 1000
+
+  - type: cLive automates terminal operations and lets you view them live via a browser.
+  - ctrl: c
+  - sleep: 1000
+
+  - type: "Typing "
+    speed: 200
+  - type: "speed "
+    speed: 100
+  - type: "can "
+    speed: 5
+  - type: "be "
+    speed: 200
+  - type: "changed."
+    speed: 10
+  - ctrl: c
+  - sleep: 1000
+
+  - type: Special keys such as the ctrl key can also be entered.
+  - ctrl: c
+  - type: sleep 3600
+  - key: enter
+  - sleep: 2000
+  - ctrl: c
+  - type: Oops, I dozed off.
+  - ctrl: c
+  - sleep: 1000
+
+  - type: Can be paused at any time.
+  - ctrl: c
+  - pause
+
+  - type: Can also sleep for any length of time.
+  - ctrl: c
+  - sleep: 2000
+
+  - type: Enjoy cLive!
+  - pause
