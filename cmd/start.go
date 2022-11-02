@@ -25,6 +25,7 @@ type startModel struct {
 	page               *rod.Page
 	currentActionIndex int
 	pausing            bool
+	pausingBeforeQuit  bool
 }
 
 func newStartModel() *startModel {
@@ -56,6 +57,8 @@ type browserLaunchedMsg struct {
 type actionDoneMsg struct{}
 
 type pauseActionMsg struct{}
+
+type pauseBeforeQuitMsg struct{}
 
 type errMsg struct {
 	err error
@@ -142,6 +145,10 @@ func (m *startModel) runAction() tea.Msg {
 	return actionDoneMsg{}
 }
 
+func (m *startModel) pauseBeforeQuit() tea.Msg {
+	return pauseBeforeQuitMsg{}
+}
+
 func (m *startModel) Init() tea.Cmd {
 	return tea.Batch(
 		m.spinner.Tick,
@@ -160,9 +167,12 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.pausing = false
 				m.currentActionIndex++
 				if m.currentActionIndex == len(m.config.Actions) {
-					return m, tea.Quit
+					return m, m.pauseBeforeQuit
 				}
 				return m, m.runAction
+			}
+			if m.pausingBeforeQuit {
+				return m, tea.Quit
 			}
 		}
 	case configLoadedMsg:
@@ -179,10 +189,13 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case pauseActionMsg:
 		m.pausing = true
 		return m, nil
+	case pauseBeforeQuitMsg:
+		m.pausingBeforeQuit = true
+		return m, nil
 	case actionDoneMsg:
 		m.currentActionIndex++
 		if m.currentActionIndex == len(m.config.Actions) {
-			return m, tea.Quit
+			return m, m.pauseBeforeQuit
 		}
 		return m, m.runAction
 	case spinner.TickMsg:
@@ -241,6 +254,10 @@ func (m *startModel) View() string {
 
 		num := paddingRight(fmt.Sprintf("#%d", i+1), digits+1)
 		s += fmt.Sprintf("%s %s%s\n", style.Render(num), cursor, style.Render(action.String()))
+	}
+
+	if m.pausingBeforeQuit {
+		s += "\n" + lipgloss.NewStyle().Bold(true).Render("Press enter to quit")
 	}
 
 	return s
