@@ -13,6 +13,71 @@ cLive automates terminal operations and lets you view them live via a browser.
 <a href="https://codeclimate.com/github/koki-develop/clive/maintainability"><img src="https://api.codeclimate.com/v1/badges/4f8a98e93a72c7a685c6/maintainability" /></a>
 </p>
 
-# License
+# cLive
+
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Configuration](#configuration)
+  - [Actions](#actions)
+  - [Settings](#settings)
+- [License](#license)
+
+## Introduction
+
+TODO
+
+## Installation
+
+TODO
+
+```sh
+brew install ttyd
+```
+
+```sh
+go install github.com/koki-develop/clive@latest
+```
+
+## Getting Started
+
+TODO
+
+## Configuration
+
+### Actions
+
+#### Type
+
+TODO
+
+#### Keys
+
+TODO
+
+#### Ctrl
+
+TODO
+
+#### Sleep
+
+TODO
+
+#### Pause
+
+### Settings
+
+#### Login Command
+
+TODO
+
+#### Font Size
+
+TODO
+
+#### Font Family
+
+TODO
+
+## License
 
 [MIT License](./LICENSE)
