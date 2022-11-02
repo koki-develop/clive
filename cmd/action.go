@@ -23,7 +23,7 @@ type keyAction struct {
 }
 
 type sleepAction struct {
-	Time int `mapstructure:"time"`
+	Sleep int `mapstructure:"sleep"`
 }
 
 type pauseAction struct{}
@@ -43,7 +43,7 @@ func (action *keyAction) String() string {
 }
 
 func (action *sleepAction) String() string {
-	return fmt.Sprintf("Sleep: %dms", action.Time)
+	return fmt.Sprintf("Sleep: %dms", action.Sleep)
 }
 
 func (action *pauseAction) String() string {

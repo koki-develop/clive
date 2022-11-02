@@ -127,7 +127,7 @@ func (m *startModel) runAction() tea.Msg {
 			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 		}
 	case *sleepAction:
-		time.Sleep(time.Duration(action.Time) * time.Millisecond)
+		time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
 	case *ctrlAction:
 		_ = m.page.Keyboard.Press(input.ControlLeft)
 		for _, r := range action.Ctrl {
