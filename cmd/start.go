@@ -228,18 +228,21 @@ func (m *startModel) View() string {
 
 		cursor := "  "
 		text := action.String()
+		num := fmt.Sprintf(fmt.Sprintf("#%%0%dd", digits), i+1)
 
 		if m.currentActionIndex > i {
 			text = color.New(color.Faint).Sprint(text)
 		} else if m.currentActionIndex == i {
 			text = color.New(color.Bold).Sprint(text)
+			num = color.New(color.Bold).Sprint(num)
 			if m.pausing {
 				cursor = "> "
 			} else {
 				cursor = m.spinner.View()
 			}
 		}
-		s += fmt.Sprintf(fmt.Sprintf("#%%0%dd %%s%%s\n", digits), i+1, cursor, text)
+
+		s += fmt.Sprintf("%s %s%s\n", num, cursor, text)
 	}
 
 	return s
