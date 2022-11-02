@@ -47,7 +47,7 @@ func (action *sleepAction) String() string {
 }
 
 func (action *pauseAction) String() string {
-	return "Press enter to continue"
+	return "Pause: Press enter to continue"
 }
 
 func (action *ctrlAction) String() string {
