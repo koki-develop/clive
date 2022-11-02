@@ -10,7 +10,6 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/fatih/color"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
 	"github.com/spf13/cobra"
@@ -226,15 +225,13 @@ func (m *startModel) View() string {
 			break
 		}
 
-		cursor := "  "
-		text := action.String()
-		num := fmt.Sprintf(fmt.Sprintf("#%%0%dd", digits), i+1)
+		style := lipgloss.NewStyle()
 
+		cursor := "  "
 		if m.currentActionIndex > i {
-			text = color.New(color.Faint).Sprint(text)
+			style = style.Faint(true)
 		} else if m.currentActionIndex == i {
-			text = color.New(color.Bold).Sprint(text)
-			num = color.New(color.Bold).Sprint(num)
+			style = style.Bold(true)
 			if m.pausing {
 				cursor = "> "
 			} else {
@@ -242,7 +239,8 @@ func (m *startModel) View() string {
 			}
 		}
 
-		s += fmt.Sprintf("%s %s%s\n", num, cursor, text)
+		num := fmt.Sprintf(fmt.Sprintf("#%%0%dd", digits), i+1)
+		s += fmt.Sprintf("%s %s%s\n", style.Render(num), cursor, style.Render(action.String()))
 	}
 
 	return s
