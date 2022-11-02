@@ -48,14 +48,16 @@ func loadConfig(p string) (*config, error) {
 	}
 
 	stgs := defaultSettings
-	if y.Settings.LoginCommand != nil {
-		stgs.LoginCommand = *y.Settings.LoginCommand
-	}
-	if y.Settings.FontSize != nil {
-		stgs.FontSize = *y.Settings.FontSize
-	}
-	if y.Settings.FontFamily != nil {
-		stgs.FontFamily = y.Settings.FontFamily
+	if y.Settings != nil {
+		if y.Settings.LoginCommand != nil {
+			stgs.LoginCommand = *y.Settings.LoginCommand
+		}
+		if y.Settings.FontSize != nil {
+			stgs.FontSize = *y.Settings.FontSize
+		}
+		if y.Settings.FontFamily != nil {
+			stgs.FontFamily = y.Settings.FontFamily
+		}
 	}
 
 	var actions []action
