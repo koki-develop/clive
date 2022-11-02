@@ -239,7 +239,7 @@ func (m *startModel) View() string {
 			}
 		}
 
-		num := fmt.Sprintf(fmt.Sprintf("#%%0%dd", digits), i+1)
+		num := paddingRight(fmt.Sprintf("#%d", i+1), digits+1)
 		s += fmt.Sprintf("%s %s%s\n", style.Render(num), cursor, style.Render(action.String()))
 	}
 
