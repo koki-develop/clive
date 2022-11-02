@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
 
@@ -210,6 +211,7 @@ func (m *startModel) View() string {
 	s := ""
 
 	from := max(0, m.currentActionIndex-8)
+	digits := len(strconv.Itoa(len(m.config.Actions)))
 
 	for i, action := range m.config.Actions {
 		if i < from {
@@ -233,7 +235,7 @@ func (m *startModel) View() string {
 				cursor = m.spinner.View()
 			}
 		}
-		s += fmt.Sprintf("%s%s\n", cursor, text)
+		s += fmt.Sprintf(fmt.Sprintf("#%%0%dd %%s%%s\n", digits), i+1, cursor, text)
 	}
 
 	return s
