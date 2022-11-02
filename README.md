@@ -13,6 +13,8 @@ cLive automates terminal operations and lets you view them live via a browser.
 <a href="https://codeclimate.com/github/koki-develop/clive/maintainability"><img src="https://api.codeclimate.com/v1/badges/4f8a98e93a72c7a685c6/maintainability" /></a>
 </p>
 
+![](./examples/demo/demo.gif)
+
 # cLive
 
 - [Installation](#installation)
@@ -21,10 +23,6 @@ cLive automates terminal operations and lets you view them live via a browser.
   - [Actions](#actions)
   - [Settings](#settings)
 - [License](#license)
-
-## Introduction
-
-TODO
 
 ## Installation
 
