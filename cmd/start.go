@@ -210,14 +210,15 @@ func (m *startModel) View() string {
 
 	s := lipgloss.NewStyle().Bold(true).Background(lipgloss.Color("#ff00ff")).Padding(0, 1).Render("Actions") + "\n"
 
-	from := max(0, m.currentActionIndex-8)
+	from := max(0, m.currentActionIndex-3)
+	show := 10
 	digits := len(strconv.Itoa(len(m.config.Actions)))
 
 	for i, action := range m.config.Actions {
-		if i < from {
+		if i < from && len(m.config.Actions)-i > show {
 			continue
 		}
-		if i-from >= 20 {
+		if i-from >= show {
 			s += fmt.Sprintf("... %d more actions", len(m.config.Actions)-i)
 			break
 		}
