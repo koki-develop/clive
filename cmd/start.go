@@ -209,10 +209,23 @@ func (m *startModel) View() string {
 
 	s := ""
 
+	from := max(0, m.currentActionIndex-8)
+
 	for i, action := range m.config.Actions {
+		if i < from {
+			continue
+		}
+		if i-from >= 20 {
+			s += fmt.Sprintf("... %d more actions", len(m.config.Actions)-i)
+			break
+		}
+
 		cursor := "  "
 		text := action.String()
-		if m.currentActionIndex == i {
+
+		if m.currentActionIndex > i {
+			text = color.New(color.Faint).Sprint(text)
+		} else if m.currentActionIndex == i {
 			text = color.New(color.Bold).Sprint(text)
 			if m.pausing {
 				cursor = "> "
