@@ -112,6 +112,7 @@ var keymap = map[rune]input.Key{
 
 	// other
 	'\n': input.Enter,
+	'\t': input.Tab,
 }
 
 var specialkeymap = map[string]input.Key{
