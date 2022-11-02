@@ -208,7 +208,7 @@ func (m *startModel) View() string {
 		return fmt.Sprintf("%s Launching browser", m.spinner.View())
 	}
 
-	s := ""
+	s := lipgloss.NewStyle().Bold(true).Background(lipgloss.Color("#ff00ff")).Padding(0, 1).Render("Actions") + "\n"
 
 	from := max(0, m.currentActionIndex-8)
 	digits := len(strconv.Itoa(len(m.config.Actions)))
