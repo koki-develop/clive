@@ -26,11 +26,13 @@ type config struct {
 type settingsYaml struct {
 	LoginCommand *[]string `yaml:"loginCommand"`
 	FontSize     *int      `yaml:"fontSize"`
+	FontFamily   *string   `yaml:"fontFamily"`
 }
 
 type settings struct {
 	LoginCommand []string
 	FontSize     int
+	FontFamily   *string
 }
 
 func loadConfig(p string) (*config, error) {
@@ -51,6 +53,9 @@ func loadConfig(p string) (*config, error) {
 	}
 	if y.Settings.FontSize != nil {
 		stgs.FontSize = *y.Settings.FontSize
+	}
+	if y.Settings.FontFamily != nil {
+		stgs.FontFamily = y.Settings.FontFamily
 	}
 
 	var actions []action
