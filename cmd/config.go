@@ -8,12 +8,29 @@ import (
 
 const defaultConfigPath = "./clive.yml"
 
+var defaultSettings = &settings{
+	LoginCommand: []string{"bash", "--login"},
+	FontSize:     22,
+}
+
 type configYaml struct {
-	Actions []interface{} `yaml:"actions"`
+	Settings *settingsYaml `yaml:"settings"`
+	Actions  []interface{} `yaml:"actions"`
 }
 
 type config struct {
-	Actions []action
+	Settings *settings
+	Actions  []action
+}
+
+type settingsYaml struct {
+	LoginCommand *[]string `yaml:"loginCommand"`
+	FontSize     *int      `yaml:"fontSize"`
+}
+
+type settings struct {
+	LoginCommand []string
+	FontSize     int
 }
 
 func loadConfig(p string) (*config, error) {
@@ -28,6 +45,14 @@ func loadConfig(p string) (*config, error) {
 		return nil, err
 	}
 
+	stgs := defaultSettings
+	if y.Settings.LoginCommand != nil {
+		stgs.LoginCommand = *y.Settings.LoginCommand
+	}
+	if y.Settings.FontSize != nil {
+		stgs.FontSize = *y.Settings.FontSize
+	}
+
 	var actions []action
 	for _, a := range y.Actions {
 		action, err := parseAction(a)
@@ -38,6 +63,7 @@ func loadConfig(p string) (*config, error) {
 	}
 
 	return &config{
-		Actions: actions,
+		Settings: stgs,
+		Actions:  actions,
 	}, nil
 }

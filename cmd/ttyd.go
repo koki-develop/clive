@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func ttyd(port int) *exec.Cmd {
+func ttyd(port int, cmd []string) *exec.Cmd {
 	args := []string{
 		fmt.Sprintf("--port=%d", port),
 		"-t", "rendererType=canvas",
@@ -13,8 +13,8 @@ func ttyd(port int) *exec.Cmd {
 		"-t", "cursorBlink=true",
 		"-t", "customGlyphs=true",
 		"--",
-		"bash", "--login",
 	}
+	args = append(args, cmd...)
 
 	return exec.Command("ttyd", args...)
 }
