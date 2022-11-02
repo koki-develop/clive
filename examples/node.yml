@@ -1,0 +1,36 @@
+actions:
+  - pause
+
+  - type: vim ./hello.js
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: i
+  - type: |-
+      const greet = (name) => {
+        console.log(`Hello ${name}!`);
+      };
+      greet("cLive");
+  - sleep: 1000
+
+  - key: esc
+  - type: :wq
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: clear
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: cat ./hello.js
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: node ./hello.js
+  - sleep: 500
+  - key: enter
+  - pause
