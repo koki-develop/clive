@@ -183,3 +183,54 @@ func Test_parsePauseAction(t *testing.T) {
 		})
 	}
 }
+
+func Test_parseCtrlAction(t *testing.T) {
+	type args struct {
+		m map[string]interface{}
+	}
+	tests := []struct {
+		args    args
+		want    *ctrlAction
+		wantErr bool
+	}{
+		{
+			args{
+				map[string]interface{}{
+					"ctrl": "c",
+				},
+			},
+			&ctrlAction{
+				Ctrl:  "c",
+				Count: 1,
+				Speed: 10,
+			},
+			false,
+		},
+		{
+			args{
+				map[string]interface{}{
+					"ctrl":  "c",
+					"count": 10,
+					"speed": 500,
+				},
+			},
+			&ctrlAction{
+				Ctrl:  "c",
+				Count: 10,
+				Speed: 500,
+			},
+			false,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			got, err := parseCtrlAction(tt.args.m)
+			if tt.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
