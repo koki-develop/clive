@@ -148,15 +148,24 @@ func (m *startModel) runAction() tea.Msg {
 			return nil
 		}
 	case *ctrlAction:
-		_ = m.Page.Keyboard.Press(input.ControlLeft)
-		for _, r := range action.Ctrl {
-			if k, ok := keymap[r]; ok {
-				_ = m.Page.Keyboard.Type(k)
+		for i := 0; i < action.Count; i++ {
+			if err := m.Page.Keyboard.Press(input.ControlLeft); err != nil {
+				return errMsg{err}
 			}
-		}
-		_ = m.Page.Keyboard.Release(input.ControlLeft)
-		if m.PausingBeforeQuit {
-			return nil
+			for _, r := range action.Ctrl {
+				if k, ok := keymap[r]; ok {
+					if err := m.Page.Keyboard.Type(k); err != nil {
+						return errMsg{err}
+					}
+				}
+			}
+			if err := m.Page.Keyboard.Release(input.ControlLeft); err != nil {
+				return errMsg{err}
+			}
+			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+			if m.PausingBeforeQuit {
+				return nil
+			}
 		}
 	}
 	if m.PausingBeforeQuit {
