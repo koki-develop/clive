@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -21,7 +20,7 @@ type startModel struct {
 	spinner            spinner.Model
 	config             *config
 	port               int
-	ttyd               *exec.Cmd
+	ttyd               *ttyd
 	browser            *rod.Browser
 	page               *rod.Page
 	currentActionIndex int
@@ -51,17 +50,16 @@ func (m *startModel) loadConfig() tea.Msg {
 }
 
 func (m *startModel) startTtyd() tea.Msg {
-	port, err := randomUnusedPort()
+	ttyd, err := newTtyd(m.config.Settings.LoginCommand)
 	if err != nil {
 		return errMsg{err}
 	}
 
-	ttyd := ttyd(port, m.config.Settings.LoginCommand)
-	if err := ttyd.Start(); err != nil {
+	if err := ttyd.Command.Start(); err != nil {
 		return errMsg{err}
 	}
 
-	return ttydStartedMsg{port, ttyd}
+	return ttydStartedMsg{ttyd}
 }
 
 func (m *startModel) launchBrowser() tea.Msg {
@@ -178,8 +176,7 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.config = msg.config
 		return m, m.startTtyd
 	case ttydStartedMsg:
-		m.ttyd = msg.ttyd
-		m.port = msg.port
+		m.ttyd = msg.Ttyd
 		return m, m.launchBrowser
 	case browserLaunchedMsg:
 		m.browser = msg.browser
@@ -270,7 +267,7 @@ var startCmd = &cobra.Command{
 		m := newStartModel()
 		defer func() {
 			if m.ttyd != nil {
-				_ = m.ttyd.Process.Kill()
+				_ = m.ttyd.Command.Process.Kill()
 			}
 		}()
 

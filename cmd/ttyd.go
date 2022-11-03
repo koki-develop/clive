@@ -5,7 +5,17 @@ import (
 	"os/exec"
 )
 
-func ttyd(port int, cmd []string) *exec.Cmd {
+type ttyd struct {
+	Port    int
+	Command *exec.Cmd
+}
+
+func newTtyd(cmd []string) (*ttyd, error) {
+	port, err := randomUnusedPort()
+	if err != nil {
+		return nil, err
+	}
+
 	args := []string{
 		fmt.Sprintf("--port=%d", port),
 		"-t", "rendererType=canvas",
@@ -16,5 +26,8 @@ func ttyd(port int, cmd []string) *exec.Cmd {
 	}
 	args = append(args, cmd...)
 
-	return exec.Command("ttyd", args...)
+	return &ttyd{
+		Port:    port,
+		Command: exec.Command("ttyd", args...),
+	}, nil
 }

@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"os/exec"
-
 	"github.com/go-rod/rod"
 )
 
@@ -11,8 +9,7 @@ type configLoadedMsg struct {
 }
 
 type ttydStartedMsg struct {
-	port int
-	ttyd *exec.Cmd
+	Ttyd *ttyd
 }
 
 type browserLaunchedMsg struct {
