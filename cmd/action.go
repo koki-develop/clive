@@ -83,6 +83,10 @@ func parseAction(v interface{}) (action, error) {
 }
 
 func parseTypeAction(m map[string]interface{}) (*typeAction, error) {
+	if _, ok := m["count"]; !ok {
+		m["count"] = 1
+	}
+
 	if _, ok := m["speed"]; !ok {
 		m["speed"] = 10
 	}
