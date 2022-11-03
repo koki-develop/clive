@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"io"
 	"os"
 
 	"gopkg.in/yaml.v3"
@@ -42,6 +43,15 @@ func loadConfig(p string) (*config, error) {
 	}
 	defer f.Close()
 
+	cfg, err := decodeConfig(f)
+	if err != nil {
+		return nil, err
+	}
+
+	return cfg, nil
+}
+
+func decodeConfig(f io.Reader) (*config, error) {
 	var y configYaml
 	if err := yaml.NewDecoder(f).Decode(&y); err != nil {
 		return nil, err
