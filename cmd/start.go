@@ -127,10 +127,20 @@ func (m *startModel) runAction() tea.Msg {
 		for _, c := range action.Type {
 			k, ok := keymap[c]
 			if ok {
-				_ = m.page.Keyboard.MustType(k)
+				if err := m.page.Keyboard.Type(k); err != nil {
+					return errMsg{err}
+				}
 			} else {
-				_ = m.page.MustElement("textarea").Input(string(c))
-				_ = m.page.MustWaitIdle()
+				txt, err := m.page.Element("textarea")
+				if err != nil {
+					return errMsg{err}
+				}
+				if err := txt.Input(string(c)); err != nil {
+					return errMsg{err}
+				}
+				if err := m.page.WaitIdle(time.Minute); err != nil {
+					return errMsg{err}
+				}
 			}
 			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 		}
@@ -138,7 +148,9 @@ func (m *startModel) runAction() tea.Msg {
 		k, ok := specialkeymap[strings.ToLower(action.Key)]
 		for i := 0; i < action.Count; i++ {
 			if ok {
-				_ = m.page.Keyboard.MustType(k)
+				if err := m.page.Keyboard.Type(k); err != nil {
+					return errMsg{err}
+				}
 			}
 			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 		}
