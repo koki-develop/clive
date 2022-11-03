@@ -4,14 +4,15 @@ import (
 	"io"
 	"os"
 
+	"github.com/mitchellh/mapstructure"
 	"gopkg.in/yaml.v3"
 )
 
 const defaultConfigPath = "./clive.yml"
 
 type configYaml struct {
-	Settings *settingsYaml `yaml:"settings"`
-	Actions  []interface{} `yaml:"actions"`
+	Settings map[string]interface{} `yaml:"settings"`
+	Actions  []interface{}          `yaml:"actions"`
 }
 
 type config struct {
@@ -19,16 +20,10 @@ type config struct {
 	Actions  []action
 }
 
-type settingsYaml struct {
-	LoginCommand *[]string `yaml:"loginCommand"`
-	FontSize     *int      `yaml:"fontSize"`
-	FontFamily   *string   `yaml:"fontFamily"`
-}
-
 type settings struct {
-	LoginCommand []string
-	FontSize     int
-	FontFamily   *string
+	LoginCommand []string `mapstructure:"loginCommand"`
+	FontSize     int      `mapstructure:"fontSize"`
+	FontFamily   *string  `mapstructure:"fontFamily"`
 }
 
 func loadConfig(p string) (*config, error) {
@@ -52,21 +47,12 @@ func decodeConfig(f io.Reader) (*config, error) {
 		return nil, err
 	}
 
-	stgs := &settings{
+	settings := settings{
 		LoginCommand: []string{"bash", "--login"},
 		FontSize:     22,
 	}
-
-	if y.Settings != nil {
-		if y.Settings.LoginCommand != nil {
-			stgs.LoginCommand = *y.Settings.LoginCommand
-		}
-		if y.Settings.FontSize != nil {
-			stgs.FontSize = *y.Settings.FontSize
-		}
-		if y.Settings.FontFamily != nil {
-			stgs.FontFamily = y.Settings.FontFamily
-		}
+	if err := mapstructure.Decode(y.Settings, &settings); err != nil {
+		return nil, err
 	}
 
 	var actions []action
@@ -79,7 +65,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 	}
 
 	return &config{
-		Settings: stgs,
+		Settings: &settings,
 		Actions:  actions,
 	}, nil
 }
