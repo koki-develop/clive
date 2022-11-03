@@ -16,16 +16,15 @@ import (
 )
 
 type startModel struct {
-	err                error
-	spinner            spinner.Model
-	config             *config
-	port               int
-	ttyd               *ttyd
-	browser            *rod.Browser
-	page               *rod.Page
-	currentActionIndex int
-	pausing            bool
-	pausingBeforeQuit  bool
+	Err                error
+	Spinner            spinner.Model
+	Config             *config
+	Ttyd               *ttyd
+	Browser            *rod.Browser
+	Page               *rod.Page
+	CurrentActionIndex int
+	Pausing            bool
+	PausingBeforeQuit  bool
 }
 
 func newStartModel() *startModel {
@@ -35,8 +34,8 @@ func newStartModel() *startModel {
 	)
 
 	return &startModel{
-		spinner:            s,
-		currentActionIndex: 0,
+		Spinner:            s,
+		CurrentActionIndex: 0,
 	}
 }
 
@@ -50,7 +49,7 @@ func (m *startModel) loadConfig() tea.Msg {
 }
 
 func (m *startModel) startTtyd() tea.Msg {
-	ttyd, err := newTtyd(m.config.Settings.LoginCommand)
+	ttyd, err := newTtyd(m.Config.Settings.LoginCommand)
 	if err != nil {
 		return errMsg{err}
 	}
@@ -68,7 +67,7 @@ func (m *startModel) launchBrowser() tea.Msg {
 		return errMsg{err}
 	}
 
-	page, err := browser.Page(proto.TargetCreateTarget{URL: fmt.Sprintf("http://localhost:%d", m.port)})
+	page, err := browser.Page(proto.TargetCreateTarget{URL: fmt.Sprintf("http://localhost:%d", m.Ttyd.Port)})
 	if err != nil {
 		return errMsg{err}
 	}
@@ -76,12 +75,12 @@ func (m *startModel) launchBrowser() tea.Msg {
 		return errMsg{err}
 	}
 
-	if m.config.Settings.FontFamily != nil {
-		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily)); err != nil {
+	if m.Config.Settings.FontFamily != nil {
+		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.Config.Settings.FontFamily)); err != nil {
 			return errMsg{err}
 		}
 	}
-	if _, err = page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", m.config.Settings.FontSize)); err != nil {
+	if _, err = page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", m.Config.Settings.FontSize)); err != nil {
 		return errMsg{err}
 	}
 	if _, err = page.Eval("term.fit"); err != nil {
@@ -92,7 +91,7 @@ func (m *startModel) launchBrowser() tea.Msg {
 }
 
 func (m *startModel) runAction() tea.Msg {
-	action := m.config.Actions[m.currentActionIndex]
+	action := m.Config.Actions[m.CurrentActionIndex]
 
 	switch action := action.(type) {
 	case *pauseAction:
@@ -101,18 +100,18 @@ func (m *startModel) runAction() tea.Msg {
 		for _, c := range action.Type {
 			k, ok := keymap[c]
 			if ok {
-				if err := m.page.Keyboard.Type(k); err != nil {
+				if err := m.Page.Keyboard.Type(k); err != nil {
 					return errMsg{err}
 				}
 			} else {
-				txt, err := m.page.Element("textarea")
+				txt, err := m.Page.Element("textarea")
 				if err != nil {
 					return errMsg{err}
 				}
 				if err := txt.Input(string(c)); err != nil {
 					return errMsg{err}
 				}
-				if err := m.page.WaitIdle(time.Minute); err != nil {
+				if err := m.Page.WaitIdle(time.Minute); err != nil {
 					return errMsg{err}
 				}
 			}
@@ -122,7 +121,7 @@ func (m *startModel) runAction() tea.Msg {
 		k, ok := specialkeymap[strings.ToLower(action.Key)]
 		for i := 0; i < action.Count; i++ {
 			if ok {
-				if err := m.page.Keyboard.Type(k); err != nil {
+				if err := m.Page.Keyboard.Type(k); err != nil {
 					return errMsg{err}
 				}
 			}
@@ -131,13 +130,13 @@ func (m *startModel) runAction() tea.Msg {
 	case *sleepAction:
 		time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
 	case *ctrlAction:
-		_ = m.page.Keyboard.Press(input.ControlLeft)
+		_ = m.Page.Keyboard.Press(input.ControlLeft)
 		for _, r := range action.Ctrl {
 			if k, ok := keymap[r]; ok {
-				_ = m.page.Keyboard.Type(k)
+				_ = m.Page.Keyboard.Type(k)
 			}
 		}
-		_ = m.page.Keyboard.Release(input.ControlLeft)
+		_ = m.Page.Keyboard.Release(input.ControlLeft)
 	}
 	return actionDoneMsg{}
 }
@@ -148,7 +147,7 @@ func (m *startModel) pauseBeforeQuit() tea.Msg {
 
 func (m *startModel) Init() tea.Cmd {
 	return tea.Batch(
-		m.spinner.Tick,
+		m.Spinner.Tick,
 		m.loadConfig,
 	)
 }
@@ -160,46 +159,46 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyCtrlC:
 			return m, tea.Quit
 		case tea.KeyEnter:
-			if m.pausing {
-				m.pausing = false
-				m.currentActionIndex++
-				if m.currentActionIndex == len(m.config.Actions) {
+			if m.Pausing {
+				m.Pausing = false
+				m.CurrentActionIndex++
+				if m.CurrentActionIndex == len(m.Config.Actions) {
 					return m, m.pauseBeforeQuit
 				}
 				return m, m.runAction
 			}
-			if m.pausingBeforeQuit {
+			if m.PausingBeforeQuit {
 				return m, tea.Quit
 			}
 		}
 	case configLoadedMsg:
-		m.config = msg.config
+		m.Config = msg.config
 		return m, m.startTtyd
 	case ttydStartedMsg:
-		m.ttyd = msg.Ttyd
+		m.Ttyd = msg.Ttyd
 		return m, m.launchBrowser
 	case browserLaunchedMsg:
-		m.browser = msg.browser
-		m.page = msg.page
+		m.Browser = msg.Browser
+		m.Page = msg.Page
 		return m, tea.Batch(tea.EnterAltScreen, m.runAction)
 	case pauseActionMsg:
-		m.pausing = true
+		m.Pausing = true
 		return m, nil
 	case pauseBeforeQuitMsg:
-		m.pausingBeforeQuit = true
+		m.PausingBeforeQuit = true
 		return m, nil
 	case actionDoneMsg:
-		m.currentActionIndex++
-		if m.currentActionIndex == len(m.config.Actions) {
+		m.CurrentActionIndex++
+		if m.CurrentActionIndex == len(m.Config.Actions) {
 			return m, m.pauseBeforeQuit
 		}
 		return m, m.runAction
 	case spinner.TickMsg:
 		var cmd tea.Cmd
-		m.spinner, cmd = m.spinner.Update(msg)
+		m.Spinner, cmd = m.Spinner.Update(msg)
 		return m, cmd
 	case errMsg:
-		m.err = msg.err
+		m.Err = msg.Err
 		return m, tea.Quit
 	}
 
@@ -207,44 +206,44 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m *startModel) View() string {
-	if m.err != nil {
+	if m.Err != nil {
 		return ""
 	}
 
-	if m.config == nil {
-		return fmt.Sprintf("%s Loading config", m.spinner.View())
+	if m.Config == nil {
+		return fmt.Sprintf("%s Loading config", m.Spinner.View())
 	}
 
-	if m.browser == nil {
-		return fmt.Sprintf("%s Launching browser", m.spinner.View())
+	if m.Browser == nil {
+		return fmt.Sprintf("%s Launching browser", m.Spinner.View())
 	}
 
 	s := lipgloss.NewStyle().Bold(true).Background(lipgloss.Color("#ff00ff")).Padding(0, 1).Render("Actions") + "\n"
 
-	from := max(0, m.currentActionIndex-3)
+	from := max(0, m.CurrentActionIndex-3)
 	show := 20
-	digits := len(strconv.Itoa(len(m.config.Actions)))
+	digits := len(strconv.Itoa(len(m.Config.Actions)))
 
-	for i, action := range m.config.Actions {
-		if i < from && len(m.config.Actions)-i > show {
+	for i, action := range m.Config.Actions {
+		if i < from && len(m.Config.Actions)-i > show {
 			continue
 		}
 		if i-from >= show {
-			s += fmt.Sprintf("... %d more actions", len(m.config.Actions)-i)
+			s += fmt.Sprintf("... %d more actions", len(m.Config.Actions)-i)
 			break
 		}
 
 		style := lipgloss.NewStyle()
 
 		cursor := "  "
-		if m.currentActionIndex > i {
+		if m.CurrentActionIndex > i {
 			style = style.Faint(true)
-		} else if m.currentActionIndex == i {
+		} else if m.CurrentActionIndex == i {
 			style = style.Bold(true)
-			if m.pausing {
+			if m.Pausing {
 				cursor = "> "
 			} else {
-				cursor = m.spinner.View()
+				cursor = m.Spinner.View()
 			}
 		}
 
@@ -252,7 +251,7 @@ func (m *startModel) View() string {
 		s += fmt.Sprintf("%s %s%s\n", style.Render(num), cursor, style.Render(action.String()))
 	}
 
-	if m.pausingBeforeQuit {
+	if m.PausingBeforeQuit {
 		s += "\n" + lipgloss.NewStyle().Bold(true).Render("Press enter to quit")
 	}
 
@@ -266,8 +265,8 @@ var startCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		m := newStartModel()
 		defer func() {
-			if m.ttyd != nil {
-				_ = m.ttyd.Command.Process.Kill()
+			if m.Ttyd != nil {
+				_ = m.Ttyd.Command.Process.Kill()
 			}
 		}()
 
@@ -276,8 +275,8 @@ var startCmd = &cobra.Command{
 			return err
 		}
 
-		if m.err != nil {
-			return m.err
+		if m.Err != nil {
+			return m.Err
 		}
 
 		return nil

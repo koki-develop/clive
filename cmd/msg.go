@@ -13,8 +13,8 @@ type ttydStartedMsg struct {
 }
 
 type browserLaunchedMsg struct {
-	browser *rod.Browser
-	page    *rod.Page
+	Browser *rod.Browser
+	Page    *rod.Page
 }
 
 type actionDoneMsg struct{}
@@ -24,5 +24,5 @@ type pauseActionMsg struct{}
 type pauseBeforeQuitMsg struct{}
 
 type errMsg struct {
-	err error
+	Err error
 }
