@@ -125,6 +125,9 @@ func (m *startModel) runAction() tea.Msg {
 				}
 			}
 			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+			if m.PausingBeforeQuit {
+				return nil
+			}
 		}
 	case *keyAction:
 		k, ok := specialkeymap[strings.ToLower(action.Key)]
@@ -135,9 +138,15 @@ func (m *startModel) runAction() tea.Msg {
 				}
 			}
 			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+			if m.PausingBeforeQuit {
+				return nil
+			}
 		}
 	case *sleepAction:
 		time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
+		if m.PausingBeforeQuit {
+			return nil
+		}
 	case *ctrlAction:
 		_ = m.Page.Keyboard.Press(input.ControlLeft)
 		for _, r := range action.Ctrl {
@@ -146,6 +155,12 @@ func (m *startModel) runAction() tea.Msg {
 			}
 		}
 		_ = m.Page.Keyboard.Release(input.ControlLeft)
+		if m.PausingBeforeQuit {
+			return nil
+		}
+	}
+	if m.PausingBeforeQuit {
+		return nil
 	}
 	return actionDoneMsg{}
 }
@@ -162,15 +177,16 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.Type {
 		case tea.KeyCtrlC:
-			return m, tea.Quit
+			m.PausingBeforeQuit = true
+			return m, nil
 		case tea.KeyEnter:
+			if m.PausingBeforeQuit {
+				return m, tea.Quit
+			}
 			if m.Pausing {
 				m.Pausing = false
 				m.CurrentActionIndex++
 				return m, m.runAction
-			}
-			if m.PausingBeforeQuit {
-				return m, tea.Quit
 			}
 		}
 	case configLoadedMsg:
@@ -248,7 +264,7 @@ func (m *startModel) actionsView() string {
 			style = style.Bold(true)
 			if m.Pausing {
 				cursor = "> "
-			} else {
+			} else if !m.PausingBeforeQuit {
 				cursor = m.Spinner.View()
 			}
 		}
