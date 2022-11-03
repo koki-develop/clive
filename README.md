@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-cLive automates terminal operations and lets you view them live via a browser.
+Automates terminal operations and lets you view them live via a browser.
 </p>
 
 <p align='center'>
