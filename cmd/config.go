@@ -9,11 +9,6 @@ import (
 
 const defaultConfigPath = "./clive.yml"
 
-var defaultSettings = &settings{
-	LoginCommand: []string{"bash", "--login"},
-	FontSize:     22,
-}
-
 type configYaml struct {
 	Settings *settingsYaml `yaml:"settings"`
 	Actions  []interface{} `yaml:"actions"`
@@ -57,7 +52,11 @@ func decodeConfig(f io.Reader) (*config, error) {
 		return nil, err
 	}
 
-	stgs := defaultSettings
+	stgs := &settings{
+		LoginCommand: []string{"bash", "--login"},
+		FontSize:     22,
+	}
+
 	if y.Settings != nil {
 		if y.Settings.LoginCommand != nil {
 			stgs.LoginCommand = *y.Settings.LoginCommand
