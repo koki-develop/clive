@@ -30,6 +30,7 @@ actions:
 				Settings: &settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
+					DefaultSpeed: 10,
 				},
 				Actions: []action{
 					&pauseAction{},
@@ -43,6 +44,7 @@ settings:
   loginCommand: ["hoge", "fuga"]
   fontSize: 999
   fontFamily: FontName
+  defaultSpeed: 999
 actions:
   - pause
 `)},
@@ -51,6 +53,7 @@ actions:
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
 					FontFamily:   ptr("FontName"),
+					DefaultSpeed: 999,
 				},
 				Actions: []action{
 					&pauseAction{},
@@ -81,7 +84,11 @@ actions:
     speed: 500
 `)},
 			&config{
-				Settings: &settings{LoginCommand: []string{"bash", "--login"}, FontSize: 22},
+				Settings: &settings{
+					LoginCommand: []string{"bash", "--login"},
+					FontSize:     22,
+					DefaultSpeed: 10,
+				},
 				Actions: []action{
 					&typeAction{Type: "Hello", Count: 1, Speed: 10},
 					&typeAction{Type: "Hello", Count: 10, Speed: 500},

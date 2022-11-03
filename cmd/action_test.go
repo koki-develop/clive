@@ -9,7 +9,8 @@ import (
 
 func Test_parseTypeAction(t *testing.T) {
 	type args struct {
-		m map[string]interface{}
+		settings *settings
+		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
@@ -18,6 +19,7 @@ func Test_parseTypeAction(t *testing.T) {
 	}{
 		{
 			args{
+				&settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type": "Hello World",
 				},
@@ -31,6 +33,7 @@ func Test_parseTypeAction(t *testing.T) {
 		},
 		{
 			args{
+				&settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type":  "Hello World",
 					"count": 10,
@@ -47,7 +50,7 @@ func Test_parseTypeAction(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseTypeAction(tt.args.m)
+			got, err := parseTypeAction(tt.args.settings, tt.args.m)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
@@ -60,7 +63,8 @@ func Test_parseTypeAction(t *testing.T) {
 
 func Test_parseKeyAction(t *testing.T) {
 	type args struct {
-		m map[string]interface{}
+		settings *settings
+		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
@@ -69,6 +73,7 @@ func Test_parseKeyAction(t *testing.T) {
 	}{
 		{
 			args{
+				&settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key": "enter",
 				},
@@ -82,6 +87,7 @@ func Test_parseKeyAction(t *testing.T) {
 		},
 		{
 			args{
+				&settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key":   "enter",
 					"count": 10,
@@ -98,7 +104,7 @@ func Test_parseKeyAction(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseKeyAction(tt.args.m)
+			got, err := parseKeyAction(tt.args.settings, tt.args.m)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
@@ -111,7 +117,8 @@ func Test_parseKeyAction(t *testing.T) {
 
 func Test_parseSleepAction(t *testing.T) {
 	type args struct {
-		m map[string]interface{}
+		settings *settings
+		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
@@ -120,6 +127,7 @@ func Test_parseSleepAction(t *testing.T) {
 	}{
 		{
 			args{
+				nil,
 				map[string]interface{}{
 					"sleep": 3000,
 				},
@@ -132,7 +140,7 @@ func Test_parseSleepAction(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseSleepAction(tt.args.m)
+			got, err := parseSleepAction(tt.args.settings, tt.args.m)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
@@ -145,7 +153,8 @@ func Test_parseSleepAction(t *testing.T) {
 
 func Test_parsePauseAction(t *testing.T) {
 	type args struct {
-		m map[string]interface{}
+		settings *settings
+		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
@@ -154,6 +163,7 @@ func Test_parsePauseAction(t *testing.T) {
 	}{
 		{
 			args{
+				nil,
 				map[string]interface{}{
 					"pause": nil,
 				},
@@ -163,6 +173,7 @@ func Test_parsePauseAction(t *testing.T) {
 		},
 		{
 			args{
+				nil,
 				map[string]interface{}{
 					"pause": struct{}{},
 				},
@@ -173,7 +184,7 @@ func Test_parsePauseAction(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parsePauseAction(tt.args.m)
+			got, err := parsePauseAction(tt.args.settings, tt.args.m)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
@@ -186,7 +197,8 @@ func Test_parsePauseAction(t *testing.T) {
 
 func Test_parseCtrlAction(t *testing.T) {
 	type args struct {
-		m map[string]interface{}
+		settings *settings
+		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
@@ -195,6 +207,7 @@ func Test_parseCtrlAction(t *testing.T) {
 	}{
 		{
 			args{
+				&settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl": "c",
 				},
@@ -208,6 +221,7 @@ func Test_parseCtrlAction(t *testing.T) {
 		},
 		{
 			args{
+				&settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl":  "c",
 					"count": 10,
@@ -224,7 +238,7 @@ func Test_parseCtrlAction(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseCtrlAction(tt.args.m)
+			got, err := parseCtrlAction(tt.args.settings, tt.args.m)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {

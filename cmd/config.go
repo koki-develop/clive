@@ -24,6 +24,7 @@ type settings struct {
 	LoginCommand []string `mapstructure:"loginCommand"`
 	FontSize     int      `mapstructure:"fontSize"`
 	FontFamily   *string  `mapstructure:"fontFamily"`
+	DefaultSpeed int      `mapstructure:"defaultSpeed"`
 }
 
 func loadConfig(p string) (*config, error) {
@@ -50,6 +51,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 	settings := settings{
 		LoginCommand: []string{"bash", "--login"},
 		FontSize:     22,
+		DefaultSpeed: 10,
 	}
 	if err := mapstructure.Decode(y.Settings, &settings); err != nil {
 		return nil, err
@@ -57,7 +59,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 
 	var actions []action
 	for _, a := range y.Actions {
-		action, err := parseAction(a)
+		action, err := parseAction(&settings, a)
 		if err != nil {
 			return nil, err
 		}
