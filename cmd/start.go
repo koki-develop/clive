@@ -91,6 +91,10 @@ func (m *startModel) launchBrowser() tea.Msg {
 }
 
 func (m *startModel) runAction() tea.Msg {
+	if m.CurrentActionIndex == len(m.Config.Actions) {
+		return pauseBeforeQuitMsg{}
+	}
+
 	action := m.Config.Actions[m.CurrentActionIndex]
 
 	switch action := action.(type) {
@@ -141,10 +145,6 @@ func (m *startModel) runAction() tea.Msg {
 	return actionDoneMsg{}
 }
 
-func (m *startModel) pauseBeforeQuit() tea.Msg {
-	return pauseBeforeQuitMsg{}
-}
-
 func (m *startModel) Init() tea.Cmd {
 	return tea.Batch(
 		m.Spinner.Tick,
@@ -162,9 +162,6 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.Pausing {
 				m.Pausing = false
 				m.CurrentActionIndex++
-				if m.CurrentActionIndex == len(m.Config.Actions) {
-					return m, m.pauseBeforeQuit
-				}
 				return m, m.runAction
 			}
 			if m.PausingBeforeQuit {
@@ -189,9 +186,6 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	case actionDoneMsg:
 		m.CurrentActionIndex++
-		if m.CurrentActionIndex == len(m.Config.Actions) {
-			return m, m.pauseBeforeQuit
-		}
 		return m, m.runAction
 	case spinner.TickMsg:
 		var cmd tea.Cmd
