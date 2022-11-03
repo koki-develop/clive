@@ -17,5 +17,10 @@ func launchBrowser() (*rod.Browser, error) {
 		return nil, err
 	}
 
-	return rod.New().ControlURL(u).MustConnect(), nil
+	browser := rod.New().ControlURL(u)
+	if err := browser.Connect(); err != nil {
+		return nil, err
+	}
+
+	return browser, nil
 }
