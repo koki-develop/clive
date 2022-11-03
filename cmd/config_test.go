@@ -42,6 +42,7 @@ actions:
 settings:
   loginCommand: ["hoge", "fuga"]
   fontSize: 999
+  fontFamily: FontName
 actions:
   - pause
 `)},
@@ -49,6 +50,7 @@ actions:
 				Settings: &settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
+					FontFamily:   ptr("FontName"),
 				},
 				Actions: []action{
 					&pauseAction{},
