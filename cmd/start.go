@@ -94,7 +94,6 @@ func (m *startModel) launchBrowser() tea.Msg {
 	}
 
 	page := browser.
-		NoDefaultDevice().
 		MustPage(fmt.Sprintf("http://localhost:%d", m.port)).
 		MustWaitIdle()
 	if m.config.Settings.FontFamily != nil {
