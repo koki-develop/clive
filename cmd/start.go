@@ -271,10 +271,12 @@ func (m *startModel) actionsView() string {
 			style = style.Faint(true)
 		} else if m.CurrentActionIndex == i {
 			style = style.Bold(true)
-			if m.Pausing {
-				cursor = "> "
-			} else if !m.PausingBeforeQuit {
-				cursor = m.Spinner.View()
+			if !m.PausingBeforeQuit {
+				if m.Pausing {
+					cursor = "> "
+				} else {
+					cursor = m.Spinner.View()
+				}
 			}
 		}
 
