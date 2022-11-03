@@ -83,15 +83,10 @@ func parseAction(v interface{}) (action, error) {
 }
 
 func parseTypeAction(m map[string]interface{}) (*typeAction, error) {
-	if _, ok := m["count"]; !ok {
-		m["count"] = 1
+	action := typeAction{
+		Count: 1,
+		Speed: 10,
 	}
-
-	if _, ok := m["speed"]; !ok {
-		m["speed"] = 10
-	}
-
-	var action typeAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
 	}
