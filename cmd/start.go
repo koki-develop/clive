@@ -193,7 +193,8 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	case errMsg:
 		m.Err = msg.Err
-		return m, tea.Quit
+		m.PausingBeforeQuit = true
+		return m, nil
 	}
 
 	return m, nil
