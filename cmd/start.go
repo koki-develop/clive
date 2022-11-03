@@ -15,6 +15,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	actionsHeaderStyle = lipgloss.NewStyle().Bold(true).Padding(0, 1).Background(lipgloss.Color("#ff00ff"))
+	errHeaderStyle     = lipgloss.NewStyle().Bold(true).Padding(0, 1).Background(lipgloss.Color("#ff0000"))
+)
+
 type startModel struct {
 	Err                error
 	Spinner            spinner.Model
@@ -200,31 +205,37 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m *startModel) View() string {
-	if m.Err != nil {
+func (m *startModel) errorView() string {
+	if m.Err == nil {
 		return ""
 	}
+	return errHeaderStyle.Render("Error") + "\n" + fmt.Sprint(m.Err)
+}
 
-	if m.Config == nil {
-		return fmt.Sprintf("%s Loading config", m.Spinner.View())
-	}
+func (m *startModel) loadingConfigView() string {
+	return fmt.Sprintf("%s Loading config", m.Spinner.View())
+}
 
-	if m.Browser == nil {
-		return fmt.Sprintf("%s Launching browser", m.Spinner.View())
-	}
+func (m *startModel) launchingBrowserView() string {
+	return fmt.Sprintf("%s Launching browser", m.Spinner.View())
+}
 
-	s := lipgloss.NewStyle().Bold(true).Background(lipgloss.Color("#ff00ff")).Padding(0, 1).Render("Actions") + "\n"
+func (m *startModel) pauseBeforeQuitView() string {
+	return lipgloss.NewStyle().Bold(true).Render("Press enter to quit")
+}
 
+func (m *startModel) actionsView() string {
 	from := max(0, m.CurrentActionIndex-3)
 	show := 20
 	digits := len(strconv.Itoa(len(m.Config.Actions)))
 
+	rows := []string{}
 	for i, action := range m.Config.Actions {
 		if i < from && len(m.Config.Actions)-i > show {
 			continue
 		}
 		if i-from >= show {
-			s += fmt.Sprintf("... %d more actions", len(m.Config.Actions)-i)
+			rows = append(rows, fmt.Sprintf("... %d more actions", len(m.Config.Actions)-i))
 			break
 		}
 
@@ -243,11 +254,35 @@ func (m *startModel) View() string {
 		}
 
 		num := paddingRight(fmt.Sprintf("#%d", i+1), digits+1)
-		s += fmt.Sprintf("%s %s%s\n", style.Render(num), cursor, style.Render(action.String()))
+		rows = append(rows, fmt.Sprintf("%s %s%s", style.Render(num), cursor, style.Render(action.String())))
 	}
 
+	return actionsHeaderStyle.Render("Actions") + "\n" + strings.Join(rows, "\n")
+}
+
+func (m *startModel) View() string {
+	s := ""
+
+	if m.Err != nil {
+		s += m.errorView()
+		s += "\n\n" + m.pauseBeforeQuitView()
+		return s
+	}
+
+	if m.Config == nil {
+		s += m.loadingConfigView()
+		return s
+	}
+
+	if m.Browser == nil || m.Page == nil {
+		s += m.launchingBrowserView()
+		return s
+	}
+
+	s += m.actionsView()
+
 	if m.PausingBeforeQuit {
-		s += "\n" + lipgloss.NewStyle().Bold(true).Render("Press enter to quit")
+		s += "\n\n" + lipgloss.NewStyle().Bold(true).Render("Press enter to quit")
 	}
 
 	return s
