@@ -142,3 +142,44 @@ func Test_parseSleepAction(t *testing.T) {
 		})
 	}
 }
+
+func Test_parsePauseAction(t *testing.T) {
+	type args struct {
+		m map[string]interface{}
+	}
+	tests := []struct {
+		args    args
+		want    *pauseAction
+		wantErr bool
+	}{
+		{
+			args{
+				map[string]interface{}{
+					"pause": nil,
+				},
+			},
+			&pauseAction{},
+			false,
+		},
+		{
+			args{
+				map[string]interface{}{
+					"pause": struct{}{},
+				},
+			},
+			&pauseAction{},
+			false,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			got, err := parsePauseAction(tt.args.m)
+			if tt.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
