@@ -44,7 +44,7 @@ func Test_truncateString(t *testing.T) {
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
 			got := truncateString(tt.args.s, tt.args.l)
-			assert.Equal(t, got, tt.want)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -82,7 +82,7 @@ func Test_max(t *testing.T) {
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
 			got := max(tt.args.x, tt.args.y)
-			assert.Equal(t, got, tt.want)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -120,7 +120,7 @@ func Test_paddingRight(t *testing.T) {
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
 			got := paddingRight(tt.args.s, tt.args.l)
-			assert.Equal(t, got, tt.want)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
