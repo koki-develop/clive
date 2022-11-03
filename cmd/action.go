@@ -95,14 +95,10 @@ func parseTypeAction(m map[string]interface{}) (*typeAction, error) {
 }
 
 func parseKeyAction(m map[string]interface{}) (*keyAction, error) {
-	if _, ok := m["count"]; !ok {
-		m["count"] = 1
+	action := keyAction{
+		Count: 1,
+		Speed: 10,
 	}
-	if _, ok := m["speed"]; !ok {
-		m["speed"] = 10
-	}
-
-	var action keyAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
 	}
@@ -129,14 +125,10 @@ func parsePauseAction(m map[string]interface{}) (*pauseAction, error) {
 }
 
 func parseCtrlAction(m map[string]interface{}) (*ctrlAction, error) {
-	if _, ok := m["count"]; !ok {
-		m["count"] = 1
+	action := ctrlAction{
+		Count: 1,
+		Speed: 10,
 	}
-	if _, ok := m["speed"]; !ok {
-		m["speed"] = 10
-	}
-
-	var action ctrlAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
 	}
