@@ -12,6 +12,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
+	"github.com/go-rod/rod/lib/proto"
 	"github.com/spf13/cobra"
 )
 
@@ -93,14 +94,25 @@ func (m *startModel) launchBrowser() tea.Msg {
 		return errMsg{err}
 	}
 
-	page := browser.
-		MustPage(fmt.Sprintf("http://localhost:%d", m.port)).
-		MustWaitIdle()
-	if m.config.Settings.FontFamily != nil {
-		_ = page.MustEval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily))
+	page, err := browser.Page(proto.TargetCreateTarget{URL: fmt.Sprintf("http://localhost:%d", m.port)})
+	if err != nil {
+		return errMsg{err}
 	}
-	_ = page.MustEval(fmt.Sprintf("() => term.options.fontSize = %d", m.config.Settings.FontSize))
-	_ = page.MustEval("term.fit")
+	if err := page.WaitIdle(time.Minute); err != nil {
+		return errMsg{err}
+	}
+
+	if m.config.Settings.FontFamily != nil {
+		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily)); err != nil {
+			return errMsg{err}
+		}
+	}
+	if _, err = page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", m.config.Settings.FontSize)); err != nil {
+		return errMsg{err}
+	}
+	if _, err = page.Eval("term.fit"); err != nil {
+		return errMsg{err}
+	}
 
 	return browserLaunchedMsg{browser, page}
 }
