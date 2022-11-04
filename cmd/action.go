@@ -72,27 +72,31 @@ func parseAction(settings *settings, v interface{}) (action, error) {
 			return &pauseAction{}, nil
 		}
 	case map[string]interface{}:
-		if _, ok := v["pause"]; ok {
-			return parsePauseAction(settings, v)
-		}
 		if _, ok := v["type"]; ok {
 			return parseTypeAction(settings, v)
 		}
 		if _, ok := v["key"]; ok {
 			return parseKeyAction(settings, v)
 		}
-		if _, ok := v["sleep"]; ok {
-			return parseSleepAction(settings, v)
-		}
 		if _, ok := v["ctrl"]; ok {
 			return parseCtrlAction(settings, v)
 		}
+		if _, ok := v["sleep"]; ok {
+			return parseSleepAction(settings, v)
+		}
+		if _, ok := v["pause"]; ok {
+			return parsePauseAction(settings, v)
+		}
 	}
 
-	return nil, fmt.Errorf("invalid action: %#v", v)
+	return nil, newInvalidActionError(v)
 }
 
 func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction, error) {
+	if !validateKeys(m, typeActionValidKeys) {
+		return nil, newInvalidActionError(m)
+	}
+
 	action := typeAction{
 		Count: 1,
 		Speed: settings.DefaultSpeed,
@@ -105,6 +109,10 @@ func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction,
 }
 
 func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, error) {
+	if !validateKeys(m, keyActionValidKeys) {
+		return nil, newInvalidActionError(m)
+	}
+
 	action := keyAction{
 		Count: 1,
 		Speed: settings.DefaultSpeed,
@@ -117,6 +125,10 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 }
 
 func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepAction, error) {
+	if !validateKeys(m, sleepActionValidKeys) {
+		return nil, newInvalidActionError(m)
+	}
+
 	var action sleepAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
@@ -126,6 +138,10 @@ func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepActio
 }
 
 func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseAction, error) {
+	if !validateKeys(m, pauseActionValidKeys) {
+		return nil, newInvalidActionError(m)
+	}
+
 	var action pauseAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
@@ -135,6 +151,10 @@ func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseActio
 }
 
 func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction, error) {
+	if !validateKeys(m, ctrlActionValidKeys) {
+		return nil, newInvalidActionError(m)
+	}
+
 	action := ctrlAction{
 		Count: 1,
 		Speed: settings.DefaultSpeed,
@@ -144,4 +164,13 @@ func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction,
 	}
 
 	return &action, nil
+}
+
+func validateKeys(m map[string]interface{}, validKeys []string) bool {
+	for k := range m {
+		if !contains(validKeys, k) {
+			return false
+		}
+	}
+	return true
 }
