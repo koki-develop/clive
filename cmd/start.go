@@ -116,72 +116,94 @@ func (m *startModel) runAction() tea.Msg {
 
 	switch action := action.(type) {
 	case *pauseAction:
-		return pauseActionMsg{}
+		return m.runPauseAction(action)
 	case *typeAction:
-		for _, c := range action.Type {
-			k, ok := keymap[c]
-			if ok {
-				if err := m.Page.Keyboard.Type(k); err != nil {
-					return errMsg{err}
-				}
-			} else {
-				txt, err := m.Page.Element("textarea")
-				if err != nil {
-					return errMsg{err}
-				}
-				if err := txt.Input(string(c)); err != nil {
-					return errMsg{err}
-				}
-				if err := m.Page.WaitIdle(time.Minute); err != nil {
-					return errMsg{err}
-				}
-			}
-			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
-			if m.PausingBeforeQuit {
-				return nil
-			}
-		}
+		return m.runTypeAction(action)
 	case *keyAction:
-		k, ok := specialkeymap[strings.ToLower(action.Key)]
-		for i := 0; i < action.Count; i++ {
-			if ok {
-				if err := m.Page.Keyboard.Type(k); err != nil {
-					return errMsg{err}
-				}
+		return m.runKeyAction(action)
+	case *sleepAction:
+		return m.runSleepAction(action)
+	case *ctrlAction:
+		return m.runCtrlAction(action)
+	default:
+		return errMsg{fmt.Errorf("unknown action: %#v", action)}
+	}
+}
+
+func (m *startModel) runPauseAction(action *pauseAction) tea.Msg {
+	return pauseActionMsg{}
+}
+
+func (m *startModel) runTypeAction(action *typeAction) tea.Msg {
+	for _, c := range action.Type {
+		k, ok := keymap[c]
+		if ok {
+			if err := m.Page.Keyboard.Type(k); err != nil {
+				return errMsg{err}
 			}
-			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
-			if m.PausingBeforeQuit {
-				return nil
+		} else {
+			txt, err := m.Page.Element("textarea")
+			if err != nil {
+				return errMsg{err}
+			}
+			if err := txt.Input(string(c)); err != nil {
+				return errMsg{err}
+			}
+			if err := m.Page.WaitIdle(time.Minute); err != nil {
+				return errMsg{err}
 			}
 		}
-	case *sleepAction:
-		time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
+		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 		if m.PausingBeforeQuit {
 			return nil
 		}
-	case *ctrlAction:
-		for i := 0; i < action.Count; i++ {
-			if err := m.Page.Keyboard.Press(input.ControlLeft); err != nil {
+	}
+	return actionDoneMsg{}
+}
+
+func (m *startModel) runKeyAction(action *keyAction) tea.Msg {
+	k, ok := specialkeymap[strings.ToLower(action.Key)]
+	for i := 0; i < action.Count; i++ {
+		if ok {
+			if err := m.Page.Keyboard.Type(k); err != nil {
 				return errMsg{err}
-			}
-			for _, r := range action.Ctrl {
-				if k, ok := keymap[r]; ok {
-					if err := m.Page.Keyboard.Type(k); err != nil {
-						return errMsg{err}
-					}
-				}
-			}
-			if err := m.Page.Keyboard.Release(input.ControlLeft); err != nil {
-				return errMsg{err}
-			}
-			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
-			if m.PausingBeforeQuit {
-				return nil
 			}
 		}
+		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		if m.PausingBeforeQuit {
+			return nil
+		}
 	}
+	return actionDoneMsg{}
+}
+
+func (m *startModel) runSleepAction(action *sleepAction) tea.Msg {
+	time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
 	if m.PausingBeforeQuit {
 		return nil
+	}
+	return actionDoneMsg{}
+}
+
+func (m *startModel) runCtrlAction(action *ctrlAction) tea.Msg {
+	for i := 0; i < action.Count; i++ {
+		if err := m.Page.Keyboard.Press(input.ControlLeft); err != nil {
+			return errMsg{err}
+		}
+		for _, r := range action.Ctrl {
+			if k, ok := keymap[r]; ok {
+				if err := m.Page.Keyboard.Type(k); err != nil {
+					return errMsg{err}
+				}
+			}
+		}
+		if err := m.Page.Keyboard.Release(input.ControlLeft); err != nil {
+			return errMsg{err}
+		}
+		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		if m.PausingBeforeQuit {
+			return nil
+		}
 	}
 	return actionDoneMsg{}
 }
