@@ -1,0 +1,11 @@
+# documentation: https://github.com/koki-develop/clive#settings
+settings:
+    logincommand: ["bash", "--login"]
+    fontsize: 22
+    defaultspeed: 10
+
+# documentation: https://github.com/koki-develop/clive#actions
+actions:
+  - pause
+  - type: echo 'Welcome to cLive!'
+  - key: enter

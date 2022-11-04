@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	_ "embed"
 	"errors"
 	"fmt"
 	"os"
@@ -8,12 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const configInitTemplate = `actions:
-  - pause
-  - type: echo 'Welcome to clive!'
-  - key: enter
-  - pause
-`
+//go:embed clive.yml
+var configInitTemplate []byte
 
 var initCmd = &cobra.Command{
 	Use:   "init",
@@ -31,7 +28,7 @@ var initCmd = &cobra.Command{
 			}
 			defer f.Close()
 
-			if _, err := f.Write([]byte(configInitTemplate)); err != nil {
+			if _, err := f.Write(configInitTemplate); err != nil {
 				return err
 			}
 
