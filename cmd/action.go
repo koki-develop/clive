@@ -16,23 +16,33 @@ type typeAction struct {
 	Speed int    `mapstructure:"speed"`
 }
 
+var typeActionValidKeys = []string{"type", "count", "speed"}
+
 type keyAction struct {
 	Key   string `mapstructure:"key"`
 	Count int    `mapstructure:"count"`
 	Speed int    `mapstructure:"speed"`
 }
 
+var keyActionValidKeys = []string{"key", "count", "speed"}
+
 type sleepAction struct {
 	Sleep int `mapstructure:"sleep"`
 }
 
+var sleepActionValidKeys = []string{"sleep"}
+
 type pauseAction struct{}
+
+var pauseActionValidKeys = []string{"pause"}
 
 type ctrlAction struct {
 	Ctrl  string `mapstructure:"ctrl"`
 	Count int    `mapstructure:"count"`
 	Speed int    `mapstructure:"speed"`
 }
+
+var ctrlActionValidKeys = []string{"ctrl", "count", "speed"}
 
 func (action *typeAction) String() string {
 	return fmt.Sprintf("Type: %s", truncateString(action.Type, 37))
