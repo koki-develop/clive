@@ -51,3 +51,12 @@ func paddingRight(s string, l int) string {
 func ptr[T any](v T) *T {
 	return &v
 }
+
+func contains[T comparable](slice []T, r T) bool {
+	for _, l := range slice {
+		if l == r {
+			return true
+		}
+	}
+	return false
+}
