@@ -10,6 +10,14 @@ import (
 
 const defaultConfigPath = "./clive.yml"
 
+func newDefaultSettings() *settings {
+	return &settings{
+		LoginCommand: []string{"bash", "--login"},
+		FontSize:     22,
+		DefaultSpeed: 10,
+	}
+}
+
 type configYaml struct {
 	Settings map[string]interface{} `yaml:"settings"`
 	Actions  []interface{}          `yaml:"actions"`
@@ -48,18 +56,14 @@ func decodeConfig(f io.Reader) (*config, error) {
 		return nil, err
 	}
 
-	settings := settings{
-		LoginCommand: []string{"bash", "--login"},
-		FontSize:     22,
-		DefaultSpeed: 10,
-	}
-	if err := mapstructure.Decode(y.Settings, &settings); err != nil {
+	settings := newDefaultSettings()
+	if err := mapstructure.Decode(y.Settings, settings); err != nil {
 		return nil, err
 	}
 
 	var actions []action
 	for _, a := range y.Actions {
-		action, err := parseAction(&settings, a)
+		action, err := parseAction(settings, a)
 		if err != nil {
 			return nil, err
 		}
@@ -67,7 +71,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 	}
 
 	return &config{
-		Settings: &settings,
+		Settings: settings,
 		Actions:  actions,
 	}, nil
 }
