@@ -28,6 +28,7 @@ type startModel struct {
 	Browser            *rod.Browser
 	Page               *rod.Page
 	CurrentActionIndex int
+	Running            bool
 	Pausing            bool
 	PausingBeforeQuit  bool
 }
@@ -207,6 +208,7 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case browserLaunchedMsg:
 		m.Browser = msg.Browser
 		m.Page = msg.Page
+		m.Running = true
 		return m, tea.Batch(tea.EnterAltScreen, m.runAction)
 	case pauseActionMsg:
 		m.Pausing = true
@@ -223,6 +225,10 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	case errMsg:
 		m.Err = msg.Err
+		if !m.Running {
+			return m, tea.Quit
+		}
+
 		m.PausingBeforeQuit = true
 		return m, nil
 	}
@@ -291,6 +297,10 @@ func (m *startModel) View() string {
 	s := ""
 
 	if m.Err != nil {
+		if !m.Running {
+			return ""
+		}
+
 		s += m.errorView()
 		s += "\n\n" + m.pauseBeforeQuitView()
 		return s
