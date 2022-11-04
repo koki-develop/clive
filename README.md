@@ -20,6 +20,7 @@ Automates terminal operations and lets you view them live via a browser.
 
 - [Installation](#installation)
 - [Getting Started](#getting-started)
+- [Commands](#commands)
 - [Configuration](#configuration)
   - [Actions](#actions)
   - [Settings](#settings)
@@ -38,6 +39,10 @@ go install github.com/koki-develop/clive@latest
 ```
 
 ## Getting Started
+
+TODO
+
+## Commands
 
 TODO
 
