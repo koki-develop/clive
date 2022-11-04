@@ -73,27 +73,38 @@ func (m *startModel) launchBrowser() tea.Msg {
 		return errMsg{err}
 	}
 
-	page, err := browser.Page(proto.TargetCreateTarget{URL: fmt.Sprintf("http://localhost:%d", m.Ttyd.Port)})
+	return browserLaunchedMsg{browser}
+}
+
+func (m *startModel) openPage() tea.Msg {
+	page, err := m.Browser.Page(proto.TargetCreateTarget{URL: fmt.Sprintf("http://localhost:%d", m.Ttyd.Port)})
 	if err != nil {
 		return errMsg{err}
 	}
 	if err := page.WaitIdle(time.Minute); err != nil {
 		return errMsg{err}
 	}
+	if err := m.setupPage(page); err != nil {
+		return errMsg{err}
+	}
 
+	return pageOpenedMsg{page}
+}
+
+func (m *startModel) setupPage(page *rod.Page) error {
 	if m.Config.Settings.FontFamily != nil {
 		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.Config.Settings.FontFamily)); err != nil {
-			return errMsg{err}
+			return err
 		}
 	}
-	if _, err = page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", m.Config.Settings.FontSize)); err != nil {
-		return errMsg{err}
+	if _, err := page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", m.Config.Settings.FontSize)); err != nil {
+		return err
 	}
-	if _, err = page.Eval("term.fit"); err != nil {
-		return errMsg{err}
+	if _, err := page.Eval("term.fit"); err != nil {
+		return err
 	}
 
-	return browserLaunchedMsg{browser, page}
+	return nil
 }
 
 func (m *startModel) runAction() tea.Msg {
@@ -207,6 +218,8 @@ func (m *startModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, m.launchBrowser
 	case browserLaunchedMsg:
 		m.Browser = msg.Browser
+		return m, m.openPage
+	case pageOpenedMsg:
 		m.Page = msg.Page
 		m.Running = true
 		return m, tea.Batch(tea.EnterAltScreen, m.runAction)

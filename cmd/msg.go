@@ -14,7 +14,10 @@ type ttydStartedMsg struct {
 
 type browserLaunchedMsg struct {
 	Browser *rod.Browser
-	Page    *rod.Page
+}
+
+type pageOpenedMsg struct {
+	Page *rod.Page
 }
 
 type actionDoneMsg struct{}
