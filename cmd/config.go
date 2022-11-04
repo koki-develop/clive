@@ -14,7 +14,9 @@ func newDefaultSettings() *settings {
 	return &settings{
 		LoginCommand: []string{"bash", "--login"},
 		FontSize:     22,
+		FontFamily:   nil,
 		DefaultSpeed: 10,
+		BrowserBin:   nil,
 	}
 }
 
@@ -33,6 +35,7 @@ type settings struct {
 	FontSize     int      `mapstructure:"fontSize"`
 	FontFamily   *string  `mapstructure:"fontFamily"`
 	DefaultSpeed int      `mapstructure:"defaultSpeed"`
+	BrowserBin   *string  `mapstructure:"browserBin"`
 }
 
 func loadConfig(p string) (*config, error) {

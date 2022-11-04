@@ -68,7 +68,7 @@ func (m *startModel) startTtyd() tea.Msg {
 }
 
 func (m *startModel) launchBrowser() tea.Msg {
-	browser, err := launchBrowser()
+	browser, err := launchBrowser(m.Config)
 	if err != nil {
 		return errMsg{err}
 	}

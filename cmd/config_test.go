@@ -30,7 +30,9 @@ actions:
 				Settings: &settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
+					FontFamily:   nil,
 					DefaultSpeed: 10,
+					BrowserBin:   nil,
 				},
 				Actions: []action{
 					&pauseAction{},
@@ -45,6 +47,7 @@ settings:
   fontSize: 999
   fontFamily: FontName
   defaultSpeed: 999
+  browserBin: /path/to/browser
 actions:
   - pause
 `)},
@@ -54,6 +57,7 @@ actions:
 					FontSize:     999,
 					FontFamily:   ptr("FontName"),
 					DefaultSpeed: 999,
+					BrowserBin:   ptr("/path/to/browser"),
 				},
 				Actions: []action{
 					&pauseAction{},
@@ -87,7 +91,9 @@ actions:
 				Settings: &settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
+					FontFamily:   nil,
 					DefaultSpeed: 10,
+					BrowserBin:   nil,
 				},
 				Actions: []action{
 					&typeAction{Type: "Hello", Count: 1, Speed: 10},

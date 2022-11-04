@@ -5,8 +5,11 @@ import (
 	"github.com/go-rod/rod/lib/launcher"
 )
 
-func launchBrowser() (*rod.Browser, error) {
+func launchBrowser(cfg *config) (*rod.Browser, error) {
 	path, _ := launcher.LookPath()
+	if cfg.Settings.BrowserBin != nil {
+		path = *cfg.Settings.BrowserBin
+	}
 
 	u, err := launcher.New().
 		Leakless(true).
