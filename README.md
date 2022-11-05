@@ -47,7 +47,7 @@ See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more 
 cLive can be installed with `go install`.
 
 ```sh
-go install github.com/koki-develop/clive@latest
+$ go install github.com/koki-develop/clive@latest
 ```
 
 Or download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
