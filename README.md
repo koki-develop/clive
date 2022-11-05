@@ -18,6 +18,7 @@ Automates terminal operations and lets you view them live via a browser.
 
 # cLive
 
+- [Prerequisite](#prerequisite)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Commands](#commands)
@@ -26,17 +27,29 @@ Automates terminal operations and lets you view them live via a browser.
   - [Settings](#settings)
 - [License](#license)
 
-## Installation
+## Prerequisite
 
-TODO
+cLive requires [ttyd](https://tsl0922.github.io/ttyd/) to be installed.  
+For example, if you use homebrew, you can install it with `brew install ttyd`.
 
 ```sh
-brew install ttyd
+$ brew install ttyd
 ```
+
+See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more information.
+
+## Installation
+
+> **NOTE**
+> There are prerequisites for using cLive. See [`Prerequisite`](#prerequisite) for details.
+
+cLive can be installed with `go install`.
 
 ```sh
 go install github.com/koki-develop/clive@latest
 ```
+
+Or download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
 
 ## Getting Started
 
