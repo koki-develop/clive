@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/mitchellh/mapstructure"
+	"github.com/pkg/errors"
 )
 
 type action interface {
@@ -121,9 +122,10 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
 	}
+	action.Key = strings.ToLower(action.Key)
 
-	if _, ok := specialkeymap[strings.ToLower(action.Key)]; !ok {
-		return nil, newInvalidActionError(m)
+	if _, ok := specialkeymap[action.Key]; !ok {
+		return nil, errors.WithMessagef(newInvalidActionError(m), "valid keys: %s", keysOf(specialkeymap))
 	}
 
 	return &action, nil

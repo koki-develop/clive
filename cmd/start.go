@@ -162,7 +162,7 @@ func (m *startModel) runTypeAction(action *typeAction) tea.Msg {
 }
 
 func (m *startModel) runKeyAction(action *keyAction) tea.Msg {
-	k, ok := specialkeymap[strings.ToLower(action.Key)]
+	k, ok := specialkeymap[action.Key]
 	for i := 0; i < action.Count; i++ {
 		if ok {
 			if err := m.Page.Keyboard.Type(k); err != nil {
