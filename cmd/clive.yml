@@ -1,8 +1,8 @@
 # documentation: https://github.com/koki-develop/clive#settings
 settings:
-    logincommand: ["bash", "--login"]
-    fontsize: 22
-    defaultspeed: 10
+  loginCommand: ["bash", "--login"]
+  fontSize: 22
+  defaultSpeed: 10
 
 # documentation: https://github.com/koki-develop/clive#actions
 actions:
