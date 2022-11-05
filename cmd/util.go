@@ -5,6 +5,8 @@ import (
 	"sort"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/charmbracelet/lipgloss"
 )
 
 func truncateString(s string, l int) string {
@@ -19,7 +21,7 @@ func truncateString(s string, l int) string {
 		trunc = true
 	}
 	if trunc {
-		s += "..."
+		s += lipgloss.NewStyle().Faint(true).Render("...")
 	}
 
 	return s
