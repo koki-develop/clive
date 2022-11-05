@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"io"
 	"os"
 
@@ -63,7 +62,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 		return nil, err
 	}
 	if err := validateFields(y.Settings, validSettingsFields); err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("invalid settings"))
+		return nil, errors.WithMessage(err, "invalid settings")
 	}
 
 	settings := newDefaultSettings()
