@@ -364,8 +364,8 @@ func (m *startModel) View() string {
 
 var startCmd = &cobra.Command{
 	Use:   "start",
-	Short: "Start clive actions",
-	Long:  "Start clive actions.",
+	Short: "Start cLive actions",
+	Long:  "Start cLive actions.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		m := newStartModel()
 		defer func() {
