@@ -32,7 +32,7 @@ var initCmd = &cobra.Command{
 				return err
 			}
 
-			fmt.Printf("created %s\n", configFilename)
+			fmt.Printf("Created %s\n", configFilename)
 			return nil
 		}
 
