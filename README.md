@@ -25,6 +25,7 @@ Automates terminal operations and lets you view them live via a browser.
 - [Configuration](#configuration)
   - [Actions](#actions)
   - [Settings](#settings)
+- [Examples](#examples)
 - [License](#license)
 
 ## Prerequisite
