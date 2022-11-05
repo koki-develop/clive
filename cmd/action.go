@@ -18,7 +18,7 @@ type typeAction struct {
 	Speed int    `mapstructure:"speed"`
 }
 
-var typeActionValidKeys = []string{"type", "count", "speed"}
+var typeActionValidFields = []string{"type", "count", "speed"}
 
 type keyAction struct {
 	Key   string `mapstructure:"key"`
@@ -26,17 +26,17 @@ type keyAction struct {
 	Speed int    `mapstructure:"speed"`
 }
 
-var keyActionValidKeys = []string{"key", "count", "speed"}
+var keyActionValidFields = []string{"key", "count", "speed"}
 
 type sleepAction struct {
 	Sleep int `mapstructure:"sleep"`
 }
 
-var sleepActionValidKeys = []string{"sleep"}
+var sleepActionValidFields = []string{"sleep"}
 
 type pauseAction struct{}
 
-var pauseActionValidKeys = []string{"pause"}
+var pauseActionValidFields = []string{"pause"}
 
 type ctrlAction struct {
 	Ctrl  string `mapstructure:"ctrl"`
@@ -44,7 +44,7 @@ type ctrlAction struct {
 	Speed int    `mapstructure:"speed"`
 }
 
-var ctrlActionValidKeys = []string{"ctrl", "count", "speed"}
+var ctrlActionValidFields = []string{"ctrl", "count", "speed"}
 
 func (action *typeAction) String() string {
 	return fmt.Sprintf("Type: %s", truncateString(action.Type, 37))
@@ -95,8 +95,8 @@ func parseAction(settings *settings, v interface{}) (action, error) {
 }
 
 func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction, error) {
-	if !validateKeys(m, typeActionValidKeys) {
-		return nil, newInvalidActionError(m)
+	if err := validateFields(m, typeActionValidFields); err != nil {
+		return nil, err
 	}
 
 	action := typeAction{
@@ -111,8 +111,8 @@ func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction,
 }
 
 func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, error) {
-	if !validateKeys(m, keyActionValidKeys) {
-		return nil, newInvalidActionError(m)
+	if err := validateFields(m, keyActionValidFields); err != nil {
+		return nil, err
 	}
 
 	action := keyAction{
@@ -125,15 +125,15 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 	action.Key = strings.ToLower(action.Key)
 
 	if _, ok := specialkeymap[action.Key]; !ok {
-		return nil, errors.WithMessagef(newInvalidActionError(m), "valid keys: %s", keysOf(specialkeymap))
+		return nil, errors.WithMessagef(newInvalidActionError(m), "valid keys are %s", keysOf(specialkeymap))
 	}
 
 	return &action, nil
 }
 
 func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepAction, error) {
-	if !validateKeys(m, sleepActionValidKeys) {
-		return nil, newInvalidActionError(m)
+	if err := validateFields(m, sleepActionValidFields); err != nil {
+		return nil, err
 	}
 
 	var action sleepAction
@@ -145,8 +145,8 @@ func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepActio
 }
 
 func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseAction, error) {
-	if !validateKeys(m, pauseActionValidKeys) {
-		return nil, newInvalidActionError(m)
+	if err := validateFields(m, pauseActionValidFields); err != nil {
+		return nil, err
 	}
 
 	var action pauseAction
@@ -158,8 +158,8 @@ func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseActio
 }
 
 func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction, error) {
-	if !validateKeys(m, ctrlActionValidKeys) {
-		return nil, newInvalidActionError(m)
+	if err := validateFields(m, ctrlActionValidFields); err != nil {
+		return nil, err
 	}
 
 	action := ctrlAction{
@@ -173,11 +173,17 @@ func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction,
 	return &action, nil
 }
 
-func validateKeys(m map[string]interface{}, validKeys []string) bool {
+func validateFields(m map[string]interface{}, validFields []string) error {
+	invalidFields := []string{}
 	for k := range m {
-		if !contains(validKeys, k) {
-			return false
+		if !contains(validFields, k) {
+			invalidFields = append(invalidFields, k)
 		}
 	}
-	return true
+
+	if len(invalidFields) > 0 {
+		return errors.WithMessagef(newInvalidActionError(m), "unknown fields %s", invalidFields)
+	}
+
+	return nil
 }
