@@ -57,7 +57,7 @@ cLive は `go install` でインストールすることができます。
 $ go install github.com/koki-develop/clive@latest
 ```
 
-もしくは [Releases ページ](https://github.com/koki-develop/clive/releases/latest) からバイナリをダウンロードしてください。
+もしくは [Releases ページ](https://github.com/koki-develop/clive/releases/latest)からバイナリをダウンロードしてください。
 
 ## 基本的な使い方
 
