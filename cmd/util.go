@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"sort"
 	"strings"
 	"unicode/utf8"
 )
@@ -59,4 +60,13 @@ func contains[T comparable](slice []T, r T) bool {
 		}
 	}
 	return false
+}
+
+func keysOf[T any](m map[string]T) []string {
+	keys := []string{}
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
 }

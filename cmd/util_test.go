@@ -147,3 +147,23 @@ func Test_contains(t *testing.T) {
 		})
 	}
 }
+
+func Test_keysOf(t *testing.T) {
+	type args struct {
+		m map[string]interface{}
+	}
+	tests := []struct {
+		args args
+		want []string
+	}{
+		{args{map[string]interface{}{}}, []string{}},
+		{args{map[string]interface{}{"a": 1}}, []string{"a"}},
+		{args{map[string]interface{}{"a": 1, "b": 2, "c": 3}}, []string{"a", "b", "c"}},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			got := keysOf(tt.args.m)
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
