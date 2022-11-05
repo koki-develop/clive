@@ -135,27 +135,29 @@ func (m *startModel) runPauseAction(action *pauseAction) tea.Msg {
 }
 
 func (m *startModel) runTypeAction(action *typeAction) tea.Msg {
-	for _, c := range action.Type {
-		k, ok := keymap[c]
-		if ok {
-			if err := m.Page.Keyboard.Type(k); err != nil {
-				return errMsg{err}
+	for i := 0; i < action.Count; i++ {
+		for _, c := range action.Type {
+			k, ok := keymap[c]
+			if ok {
+				if err := m.Page.Keyboard.Type(k); err != nil {
+					return errMsg{err}
+				}
+			} else {
+				txt, err := m.Page.Element("textarea")
+				if err != nil {
+					return errMsg{err}
+				}
+				if err := txt.Input(string(c)); err != nil {
+					return errMsg{err}
+				}
+				if err := m.Page.WaitIdle(time.Minute); err != nil {
+					return errMsg{err}
+				}
 			}
-		} else {
-			txt, err := m.Page.Element("textarea")
-			if err != nil {
-				return errMsg{err}
+			time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+			if m.PausingBeforeQuit {
+				return nil
 			}
-			if err := txt.Input(string(c)); err != nil {
-				return errMsg{err}
-			}
-			if err := m.Page.WaitIdle(time.Minute); err != nil {
-				return errMsg{err}
-			}
-		}
-		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
-		if m.PausingBeforeQuit {
-			return nil
 		}
 	}
 	return actionDoneMsg{}
