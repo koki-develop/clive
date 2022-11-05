@@ -304,7 +304,7 @@ settings:
 
 ## Examples
 
-For more examples see the [`examples/`](https://github.com/koki-develop/clive/tree/main/examples) directory.
+For more examples see the [`examples/`](./examples/) directory.
 
 ## License
 
