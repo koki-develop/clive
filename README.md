@@ -155,7 +155,7 @@ Type characters.
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | **Yes** | N/A | Characters to type. |
-| `count` | No | `1` | Count to repeat action. |
+| `count` | No | `1` | Number of times the action is repeated. |
 | `speed` | No | `10` | Interval between key typing (milliseconds). |
 
 ```yaml
@@ -183,7 +183,7 @@ Available keys:
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
 | `key` | **Yes** | N/A | Special key to type. |
-| `count` | No | `1` | Count to repeat action. |
+| `count` | No | `1` | Number of times the action is repeated. |
 | `speed` | No | `10` | Interval between key typing (milliseconds). |
 
 ```yaml
@@ -201,7 +201,7 @@ Enter the ctrl key with other characters.
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
 | `ctrl` | **Yes** | N/A | Characters to enter with the ctrl key. |
-| `count` | No | `1` | Count to repeat action. |
+| `count` | No | `1` | Number of times the action is repeated. |
 | `speed` | No | `10` | Interval between key typing (milliseconds). |
 
 ```yaml
