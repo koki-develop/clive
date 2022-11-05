@@ -44,43 +44,222 @@ TODO
 
 ## Commands
 
-TODO
+### `clive init`
+
+Create a config file.
+
+```sh
+$ clive init
+```
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-c`, `--config` | `./clive.yml` | Config file name. |
+
+### `clive start`
+
+Load config file and start cLive actions.  
+See [`Configuration`](#configuration) for config file.
+
+```sh
+$ clive start
+```
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-c`, `--config` | `./clive.yml` | Config file name. |
+
+### `clive completion`
+
+Generate the autocompletion script for clive for the specified shell.  
+See each sub-command's help for details on how to use the generated script.
+
+```sh
+$ clive completion <shell>
+
+# e.g.
+$ clive completion bash
+$ clive completion bash --help
+```
+
+Available shells:
+
+- bash
+- fish
+- powershell
+- zsh
 
 ## Configuration
 
+Config file consists of `actions` and `settings`.
+
+- [`actions`](#actions) - Actions to run.
+- [`settings`](#settings) - Basic settings (font size, default speed, etc.)
+
 ### Actions
 
-#### Type
+Actions to run.  
+Available actions:
 
-TODO
+- [`type`](#type) - Type characters.
+- [`key`](#key) - Enter special keys.
+- [`ctrl`](#ctrl) - Enter the ctrl key with other keys.
+- [`sleep`](#sleep) - Sleep for a specific number of milliseconds.
+- [`pause`](#pause) - Pause actions.
 
-#### Keys
+#### `type`
 
-TODO
+Type characters.
 
-#### Ctrl
+| Field | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | **Yes** | N/A | Characters to type. |
+| `count` | No | `1` | Count to repeat action. |
+| `speed` | No | `10` | Interval between key typing (milliseconds). |
 
-TODO
+```yaml
+# e.g.
+actions:
+  - type: echo 'Hello World'
+    count: 10
+    speed: 100
+```
 
-#### Sleep
+#### `key`
 
-TODO
+Enter special keys.  
+Available keys:
 
-#### Pause
+- `esc`
+- `backspace`
+- `tab`
+- `enter`
+- `left`
+- `up`
+- `right`
+- `down`
+
+| Field | Required | Default | Description |
+| --- | --- | --- | --- |
+| `key` | **Yes** | N/A | Special key to type. |
+| `count` | No | `1` | Count to repeat action. |
+| `speed` | No | `10` | Interval between key typing (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - key: enter
+    count: 10
+    speed: 100
+```
+
+#### `ctrl`
+
+Enter the ctrl key with other characters.
+
+| Field | Required | Default | Description |
+| --- | --- | --- | --- |
+| `ctrl` | **Yes** | N/A | Characters to enter with the ctrl key. |
+| `count` | No | `1` | Count to repeat action. |
+| `speed` | No | `10` | Interval between key typing (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - ctrl: c
+    count: 10
+    speed: 100
+```
+
+#### `sleep`
+
+Sleep for a specific number of milliseconds.
+
+| Field | Required | Default | Description |
+| --- | --- | --- | --- |
+| `sleep` | **Yes** | N/A | Time to sleep (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - sleep: 3000 # Sleep for 3 seconds.
+```
+
+#### `pause`
+
+Pause actions.  
+Press enter to continue.
+
+```yaml
+# e.g.
+actions:
+  - pause
+```
 
 ### Settings
 
-#### Login Command
+Basic settings.  
+Available settings:
 
-TODO
+- [`loginCommand`](#logincommand) - Login command and args.
+- [`fontSize`](#fontsize) - Font size.
+- [`fontFamily`](#fontfamily) - Font family
+- [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
+- [`browserBin`](#browserbin) - Path to executable browser binary.
 
-#### Font Size
+#### `loginCommand`
 
-TODO
+Set command and args for logging into the shell.  
+Default: `["bash", "--login"]`.
 
-#### Font Family
+```yaml
+# e.g.
+settings:
+  loginCommand: ["zsh", "--login"]
+```
 
-TODO
+#### `fontSize`
+
+Set font size.  
+Default: `22`
+
+```yaml
+# e.g.
+settings:
+  fontSize: 36
+```
+
+#### `fontFamily`
+
+Set font family.  
+
+```yaml
+# e.g.
+settings:
+  fontFamily: monospace
+```
+
+#### `defaultSpeed`
+
+Set default interval between key typing (milliseconds).  
+Default: `10`
+
+```yaml
+# e.g.
+settings:
+  defaultSpeed: 100
+```
+
+#### `browserBin`
+
+Set path to executable binary for the browser used.  
+See [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
+
+```yaml
+# e.g.
+settings:
+  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
+```
 
 ## License
 
