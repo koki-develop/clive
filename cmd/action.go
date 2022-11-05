@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/pkg/errors"
@@ -123,7 +124,12 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 	}
 
 	if _, ok := specialkeymap[action.Key]; !ok {
-		return nil, errors.WithMessagef(fmt.Errorf("valid keys %s", keysOf(specialkeymap)), newInvalidActionError(m).Error())
+		validKeys := []string{}
+		for k := range specialkeymap {
+			validKeys = append(validKeys, k)
+		}
+		sort.Strings(validKeys)
+		return nil, errors.WithMessagef(fmt.Errorf("valid keys %s", validKeys), newInvalidActionError(m).Error())
 	}
 
 	return &action, nil

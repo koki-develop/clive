@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"bytes"
-	"sort"
 	"strings"
 	"unicode/utf8"
 
@@ -51,24 +50,15 @@ func paddingRight(s string, l int) string {
 	return buf.String()
 }
 
-func ptr[T any](v T) *T {
+func ptrString(v string) *string {
 	return &v
 }
 
-func contains[T comparable](slice []T, r T) bool {
+func contains(slice []string, r string) bool {
 	for _, l := range slice {
 		if l == r {
 			return true
 		}
 	}
 	return false
-}
-
-func keysOf[T any](m map[string]T) []string {
-	keys := []string{}
-	for k := range m {
-		keys = append(keys, k)
-	}
-	sort.Strings(keys)
-	return keys
 }

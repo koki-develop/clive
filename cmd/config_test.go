@@ -55,9 +55,9 @@ actions:
 				Settings: &settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
-					FontFamily:   ptr("FontName"),
+					FontFamily:   ptrString("FontName"),
 					DefaultSpeed: 999,
-					BrowserBin:   ptr("/path/to/browser"),
+					BrowserBin:   ptrString("/path/to/browser"),
 				},
 				Actions: []action{
 					&pauseAction{},
