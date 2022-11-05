@@ -26,19 +26,19 @@ func Test_truncateString(t *testing.T) {
 		},
 		{
 			args{"aaaaaaaaaaa", 10},
-			"aaaaaaaaaa...",
+			"aaaaaaaaaa\x1b[2m...\x1b[0m",
 		},
 		{
 			args{"aaaaaaaaa\naaaaa", 10},
-			"aaaaaaaaa...",
+			"aaaaaaaaa\x1b[2m...\x1b[0m",
 		},
 		{
 			args{"aaaaaaaaaa\naaaaa", 10},
-			"aaaaaaaaaa...",
+			"aaaaaaaaaa\x1b[2m...\x1b[0m",
 		},
 		{
 			args{"aaaaaaaaaaa\naaaaa", 10},
-			"aaaaaaaaaa...",
+			"aaaaaaaaaa\x1b[2m...\x1b[0m",
 		},
 	}
 	for i, tt := range tests {
