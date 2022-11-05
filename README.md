@@ -85,6 +85,12 @@ $ clive start
 
 ## Commands
 
+Available commands:
+
+- [`init`](#clive-init) - Create config file.
+- [`start`](#clive-start) - Load config file and start cLive.
+- [`completion`](#clive-completion) - Generate the autocompletion script for the specified shell.
+
 ### `clive init`
 
 Create a config file.
@@ -99,7 +105,7 @@ $ clive init
 
 ### `clive start`
 
-Load config file and start cLive actions.  
+Load config file and start cLive.  
 See [`Configuration`](#configuration) for config file.
 
 ```sh
@@ -135,7 +141,7 @@ Available shells:
 Config file consists of `actions` and `settings`.
 
 - [`actions`](#actions) - Actions to run.
-- [`settings`](#settings) - Basic settings (font size, default speed, etc.)
+- [`settings`](#settings) - Basic settings (font size, default speed, etc.).
 
 ### Actions
 
