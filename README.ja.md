@@ -146,7 +146,7 @@ $ clive completion bash --help
 設定ファイルは `actions` と `settings` で構成されます。
 Config file consists of `actions` and `settings`.
 
-- [`actions`](#actions) - 実行するアクション。
+- [`actions`](#actions) - 実行するアクションのリスト。
 - [`settings`](#settings) - 基本的な設定 (フォントサイズ、デフォルトの速度など) 。
 
 ### `actions`
