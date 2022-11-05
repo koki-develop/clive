@@ -1,10 +1,12 @@
 package cmd
 
 import (
+	"fmt"
 	"io"
 	"os"
 
 	"github.com/mitchellh/mapstructure"
+	"github.com/pkg/errors"
 	"gopkg.in/yaml.v3"
 )
 
@@ -38,6 +40,8 @@ type settings struct {
 	BrowserBin   *string  `mapstructure:"browserBin"`
 }
 
+var validSettingsFields = []string{"loginCommand", "fontSize", "fontFamily", "defaultSpeed", "browserBin"}
+
 func loadConfig(p string) (*config, error) {
 	f, err := os.Open(p)
 	if err != nil {
@@ -57,6 +61,9 @@ func decodeConfig(f io.Reader) (*config, error) {
 	var y configYaml
 	if err := yaml.NewDecoder(f).Decode(&y); err != nil {
 		return nil, err
+	}
+	if err := validateFields(y.Settings, validSettingsFields); err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("invalid settings"))
 	}
 
 	settings := newDefaultSettings()

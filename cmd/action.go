@@ -95,7 +95,7 @@ func parseAction(settings *settings, v interface{}) (action, error) {
 
 func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction, error) {
 	if err := validateFields(m, typeActionValidFields); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, newInvalidActionError(m).Error())
 	}
 
 	action := typeAction{
@@ -111,7 +111,7 @@ func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction,
 
 func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, error) {
 	if err := validateFields(m, keyActionValidFields); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, newInvalidActionError(m).Error())
 	}
 
 	action := keyAction{
@@ -123,7 +123,7 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 	}
 
 	if _, ok := specialkeymap[action.Key]; !ok {
-		return nil, errors.WithMessagef(newInvalidActionError(m), "valid keys are %s", keysOf(specialkeymap))
+		return nil, errors.WithMessagef(fmt.Errorf("valid keys %s", keysOf(specialkeymap)), newInvalidActionError(m).Error())
 	}
 
 	return &action, nil
@@ -131,7 +131,7 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 
 func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepAction, error) {
 	if err := validateFields(m, sleepActionValidFields); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, newInvalidActionError(m).Error())
 	}
 
 	var action sleepAction
@@ -144,7 +144,7 @@ func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepActio
 
 func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseAction, error) {
 	if err := validateFields(m, pauseActionValidFields); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, newInvalidActionError(m).Error())
 	}
 
 	var action pauseAction
@@ -157,7 +157,7 @@ func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseActio
 
 func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction, error) {
 	if err := validateFields(m, ctrlActionValidFields); err != nil {
-		return nil, err
+		return nil, errors.Wrap(err, newInvalidActionError(m).Error())
 	}
 
 	action := ctrlAction{
@@ -180,7 +180,7 @@ func validateFields(m map[string]interface{}, validFields []string) error {
 	}
 
 	if len(invalidFields) > 0 {
-		return errors.WithMessagef(newInvalidActionError(m), "unknown fields %s", invalidFields)
+		return fmt.Errorf("unknown fields %s", invalidFields)
 	}
 
 	return nil
