@@ -40,7 +40,7 @@ See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more 
 
 ## Installation
 
-> **NOTE**
+> **Note**
 > There are prerequisites for using cLive. See [`Prerequisite`](#prerequisite) for details.
 
 cLive can be installed with `go install`.
