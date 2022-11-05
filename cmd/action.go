@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -119,6 +120,10 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 	}
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
+	}
+
+	if _, ok := specialkeymap[strings.ToLower(action.Key)]; !ok {
+		return nil, newInvalidActionError(m)
 	}
 
 	return &action, nil
