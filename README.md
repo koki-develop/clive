@@ -301,6 +301,10 @@ settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
 ```
 
+## Examples
+
+For more examples see the [`examples/`](https://github.com/koki-develop/clive/tree/main/examples) directory.
+
 ## License
 
 [MIT License](./LICENSE)
