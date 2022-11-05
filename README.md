@@ -16,15 +16,23 @@ Automates terminal operations and lets you view them live via a browser.
 
 ![](./examples/demo/demo.gif)
 
+<p align="center">
+English | <a href="./README.ja.md">日本語</a>
+</p>
+
+
 # cLive
 
 - [Prerequisite](#prerequisite)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Commands](#commands)
+  - [`init`](#clive-init)
+  - [`start`](#clive-start)
+  - [`completion`](#clive-completion)
 - [Configuration](#configuration)
-  - [Actions](#actions)
-  - [Settings](#settings)
+  - [`actions`](#actions)
+  - [`settings`](#settings)
 - [Examples](#examples)
 - [License](#license)
 
@@ -143,7 +151,7 @@ Config file consists of `actions` and `settings`.
 - [`actions`](#actions) - Actions to run.
 - [`settings`](#settings) - Basic settings (font size, default speed, etc.).
 
-### Actions
+### `actions`
 
 Actions to run.  
 Available actions:
@@ -213,7 +221,7 @@ Enter the ctrl key with other characters.
 ```yaml
 # e.g.
 actions:
-  - ctrl: c
+  - ctrl: c # Ctrl+c
     count: 10
     speed: 100
 ```
@@ -243,7 +251,7 @@ actions:
   - pause
 ```
 
-### Settings
+### `settings`
 
 Basic settings.  
 Available settings:
