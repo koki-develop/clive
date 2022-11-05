@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: goreleaser/goreleaser-action@v3
         with:
           args: release --rm-dist
         env:
