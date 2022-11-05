@@ -40,7 +40,34 @@ go install github.com/koki-develop/clive@latest
 
 ## Getting Started
 
-TODO
+First, run `clive init`.
+
+```sh
+$ clive init
+Created ./clive.yml
+```
+
+A file named `clive.yml` will then be created with the following contents:
+
+```yaml
+# documentation: https://github.com/koki-develop/clive#settings
+settings:
+  loginCommand: ["bash", "--login"]
+  fontSize: 22
+  defaultSpeed: 10
+
+# documentation: https://github.com/koki-develop/clive#actions
+actions:
+  - pause
+  - type: echo 'Welcome to cLive!'
+  - key: enter
+```
+
+Finally, run `clive start` to launch the browser and start cLive.
+
+```sh
+$ clive start
+```
 
 ## Commands
 
