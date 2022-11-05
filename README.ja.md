@@ -44,7 +44,7 @@ cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) がインストール
 $ brew install ttyd
 ```
 
-それ以外のインストール方法については [ttyd のドキュメント](https://github.com/tsl0922/ttyd#installation) を参照してください。
+それ以外のインストール方法については [ttyd のドキュメント](https://github.com/tsl0922/ttyd#installation)を参照してください。
 
 ## インストール
 
