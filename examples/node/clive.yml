@@ -1,3 +1,8 @@
+settings:
+  loginCommand: ["bash", "--login"]
+  fontSize: 22
+  defaultSpeed: 10
+
 actions:
   - pause
 
