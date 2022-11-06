@@ -1,0 +1,48 @@
+settings:
+  loginCommand: ["bash", "--login"]
+  fontSize: 22
+  defaultSpeed: 10
+
+actions:
+  - pause
+
+  - type: vim main.go
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: i
+  - type: |-
+      package main
+
+      import "fmt"
+
+      func main() {
+      	fmt.Println("Hello cLive!")
+      }
+  - sleep: 1000
+
+  - key: esc
+  - type: :wq
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: go fmt ./main.go
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: clear
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: cat ./main.go
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: go run ./main.go
+  - sleep: 500
+  - key: enter
