@@ -1,0 +1,29 @@
+settings:
+  loginCommand: ["bash", "--login"]
+  fontSize: 22
+  defaultSpeed: 10
+
+actions:
+  - pause
+
+  - type: ls
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: ls | gum filter
+  - sleep: 500
+  - key: enter
+  - sleep: 1000
+
+  - type: o
+  - sleep: 500
+  - key: down
+    count: 3
+    speed: 300
+  - sleep: 500
+  - key: up
+    count: 2
+    speed: 300
+  - sleep: 1000
+  - key: enter
