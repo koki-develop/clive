@@ -110,6 +110,9 @@ var keymap = map[rune]input.Key{
 	'/': input.Slash,
 	'?': shift(input.Slash),
 
+	// last row
+	' ': input.Space,
+
 	// other
 	'\n': input.Enter,
 	'\t': input.Tab,
@@ -124,4 +127,5 @@ var specialkeymap = map[string]input.Key{
 	"up":        input.ArrowUp,
 	"right":     input.ArrowRight,
 	"down":      input.ArrowDown,
+	"space":     input.Space,
 }

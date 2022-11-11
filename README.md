@@ -193,6 +193,7 @@ Available keys:
 - `up`
 - `right`
 - `down`
+- `space`
 
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
