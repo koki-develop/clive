@@ -375,7 +375,7 @@ var startCmd = &cobra.Command{
 		}()
 
 		p := tea.NewProgram(m)
-		if err := p.Start(); err != nil {
+		if _, err := p.Run(); err != nil {
 			return err
 		}
 
