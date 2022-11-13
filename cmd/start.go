@@ -12,6 +12,7 @@ import (
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
 	"github.com/go-rod/rod/lib/proto"
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
@@ -117,29 +118,29 @@ func (m *startModel) runAction() tea.Msg {
 	action := m.Config.Actions[m.CurrentActionIndex]
 
 	switch action := action.(type) {
-	case *pauseAction:
+	case *config.PauseAction:
 		return m.runPauseAction(action)
-	case *typeAction:
+	case *config.TypeAction:
 		return m.runTypeAction(action)
-	case *keyAction:
+	case *config.KeyAction:
 		return m.runKeyAction(action)
-	case *sleepAction:
+	case *config.SleepAction:
 		return m.runSleepAction(action)
-	case *ctrlAction:
+	case *config.CtrlAction:
 		return m.runCtrlAction(action)
 	default:
 		return errMsg{fmt.Errorf("unknown action: %#v", action)}
 	}
 }
 
-func (m *startModel) runPauseAction(action *pauseAction) tea.Msg {
+func (m *startModel) runPauseAction(action *config.PauseAction) tea.Msg {
 	return pauseActionMsg{}
 }
 
-func (m *startModel) runTypeAction(action *typeAction) tea.Msg {
+func (m *startModel) runTypeAction(action *config.TypeAction) tea.Msg {
 	for i := 0; i < action.Count; i++ {
 		for _, c := range action.Type {
-			k, ok := keymap[c]
+			k, ok := config.KeyMap[c]
 			if ok {
 				if err := m.Page.Keyboard.Type(k); err != nil {
 					return errMsg{err}
@@ -165,8 +166,8 @@ func (m *startModel) runTypeAction(action *typeAction) tea.Msg {
 	return actionDoneMsg{}
 }
 
-func (m *startModel) runKeyAction(action *keyAction) tea.Msg {
-	k, ok := specialkeymap[action.Key]
+func (m *startModel) runKeyAction(action *config.KeyAction) tea.Msg {
+	k, ok := config.SpecialKeyMap[action.Key]
 	for i := 0; i < action.Count; i++ {
 		if ok {
 			if err := m.Page.Keyboard.Type(k); err != nil {
@@ -181,7 +182,7 @@ func (m *startModel) runKeyAction(action *keyAction) tea.Msg {
 	return actionDoneMsg{}
 }
 
-func (m *startModel) runSleepAction(action *sleepAction) tea.Msg {
+func (m *startModel) runSleepAction(action *config.SleepAction) tea.Msg {
 	time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
 	if m.PausingBeforeQuit {
 		return nil
@@ -189,13 +190,13 @@ func (m *startModel) runSleepAction(action *sleepAction) tea.Msg {
 	return actionDoneMsg{}
 }
 
-func (m *startModel) runCtrlAction(action *ctrlAction) tea.Msg {
+func (m *startModel) runCtrlAction(action *config.CtrlAction) tea.Msg {
 	for i := 0; i < action.Count; i++ {
 		if err := m.Page.Keyboard.Press(input.ControlLeft); err != nil {
 			return errMsg{err}
 		}
 		for _, r := range action.Ctrl {
-			if k, ok := keymap[r]; ok {
+			if k, ok := config.KeyMap[r]; ok {
 				if err := m.Page.Keyboard.Type(k); err != nil {
 					return errMsg{err}
 				}

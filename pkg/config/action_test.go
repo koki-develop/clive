@@ -1,31 +1,30 @@
-package cmd
+package config
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/koki-develop/clive/pkg/config"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_parseTypeAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *typeAction
+		want    *TypeAction
 		wantErr bool
 	}{
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type": "Hello World",
 				},
 			},
-			&typeAction{
+			&TypeAction{
 				Type:  "Hello World",
 				Count: 1,
 				Speed: 10,
@@ -34,14 +33,14 @@ func Test_parseTypeAction(t *testing.T) {
 		},
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type":  "Hello World",
 					"count": 10,
 					"speed": 500,
 				},
 			},
-			&typeAction{
+			&TypeAction{
 				Type:  "Hello World",
 				Count: 10,
 				Speed: 500,
@@ -64,22 +63,22 @@ func Test_parseTypeAction(t *testing.T) {
 
 func Test_parseKeyAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *keyAction
+		want    *KeyAction
 		wantErr bool
 	}{
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key": "enter",
 				},
 			},
-			&keyAction{
+			&KeyAction{
 				Key:   "enter",
 				Count: 1,
 				Speed: 10,
@@ -88,14 +87,14 @@ func Test_parseKeyAction(t *testing.T) {
 		},
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key":   "enter",
 					"count": 10,
 					"speed": 500,
 				},
 			},
-			&keyAction{
+			&KeyAction{
 				Key:   "enter",
 				Count: 10,
 				Speed: 500,
@@ -118,12 +117,12 @@ func Test_parseKeyAction(t *testing.T) {
 
 func Test_parseSleepAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *sleepAction
+		want    *SleepAction
 		wantErr bool
 	}{
 		{
@@ -133,7 +132,7 @@ func Test_parseSleepAction(t *testing.T) {
 					"sleep": 3000,
 				},
 			},
-			&sleepAction{
+			&SleepAction{
 				Sleep: 3000,
 			},
 			false,
@@ -154,12 +153,12 @@ func Test_parseSleepAction(t *testing.T) {
 
 func Test_parsePauseAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *pauseAction
+		want    *PauseAction
 		wantErr bool
 	}{
 		{
@@ -169,7 +168,7 @@ func Test_parsePauseAction(t *testing.T) {
 					"pause": nil,
 				},
 			},
-			&pauseAction{},
+			&PauseAction{},
 			false,
 		},
 		{
@@ -179,7 +178,7 @@ func Test_parsePauseAction(t *testing.T) {
 					"pause": struct{}{},
 				},
 			},
-			&pauseAction{},
+			&PauseAction{},
 			false,
 		},
 	}
@@ -198,22 +197,22 @@ func Test_parsePauseAction(t *testing.T) {
 
 func Test_parseCtrlAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *ctrlAction
+		want    *CtrlAction
 		wantErr bool
 	}{
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl": "c",
 				},
 			},
-			&ctrlAction{
+			&CtrlAction{
 				Ctrl:  "c",
 				Count: 1,
 				Speed: 10,
@@ -222,14 +221,14 @@ func Test_parseCtrlAction(t *testing.T) {
 		},
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl":  "c",
 					"count": 10,
 					"speed": 500,
 				},
 			},
-			&ctrlAction{
+			&CtrlAction{
 				Ctrl:  "c",
 				Count: 10,
 				Speed: 500,
