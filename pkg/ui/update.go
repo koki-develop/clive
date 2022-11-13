@@ -137,9 +137,52 @@ func (m *Model) runPause(action *config.PauseAction) tea.Msg {
 }
 
 func (m *Model) runType(action *config.TypeAction) tea.Msg {
-	// TODO: implement
-	time.Sleep(200 * time.Millisecond)
+	for i := 0; i < action.Count; i++ {
+		if err := m.runTypeOnce(action); err != nil {
+			return errMsg{err}
+		}
+		if m.quitting {
+			return nil
+		}
+	}
+
 	return runMsg{}
+}
+
+func (m *Model) runTypeOnce(action *config.TypeAction) error {
+	for _, c := range action.Type {
+		if err := m.typeChar(c); err != nil {
+			return err
+		}
+		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		if m.quitting {
+			return nil
+		}
+	}
+
+	return nil
+}
+
+func (m *Model) typeChar(c rune) error {
+	k, ok := config.KeyMap[c]
+	if ok {
+		if err := m.page.Keyboard.Type(k); err != nil {
+			return err
+		}
+	} else {
+		area, err := m.page.Element("textarea")
+		if err != nil {
+			return err
+		}
+		if err := area.Input(string(c)); err != nil {
+			return err
+		}
+		if err := m.page.WaitIdle(time.Minute); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (m *Model) runKey(action *config.KeyAction) tea.Msg {
@@ -147,7 +190,6 @@ func (m *Model) runKey(action *config.KeyAction) tea.Msg {
 		if err := m.runKeyOnce(action); err != nil {
 			return errMsg{err}
 		}
-		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 		if m.quitting {
 			return nil
 		}
@@ -166,6 +208,7 @@ func (m *Model) runKeyOnce(action *config.KeyAction) error {
 		return err
 	}
 
+	time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 	return nil
 }
 
@@ -182,7 +225,6 @@ func (m *Model) runCtrl(action *config.CtrlAction) tea.Msg {
 		if err := m.runCtrlOnce(action); err != nil {
 			return errMsg{err}
 		}
-		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 		if m.quitting {
 			return nil
 		}
@@ -208,5 +250,6 @@ func (m *Model) runCtrlOnce(action *config.CtrlAction) error {
 		return err
 	}
 
+	time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 	return nil
 }
