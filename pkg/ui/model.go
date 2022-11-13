@@ -44,3 +44,7 @@ func (m *Model) Close() error {
 
 	return nil
 }
+
+func (m *Model) running() bool {
+	return m.page != nil
+}
