@@ -12,4 +12,5 @@ var (
 	styleActive       = lipgloss.NewStyle().Bold(true)
 	styleActionHeader = lipgloss.NewStyle().Bold(true).Padding(0, 1).Background(lipgloss.Color(colorMain))
 	styleErrorHeader  = lipgloss.NewStyle().Bold(true).Padding(0, 1).Background(lipgloss.Color(colorErr))
+	styleDone         = lipgloss.NewStyle().Faint(true)
 )

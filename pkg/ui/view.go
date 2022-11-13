@@ -2,7 +2,6 @@ package ui
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
@@ -49,7 +48,7 @@ func (m *Model) openingView() string {
 func (m *Model) actionsView() string {
 	from := util.Max(0, m.currentActionIndex-3)
 	show := 20
-	digits := len(strconv.Itoa(len(m.config.Actions)))
+	digits := util.Digits(len(m.config.Actions))
 
 	rows := []string{}
 	for i, action := range m.config.Actions {
@@ -61,13 +60,13 @@ func (m *Model) actionsView() string {
 			break
 		}
 
-		style := lipgloss.NewStyle()
+		var style lipgloss.Style
 
 		cursor := "  "
 		if m.currentActionIndex > i {
-			style = style.Faint(true)
+			style = styleDone
 		} else if m.currentActionIndex == i {
-			style = style.Bold(true)
+			style = styleActive
 			if !m.quitting {
 				if m.pausing {
 					cursor = "> "
