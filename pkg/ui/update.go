@@ -3,12 +3,14 @@ package ui
 import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/go-rod/rod"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
 )
 
 type loadConfigMsg struct{ config *config.Config }
 type startTtydMsg struct{ ttyd *ttyd.Ttyd }
+type openMsg struct{ page *rod.Page }
 type errMsg struct{ err error }
 
 // TODO: implement
@@ -33,6 +35,9 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, m.startTtyd
 	case startTtydMsg:
 		m.ttyd = msg.ttyd
+		return m, m.open
+	case openMsg:
+		m.page = msg.page
 	}
 
 	return m, nil
@@ -58,4 +63,13 @@ func (m *Model) startTtyd() tea.Msg {
 	}
 
 	return startTtydMsg{ttyd}
+}
+
+func (m *Model) open() tea.Msg {
+	page, err := openPage(m.config, m.ttyd.Port)
+	if err != nil {
+		return errMsg{err}
+	}
+
+	return openMsg{page}
 }

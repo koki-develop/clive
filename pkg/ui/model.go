@@ -3,16 +3,19 @@ package ui
 import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/go-rod/rod"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
 )
 
 type Model struct {
+	err error
+
 	configFile string
 	config     *config.Config
-	ttyd       *ttyd.Ttyd
 
-	err error
+	ttyd *ttyd.Ttyd
+	page *rod.Page
 
 	spinner spinner.Model
 }
