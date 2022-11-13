@@ -17,7 +17,9 @@ type Model struct {
 	ttyd *ttyd.Ttyd
 	page *rod.Page
 
-	quitting bool
+	currentActionIndex int
+	pausing            bool
+	quitting           bool
 
 	spinner spinner.Model
 }
@@ -26,8 +28,9 @@ var _ tea.Model = (*Model)(nil)
 
 func New(configFile string) *Model {
 	return &Model{
-		configFile: configFile,
-		spinner:    spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styleSpinner)),
+		configFile:         configFile,
+		currentActionIndex: 0,
+		spinner:            spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styleSpinner)),
 	}
 }
 

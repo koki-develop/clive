@@ -1,6 +1,9 @@
 package ui
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
@@ -11,6 +14,8 @@ import (
 type loadConfigMsg struct{ config *config.Config }
 type startTtydMsg struct{ ttyd *ttyd.Ttyd }
 type openMsg struct{ page *rod.Page }
+type runMsg struct{}
+type pauseMsg struct{}
 type quitMsg struct{}
 type errMsg struct{ err error }
 
@@ -27,7 +32,16 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.Type {
 		case tea.KeyCtrlC:
-			return m, tea.Quit
+			return m, m.quit
+		case tea.KeyEnter:
+			if m.quitting {
+				return m, tea.Quit
+			}
+			if m.pausing {
+				m.pausing = false
+				m.currentActionIndex++
+				return m, m.run
+			}
 		}
 
 	// events
@@ -39,6 +53,13 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, m.open
 	case openMsg:
 		m.page = msg.page
+		return m, tea.Batch(tea.EnterAltScreen, m.run)
+	case runMsg:
+		m.currentActionIndex++
+		return m, m.run
+	case pauseMsg:
+		m.pausing = true
+		return m, nil
 	case quitMsg:
 		m.quitting = true
 		return m, nil
@@ -86,4 +107,50 @@ func (m *Model) open() tea.Msg {
 
 func (m *Model) quit() tea.Msg {
 	return quitMsg{}
+}
+
+func (m *Model) run() tea.Msg {
+	if m.currentActionIndex == len(m.config.Actions) {
+		return m.quit()
+	}
+
+	action := m.config.Actions[m.currentActionIndex]
+	switch action := action.(type) {
+	case *config.PauseAction:
+		return m.runPause(action)
+	case *config.TypeAction:
+		return m.runType(action)
+	case *config.KeyAction:
+		return m.runKey(action)
+	case *config.SleepAction:
+		return m.runSleep(action)
+	case *config.CtrlAction:
+		return m.runCtrl(action)
+	default:
+		return errMsg{fmt.Errorf("unknown action: %#v", action)}
+	}
+}
+
+func (m *Model) runPause(action *config.PauseAction) tea.Msg {
+	return pauseMsg{}
+}
+
+func (m *Model) runType(action *config.TypeAction) tea.Msg {
+	time.Sleep(200 * time.Millisecond)
+	return runMsg{}
+}
+
+func (m *Model) runKey(action *config.KeyAction) tea.Msg {
+	time.Sleep(200 * time.Millisecond)
+	return runMsg{}
+}
+
+func (m *Model) runSleep(action *config.SleepAction) tea.Msg {
+	time.Sleep(200 * time.Millisecond)
+	return runMsg{}
+}
+
+func (m *Model) runCtrl(action *config.CtrlAction) tea.Msg {
+	time.Sleep(200 * time.Millisecond)
+	return runMsg{}
 }
