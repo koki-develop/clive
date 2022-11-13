@@ -15,7 +15,7 @@ func Test_parseTypeAction(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *typeAction
+		want    *config.TypeAction
 		wantErr bool
 	}{
 		{
@@ -25,7 +25,7 @@ func Test_parseTypeAction(t *testing.T) {
 					"type": "Hello World",
 				},
 			},
-			&typeAction{
+			&config.TypeAction{
 				Type:  "Hello World",
 				Count: 1,
 				Speed: 10,
@@ -41,7 +41,7 @@ func Test_parseTypeAction(t *testing.T) {
 					"speed": 500,
 				},
 			},
-			&typeAction{
+			&config.TypeAction{
 				Type:  "Hello World",
 				Count: 10,
 				Speed: 500,
@@ -69,7 +69,7 @@ func Test_parseKeyAction(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *keyAction
+		want    *config.KeyAction
 		wantErr bool
 	}{
 		{
@@ -79,7 +79,7 @@ func Test_parseKeyAction(t *testing.T) {
 					"key": "enter",
 				},
 			},
-			&keyAction{
+			&config.KeyAction{
 				Key:   "enter",
 				Count: 1,
 				Speed: 10,
@@ -95,7 +95,7 @@ func Test_parseKeyAction(t *testing.T) {
 					"speed": 500,
 				},
 			},
-			&keyAction{
+			&config.KeyAction{
 				Key:   "enter",
 				Count: 10,
 				Speed: 500,
@@ -123,7 +123,7 @@ func Test_parseSleepAction(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *sleepAction
+		want    *config.SleepAction
 		wantErr bool
 	}{
 		{
@@ -133,7 +133,7 @@ func Test_parseSleepAction(t *testing.T) {
 					"sleep": 3000,
 				},
 			},
-			&sleepAction{
+			&config.SleepAction{
 				Sleep: 3000,
 			},
 			false,
@@ -159,7 +159,7 @@ func Test_parsePauseAction(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *pauseAction
+		want    *config.PauseAction
 		wantErr bool
 	}{
 		{
@@ -169,7 +169,7 @@ func Test_parsePauseAction(t *testing.T) {
 					"pause": nil,
 				},
 			},
-			&pauseAction{},
+			&config.PauseAction{},
 			false,
 		},
 		{
@@ -179,7 +179,7 @@ func Test_parsePauseAction(t *testing.T) {
 					"pause": struct{}{},
 				},
 			},
-			&pauseAction{},
+			&config.PauseAction{},
 			false,
 		},
 	}
@@ -203,7 +203,7 @@ func Test_parseCtrlAction(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *ctrlAction
+		want    *config.CtrlAction
 		wantErr bool
 	}{
 		{
@@ -213,7 +213,7 @@ func Test_parseCtrlAction(t *testing.T) {
 					"ctrl": "c",
 				},
 			},
-			&ctrlAction{
+			&config.CtrlAction{
 				Ctrl:  "c",
 				Count: 1,
 				Speed: 10,
@@ -229,7 +229,7 @@ func Test_parseCtrlAction(t *testing.T) {
 					"speed": 500,
 				},
 			},
-			&ctrlAction{
+			&config.CtrlAction{
 				Ctrl:  "c",
 				Count: 10,
 				Speed: 500,

@@ -17,7 +17,7 @@ type configYaml struct {
 
 type legacyConfig struct {
 	Settings *config.Settings
-	Actions  []action
+	Actions  []config.Action
 }
 
 func loadConfig(p string) (*legacyConfig, error) {
@@ -46,7 +46,7 @@ func decodeConfig(f io.Reader) (*legacyConfig, error) {
 		return nil, err
 	}
 
-	var actions []action
+	var actions []config.Action
 	for _, a := range y.Actions {
 		action, err := parseAction(settings, a)
 		if err != nil {

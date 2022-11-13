@@ -36,8 +36,8 @@ actions:
 					DefaultSpeed: 10,
 					BrowserBin:   nil,
 				},
-				Actions: []action{
-					&pauseAction{},
+				Actions: []config.Action{
+					&config.PauseAction{},
 				},
 			},
 			false,
@@ -61,8 +61,8 @@ actions:
 					DefaultSpeed: 999,
 					BrowserBin:   util.String("/path/to/browser"),
 				},
-				Actions: []action{
-					&pauseAction{},
+				Actions: []config.Action{
+					&config.PauseAction{},
 				},
 			},
 			false,
@@ -97,16 +97,16 @@ actions:
 					DefaultSpeed: 10,
 					BrowserBin:   nil,
 				},
-				Actions: []action{
-					&typeAction{Type: "Hello", Count: 1, Speed: 10},
-					&typeAction{Type: "Hello", Count: 10, Speed: 500},
-					&keyAction{Key: "enter", Count: 1, Speed: 10},
-					&keyAction{Key: "enter", Count: 10, Speed: 500},
-					&sleepAction{Sleep: 1000},
-					&pauseAction{},
-					&pauseAction{},
-					&ctrlAction{Ctrl: "c", Count: 1, Speed: 10},
-					&ctrlAction{Ctrl: "c", Count: 10, Speed: 500},
+				Actions: []config.Action{
+					&config.TypeAction{Type: "Hello", Count: 1, Speed: 10},
+					&config.TypeAction{Type: "Hello", Count: 10, Speed: 500},
+					&config.KeyAction{Key: "enter", Count: 1, Speed: 10},
+					&config.KeyAction{Key: "enter", Count: 10, Speed: 500},
+					&config.SleepAction{Sleep: 1000},
+					&config.PauseAction{},
+					&config.PauseAction{},
+					&config.CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
+					&config.CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
 				},
 			},
 			false,

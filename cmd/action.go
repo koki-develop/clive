@@ -10,70 +10,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-type action interface {
-	String() string
-}
-
-type typeAction struct {
-	Type  string `mapstructure:"type"`
-	Count int    `mapstructure:"count"`
-	Speed int    `mapstructure:"speed"`
-}
-
-var typeActionValidFields = []string{"type", "count", "speed"}
-
-type keyAction struct {
-	Key   string `mapstructure:"key"`
-	Count int    `mapstructure:"count"`
-	Speed int    `mapstructure:"speed"`
-}
-
-var keyActionValidFields = []string{"key", "count", "speed"}
-
-type sleepAction struct {
-	Sleep int `mapstructure:"sleep"`
-}
-
-var sleepActionValidFields = []string{"sleep"}
-
-type pauseAction struct{}
-
-var pauseActionValidFields = []string{"pause"}
-
-type ctrlAction struct {
-	Ctrl  string `mapstructure:"ctrl"`
-	Count int    `mapstructure:"count"`
-	Speed int    `mapstructure:"speed"`
-}
-
-var ctrlActionValidFields = []string{"ctrl", "count", "speed"}
-
-func (action *typeAction) String() string {
-	return fmt.Sprintf("Type: %s", util.TruncateString(action.Type, 37))
-}
-
-func (action *keyAction) String() string {
-	return fmt.Sprintf("Key: %s", action.Key)
-}
-
-func (action *sleepAction) String() string {
-	return fmt.Sprintf("Sleep: %dms", action.Sleep)
-}
-
-func (action *pauseAction) String() string {
-	return "Pause: Press enter to continue"
-}
-
-func (action *ctrlAction) String() string {
-	return fmt.Sprintf("Ctrl+%s", action.Ctrl)
-}
-
-func parseAction(settings *config.Settings, v interface{}) (action, error) {
+func parseAction(settings *config.Settings, v interface{}) (config.Action, error) {
 	switch v := v.(type) {
 	case string:
 		switch v {
 		case "pause":
-			return &pauseAction{}, nil
+			return &config.PauseAction{}, nil
 		}
 	case map[string]interface{}:
 		if _, ok := v["type"]; ok {
@@ -96,12 +38,12 @@ func parseAction(settings *config.Settings, v interface{}) (action, error) {
 	return nil, newInvalidActionError(v)
 }
 
-func parseTypeAction(settings *config.Settings, m map[string]interface{}) (*typeAction, error) {
-	if err := validateActionFields(m, typeActionValidFields); err != nil {
+func parseTypeAction(settings *config.Settings, m map[string]interface{}) (*config.TypeAction, error) {
+	if err := validateActionFields(m, config.TypeActionValidFields); err != nil {
 		return nil, err
 	}
 
-	action := typeAction{
+	action := config.TypeAction{
 		Count: 1,
 		Speed: settings.DefaultSpeed,
 	}
@@ -112,12 +54,12 @@ func parseTypeAction(settings *config.Settings, m map[string]interface{}) (*type
 	return &action, nil
 }
 
-func parseKeyAction(settings *config.Settings, m map[string]interface{}) (*keyAction, error) {
-	if err := validateActionFields(m, keyActionValidFields); err != nil {
+func parseKeyAction(settings *config.Settings, m map[string]interface{}) (*config.KeyAction, error) {
+	if err := validateActionFields(m, config.KeyActionValidFields); err != nil {
 		return nil, err
 	}
 
-	action := keyAction{
+	action := config.KeyAction{
 		Count: 1,
 		Speed: settings.DefaultSpeed,
 	}
@@ -137,12 +79,12 @@ func parseKeyAction(settings *config.Settings, m map[string]interface{}) (*keyAc
 	return &action, nil
 }
 
-func parseSleepAction(settings *config.Settings, m map[string]interface{}) (*sleepAction, error) {
-	if err := validateActionFields(m, sleepActionValidFields); err != nil {
+func parseSleepAction(settings *config.Settings, m map[string]interface{}) (*config.SleepAction, error) {
+	if err := validateActionFields(m, config.SleepActionValidFields); err != nil {
 		return nil, err
 	}
 
-	var action sleepAction
+	var action config.SleepAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
 	}
@@ -150,12 +92,12 @@ func parseSleepAction(settings *config.Settings, m map[string]interface{}) (*sle
 	return &action, nil
 }
 
-func parsePauseAction(settings *config.Settings, m map[string]interface{}) (*pauseAction, error) {
-	if err := validateActionFields(m, pauseActionValidFields); err != nil {
+func parsePauseAction(settings *config.Settings, m map[string]interface{}) (*config.PauseAction, error) {
+	if err := validateActionFields(m, config.PauseActionValidFields); err != nil {
 		return nil, err
 	}
 
-	var action pauseAction
+	var action config.PauseAction
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, err
 	}
@@ -163,12 +105,12 @@ func parsePauseAction(settings *config.Settings, m map[string]interface{}) (*pau
 	return &action, nil
 }
 
-func parseCtrlAction(settings *config.Settings, m map[string]interface{}) (*ctrlAction, error) {
-	if err := validateActionFields(m, ctrlActionValidFields); err != nil {
+func parseCtrlAction(settings *config.Settings, m map[string]interface{}) (*config.CtrlAction, error) {
+	if err := validateActionFields(m, config.CtrlActionValidFields); err != nil {
 		return nil, err
 	}
 
-	action := ctrlAction{
+	action := config.CtrlAction{
 		Count: 1,
 		Speed: settings.DefaultSpeed,
 	}
