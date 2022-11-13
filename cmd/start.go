@@ -26,7 +26,7 @@ var (
 type startModel struct {
 	Err                error
 	Spinner            spinner.Model
-	Config             *legacyConfig
+	Config             *config.Config
 	Ttyd               *ttyd.Ttyd
 	Browser            *rod.Browser
 	Page               *rod.Page
@@ -49,7 +49,7 @@ func newStartModel() *startModel {
 }
 
 func (m *startModel) loadConfig() tea.Msg {
-	cfg, err := loadConfig(configFilename)
+	cfg, err := config.Load(configFilename)
 	if err != nil {
 		return errMsg{err}
 	}

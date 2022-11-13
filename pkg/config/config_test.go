@@ -1,4 +1,4 @@
-package cmd
+package config
 
 import (
 	"fmt"
@@ -6,18 +6,17 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_decodeConfig(t *testing.T) {
+func Test_Decode(t *testing.T) {
 	type args struct {
-		f io.Reader
+		r io.Reader
 	}
 	tests := []struct {
 		args    args
-		want    *legacyConfig
+		want    *Config
 		wantErr bool
 	}{
 		/*
@@ -28,16 +27,16 @@ func Test_decodeConfig(t *testing.T) {
 actions:
   - pause
 `)},
-			&legacyConfig{
-				Settings: &config.Settings{
+			&Config{
+				Settings: &Settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
 					FontFamily:   nil,
 					DefaultSpeed: 10,
 					BrowserBin:   nil,
 				},
-				Actions: []config.Action{
-					&config.PauseAction{},
+				Actions: []Action{
+					&PauseAction{},
 				},
 			},
 			false,
@@ -53,16 +52,16 @@ settings:
 actions:
   - pause
 `)},
-			&legacyConfig{
-				Settings: &config.Settings{
+			&Config{
+				Settings: &Settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
 					FontFamily:   util.String("FontName"),
 					DefaultSpeed: 999,
 					BrowserBin:   util.String("/path/to/browser"),
 				},
-				Actions: []config.Action{
-					&config.PauseAction{},
+				Actions: []Action{
+					&PauseAction{},
 				},
 			},
 			false,
@@ -89,24 +88,24 @@ actions:
     count: 10
     speed: 500
 `)},
-			&legacyConfig{
-				Settings: &config.Settings{
+			&Config{
+				Settings: &Settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
 					FontFamily:   nil,
 					DefaultSpeed: 10,
 					BrowserBin:   nil,
 				},
-				Actions: []config.Action{
-					&config.TypeAction{Type: "Hello", Count: 1, Speed: 10},
-					&config.TypeAction{Type: "Hello", Count: 10, Speed: 500},
-					&config.KeyAction{Key: "enter", Count: 1, Speed: 10},
-					&config.KeyAction{Key: "enter", Count: 10, Speed: 500},
-					&config.SleepAction{Sleep: 1000},
-					&config.PauseAction{},
-					&config.PauseAction{},
-					&config.CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
-					&config.CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
+				Actions: []Action{
+					&TypeAction{Type: "Hello", Count: 1, Speed: 10},
+					&TypeAction{Type: "Hello", Count: 10, Speed: 500},
+					&KeyAction{Key: "enter", Count: 1, Speed: 10},
+					&KeyAction{Key: "enter", Count: 10, Speed: 500},
+					&SleepAction{Sleep: 1000},
+					&PauseAction{},
+					&PauseAction{},
+					&CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
+					&CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
 				},
 			},
 			false,
@@ -114,7 +113,7 @@ actions:
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := decodeConfig(tt.args.f)
+			got, err := Decode(tt.args.r)
 
 			if tt.wantErr {
 				assert.Error(t, err)

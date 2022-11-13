@@ -7,6 +7,7 @@ import (
 )
 
 var (
+	ErrInvalidConfig   = errors.New("invalid config")
 	ErrInvalidSettings = errors.New("invalid settings")
 )
 
