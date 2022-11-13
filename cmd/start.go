@@ -14,6 +14,7 @@ import (
 	"github.com/go-rod/rod/lib/proto"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
+	"github.com/koki-develop/clive/pkg/ui"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -370,20 +371,16 @@ var startCmd = &cobra.Command{
 	Short: "Start cLive actions",
 	Long:  "Start cLive actions.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		m := newStartModel()
-		defer func() {
-			if m.Ttyd != nil {
-				_ = m.Ttyd.Command.Process.Kill()
-			}
-		}()
+		m := ui.New()
+		defer m.Close()
 
 		p := tea.NewProgram(m)
 		if _, err := p.Run(); err != nil {
 			return err
 		}
 
-		if m.Err != nil {
-			return m.Err
+		if err := m.Err(); err != nil {
+			return err
 		}
 
 		return nil
