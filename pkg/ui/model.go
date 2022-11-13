@@ -1,15 +1,22 @@
 package ui
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	"github.com/charmbracelet/bubbles/spinner"
+	tea "github.com/charmbracelet/bubbletea"
+)
 
 type Model struct {
 	err error
+
+	spinner spinner.Model
 }
 
 var _ tea.Model = (*Model)(nil)
 
 func New() *Model {
-	return &Model{}
+	return &Model{
+		spinner: spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styleSpinner)),
+	}
 }
 
 func (m *Model) Err() error {
