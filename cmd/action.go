@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/mitchellh/mapstructure"
 	"github.com/pkg/errors"
@@ -67,7 +68,7 @@ func (action *ctrlAction) String() string {
 	return fmt.Sprintf("Ctrl+%s", action.Ctrl)
 }
 
-func parseAction(settings *settings, v interface{}) (action, error) {
+func parseAction(settings *config.Settings, v interface{}) (action, error) {
 	switch v := v.(type) {
 	case string:
 		switch v {
@@ -95,7 +96,7 @@ func parseAction(settings *settings, v interface{}) (action, error) {
 	return nil, newInvalidActionError(v)
 }
 
-func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction, error) {
+func parseTypeAction(settings *config.Settings, m map[string]interface{}) (*typeAction, error) {
 	if err := validateActionFields(m, typeActionValidFields); err != nil {
 		return nil, err
 	}
@@ -111,7 +112,7 @@ func parseTypeAction(settings *settings, m map[string]interface{}) (*typeAction,
 	return &action, nil
 }
 
-func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, error) {
+func parseKeyAction(settings *config.Settings, m map[string]interface{}) (*keyAction, error) {
 	if err := validateActionFields(m, keyActionValidFields); err != nil {
 		return nil, err
 	}
@@ -136,7 +137,7 @@ func parseKeyAction(settings *settings, m map[string]interface{}) (*keyAction, e
 	return &action, nil
 }
 
-func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepAction, error) {
+func parseSleepAction(settings *config.Settings, m map[string]interface{}) (*sleepAction, error) {
 	if err := validateActionFields(m, sleepActionValidFields); err != nil {
 		return nil, err
 	}
@@ -149,7 +150,7 @@ func parseSleepAction(settings *settings, m map[string]interface{}) (*sleepActio
 	return &action, nil
 }
 
-func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseAction, error) {
+func parsePauseAction(settings *config.Settings, m map[string]interface{}) (*pauseAction, error) {
 	if err := validateActionFields(m, pauseActionValidFields); err != nil {
 		return nil, err
 	}
@@ -162,7 +163,7 @@ func parsePauseAction(settings *settings, m map[string]interface{}) (*pauseActio
 	return &action, nil
 }
 
-func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction, error) {
+func parseCtrlAction(settings *config.Settings, m map[string]interface{}) (*ctrlAction, error) {
 	if err := validateActionFields(m, ctrlActionValidFields); err != nil {
 		return nil, err
 	}

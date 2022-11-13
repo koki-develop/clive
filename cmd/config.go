@@ -4,22 +4,11 @@ import (
 	"io"
 	"os"
 
-	"github.com/mitchellh/mapstructure"
-	"github.com/pkg/errors"
+	"github.com/koki-develop/clive/pkg/config"
 	"gopkg.in/yaml.v3"
 )
 
 const defaultConfigPath = "./clive.yml"
-
-func newDefaultSettings() *settings {
-	return &settings{
-		LoginCommand: []string{"bash", "--login"},
-		FontSize:     22,
-		FontFamily:   nil,
-		DefaultSpeed: 10,
-		BrowserBin:   nil,
-	}
-}
 
 type configYaml struct {
 	Settings map[string]interface{} `yaml:"settings"`
@@ -27,19 +16,9 @@ type configYaml struct {
 }
 
 type legacyConfig struct {
-	Settings *settings
+	Settings *config.Settings
 	Actions  []action
 }
-
-type settings struct {
-	LoginCommand []string `mapstructure:"loginCommand"`
-	FontSize     int      `mapstructure:"fontSize"`
-	FontFamily   *string  `mapstructure:"fontFamily"`
-	DefaultSpeed int      `mapstructure:"defaultSpeed"`
-	BrowserBin   *string  `mapstructure:"browserBin"`
-}
-
-var validSettingsFields = []string{"loginCommand", "fontSize", "fontFamily", "defaultSpeed", "browserBin"}
 
 func loadConfig(p string) (*legacyConfig, error) {
 	f, err := os.Open(p)
@@ -61,12 +40,9 @@ func decodeConfig(f io.Reader) (*legacyConfig, error) {
 	if err := yaml.NewDecoder(f).Decode(&y); err != nil {
 		return nil, err
 	}
-	if err := validateFields(y.Settings, validSettingsFields); err != nil {
-		return nil, errors.WithMessage(err, "invalid settings")
-	}
 
-	settings := newDefaultSettings()
-	if err := mapstructure.Decode(y.Settings, settings); err != nil {
+	settings, err := config.DecodeSettings(y.Settings)
+	if err != nil {
 		return nil, err
 	}
 

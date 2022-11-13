@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
@@ -28,7 +29,7 @@ actions:
   - pause
 `)},
 			&legacyConfig{
-				Settings: &settings{
+				Settings: &config.Settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
 					FontFamily:   nil,
@@ -53,7 +54,7 @@ actions:
   - pause
 `)},
 			&legacyConfig{
-				Settings: &settings{
+				Settings: &config.Settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
 					FontFamily:   util.String("FontName"),
@@ -89,7 +90,7 @@ actions:
     speed: 500
 `)},
 			&legacyConfig{
-				Settings: &settings{
+				Settings: &config.Settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
 					FontFamily:   nil,

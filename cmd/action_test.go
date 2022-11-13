@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_parseTypeAction(t *testing.T) {
 	type args struct {
-		settings *settings
+		settings *config.Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
@@ -19,7 +20,7 @@ func Test_parseTypeAction(t *testing.T) {
 	}{
 		{
 			args{
-				&settings{DefaultSpeed: 10},
+				&config.Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type": "Hello World",
 				},
@@ -33,7 +34,7 @@ func Test_parseTypeAction(t *testing.T) {
 		},
 		{
 			args{
-				&settings{DefaultSpeed: 10},
+				&config.Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type":  "Hello World",
 					"count": 10,
@@ -63,7 +64,7 @@ func Test_parseTypeAction(t *testing.T) {
 
 func Test_parseKeyAction(t *testing.T) {
 	type args struct {
-		settings *settings
+		settings *config.Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
@@ -73,7 +74,7 @@ func Test_parseKeyAction(t *testing.T) {
 	}{
 		{
 			args{
-				&settings{DefaultSpeed: 10},
+				&config.Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key": "enter",
 				},
@@ -87,7 +88,7 @@ func Test_parseKeyAction(t *testing.T) {
 		},
 		{
 			args{
-				&settings{DefaultSpeed: 10},
+				&config.Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key":   "enter",
 					"count": 10,
@@ -117,7 +118,7 @@ func Test_parseKeyAction(t *testing.T) {
 
 func Test_parseSleepAction(t *testing.T) {
 	type args struct {
-		settings *settings
+		settings *config.Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
@@ -153,7 +154,7 @@ func Test_parseSleepAction(t *testing.T) {
 
 func Test_parsePauseAction(t *testing.T) {
 	type args struct {
-		settings *settings
+		settings *config.Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
@@ -197,7 +198,7 @@ func Test_parsePauseAction(t *testing.T) {
 
 func Test_parseCtrlAction(t *testing.T) {
 	type args struct {
-		settings *settings
+		settings *config.Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
@@ -207,7 +208,7 @@ func Test_parseCtrlAction(t *testing.T) {
 	}{
 		{
 			args{
-				&settings{DefaultSpeed: 10},
+				&config.Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl": "c",
 				},
@@ -221,7 +222,7 @@ func Test_parseCtrlAction(t *testing.T) {
 		},
 		{
 			args{
-				&settings{DefaultSpeed: 10},
+				&config.Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl":  "c",
 					"count": 10,
