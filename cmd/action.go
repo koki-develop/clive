@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/koki-develop/clive/pkg/util"
 	"github.com/mitchellh/mapstructure"
 	"github.com/pkg/errors"
 )
@@ -47,7 +48,7 @@ type ctrlAction struct {
 var ctrlActionValidFields = []string{"ctrl", "count", "speed"}
 
 func (action *typeAction) String() string {
-	return fmt.Sprintf("Type: %s", truncateString(action.Type, 37))
+	return fmt.Sprintf("Type: %s", util.TruncateString(action.Type, 37))
 }
 
 func (action *keyAction) String() string {
@@ -180,7 +181,7 @@ func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction,
 func validateFields(m map[string]interface{}, validFields []string) error {
 	invalidFields := []string{}
 	for k := range m {
-		if !contains(validFields, k) {
+		if !util.Contains(validFields, k) {
 			invalidFields = append(invalidFields, k)
 		}
 	}

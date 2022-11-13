@@ -1,4 +1,4 @@
-package cmd
+package util
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func truncateString(s string, l int) string {
+func TruncateString(s string, l int) string {
 	rows := strings.Split(s, "\n")
 	trunc := false
 	if len(rows) > 1 {
@@ -26,14 +26,7 @@ func truncateString(s string, l int) string {
 	return s
 }
 
-func max(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
-}
-
-func paddingRight(s string, l int) string {
+func PaddingRight(s string, l int) string {
 	l -= len(s)
 	if l <= 0 {
 		return s
@@ -50,11 +43,11 @@ func paddingRight(s string, l int) string {
 	return buf.String()
 }
 
-func ptrString(v string) *string {
+func String(v string) *string {
 	return &v
 }
 
-func contains(slice []string, r string) bool {
+func Contains(slice []string, r string) bool {
 	for _, l := range slice {
 		if l == r {
 			return true
