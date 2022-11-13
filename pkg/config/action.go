@@ -96,14 +96,8 @@ func ParseAction(stgs *Settings, v interface{}) (Action, error) {
 }
 
 func parseTypeAction(stgs *Settings, m map[string]interface{}) (*TypeAction, error) {
-	invalidFields := []string{}
-	for k := range m {
-		if !util.Contains(TypeActionValidFields, k) {
-			invalidFields = append(invalidFields, k)
-		}
-	}
-	if len(invalidFields) > 0 {
-		return nil, errors.WithMessagef(NewErrInvalidAction(m), "unknown fields %s", invalidFields)
+	if err := validateActionFields(m, TypeActionValidFields); err != nil {
+		return nil, err
 	}
 
 	action := TypeAction{
@@ -118,14 +112,8 @@ func parseTypeAction(stgs *Settings, m map[string]interface{}) (*TypeAction, err
 }
 
 func parseKeyAction(settings *Settings, m map[string]interface{}) (*KeyAction, error) {
-	invalidFields := []string{}
-	for k := range m {
-		if !util.Contains(KeyActionValidFields, k) {
-			invalidFields = append(invalidFields, k)
-		}
-	}
-	if len(invalidFields) > 0 {
-		return nil, errors.WithMessagef(NewErrInvalidAction(m), "unknown fields %s", invalidFields)
+	if err := validateActionFields(m, KeyActionValidFields); err != nil {
+		return nil, err
 	}
 
 	action := KeyAction{
@@ -149,14 +137,8 @@ func parseKeyAction(settings *Settings, m map[string]interface{}) (*KeyAction, e
 }
 
 func parseSleepAction(settings *Settings, m map[string]interface{}) (*SleepAction, error) {
-	invalidFields := []string{}
-	for k := range m {
-		if !util.Contains(SleepActionValidFields, k) {
-			invalidFields = append(invalidFields, k)
-		}
-	}
-	if len(invalidFields) > 0 {
-		return nil, errors.WithMessagef(NewErrInvalidAction(m), "unknown fields %s", invalidFields)
+	if err := validateActionFields(m, SleepActionValidFields); err != nil {
+		return nil, err
 	}
 
 	var action SleepAction
@@ -168,14 +150,8 @@ func parseSleepAction(settings *Settings, m map[string]interface{}) (*SleepActio
 }
 
 func parsePauseAction(settings *Settings, m map[string]interface{}) (*PauseAction, error) {
-	invalidFields := []string{}
-	for k := range m {
-		if !util.Contains(PauseActionValidFields, k) {
-			invalidFields = append(invalidFields, k)
-		}
-	}
-	if len(invalidFields) > 0 {
-		return nil, errors.WithMessagef(NewErrInvalidAction(m), "unknown fields %s", invalidFields)
+	if err := validateActionFields(m, PauseActionValidFields); err != nil {
+		return nil, err
 	}
 
 	var action PauseAction
@@ -187,14 +163,8 @@ func parsePauseAction(settings *Settings, m map[string]interface{}) (*PauseActio
 }
 
 func parseCtrlAction(settings *Settings, m map[string]interface{}) (*CtrlAction, error) {
-	invalidFields := []string{}
-	for k := range m {
-		if !util.Contains(CtrlActionValidFields, k) {
-			invalidFields = append(invalidFields, k)
-		}
-	}
-	if len(invalidFields) > 0 {
-		return nil, errors.WithMessagef(NewErrInvalidAction(m), "unknown fields %s", invalidFields)
+	if err := validateActionFields(m, CtrlActionValidFields); err != nil {
+		return nil, err
 	}
 
 	action := CtrlAction{
@@ -206,4 +176,18 @@ func parseCtrlAction(settings *Settings, m map[string]interface{}) (*CtrlAction,
 	}
 
 	return &action, nil
+}
+
+func validateActionFields(m map[string]interface{}, valid []string) error {
+	invalidFields := []string{}
+	for k := range m {
+		if !util.Contains(valid, k) {
+			invalidFields = append(invalidFields, k)
+		}
+	}
+	if len(invalidFields) > 0 {
+		return errors.WithMessagef(NewErrInvalidAction(m), "unknown fields %s", invalidFields)
+	}
+
+	return nil
 }
