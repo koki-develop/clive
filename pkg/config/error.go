@@ -15,7 +15,7 @@ type ErrInvalidAction struct {
 }
 
 func NewErrInvalidAction(action interface{}) ErrInvalidAction {
-	return NewErrInvalidAction(action)
+	return ErrInvalidAction{action}
 }
 
 func (err ErrInvalidAction) Error() string {
