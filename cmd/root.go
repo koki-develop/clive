@@ -8,7 +8,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:     "clive",
-	Version: "v0.2.0",
+	Version: "v0.3.0",
 	Short:   "Automates terminal operations and lets you view them live via a browser",
 	Long:    "Automates terminal operations and lets you view them live via a browser.",
 }
