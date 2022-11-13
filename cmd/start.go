@@ -324,7 +324,7 @@ func (m *startModel) actionsView() string {
 			}
 		}
 
-		num := paddingRight(fmt.Sprintf("#%d", i+1), digits+1)
+		num := util.PaddingRight(fmt.Sprintf("#%d", i+1), digits+1)
 		rows = append(rows, fmt.Sprintf("%s %s%s", style.Render(num), cursor, style.Render(action.String())))
 	}
 
