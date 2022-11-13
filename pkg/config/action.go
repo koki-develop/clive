@@ -13,6 +13,14 @@ type Action interface {
 	String() string
 }
 
+var (
+	_ Action = (*TypeAction)(nil)
+	_ Action = (*KeyAction)(nil)
+	_ Action = (*SleepAction)(nil)
+	_ Action = (*PauseAction)(nil)
+	_ Action = (*CtrlAction)(nil)
+)
+
 type TypeAction struct {
 	Type  string `mapstructure:"type"`
 	Count int    `mapstructure:"count"`
