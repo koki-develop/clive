@@ -24,7 +24,7 @@ var (
 type startModel struct {
 	Err                error
 	Spinner            spinner.Model
-	Config             *config
+	Config             *legacyConfig
 	Ttyd               *ttyd
 	Browser            *rod.Browser
 	Page               *rod.Page

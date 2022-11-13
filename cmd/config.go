@@ -4,44 +4,23 @@ import (
 	"io"
 	"os"
 
-	"github.com/mitchellh/mapstructure"
-	"github.com/pkg/errors"
+	"github.com/koki-develop/clive/pkg/config"
 	"gopkg.in/yaml.v3"
 )
 
 const defaultConfigPath = "./clive.yml"
-
-func newDefaultSettings() *settings {
-	return &settings{
-		LoginCommand: []string{"bash", "--login"},
-		FontSize:     22,
-		FontFamily:   nil,
-		DefaultSpeed: 10,
-		BrowserBin:   nil,
-	}
-}
 
 type configYaml struct {
 	Settings map[string]interface{} `yaml:"settings"`
 	Actions  []interface{}          `yaml:"actions"`
 }
 
-type config struct {
-	Settings *settings
+type legacyConfig struct {
+	Settings *config.Settings
 	Actions  []action
 }
 
-type settings struct {
-	LoginCommand []string `mapstructure:"loginCommand"`
-	FontSize     int      `mapstructure:"fontSize"`
-	FontFamily   *string  `mapstructure:"fontFamily"`
-	DefaultSpeed int      `mapstructure:"defaultSpeed"`
-	BrowserBin   *string  `mapstructure:"browserBin"`
-}
-
-var validSettingsFields = []string{"loginCommand", "fontSize", "fontFamily", "defaultSpeed", "browserBin"}
-
-func loadConfig(p string) (*config, error) {
+func loadConfig(p string) (*legacyConfig, error) {
 	f, err := os.Open(p)
 	if err != nil {
 		return nil, err
@@ -56,17 +35,14 @@ func loadConfig(p string) (*config, error) {
 	return cfg, nil
 }
 
-func decodeConfig(f io.Reader) (*config, error) {
+func decodeConfig(f io.Reader) (*legacyConfig, error) {
 	var y configYaml
 	if err := yaml.NewDecoder(f).Decode(&y); err != nil {
 		return nil, err
 	}
-	if err := validateFields(y.Settings, validSettingsFields); err != nil {
-		return nil, errors.WithMessage(err, "invalid settings")
-	}
 
-	settings := newDefaultSettings()
-	if err := mapstructure.Decode(y.Settings, settings); err != nil {
+	settings, err := config.DecodeSettings(y.Settings)
+	if err != nil {
 		return nil, err
 	}
 
@@ -79,7 +55,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 		actions = append(actions, action)
 	}
 
-	return &config{
+	return &legacyConfig{
 		Settings: settings,
 		Actions:  actions,
 	}, nil

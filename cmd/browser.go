@@ -5,7 +5,7 @@ import (
 	"github.com/go-rod/rod/lib/launcher"
 )
 
-func launchBrowser(cfg *config) (*rod.Browser, error) {
+func launchBrowser(cfg *legacyConfig) (*rod.Browser, error) {
 	path, _ := launcher.LookPath()
 	if cfg.Settings.BrowserBin != nil {
 		path = *cfg.Settings.BrowserBin

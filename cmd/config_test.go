@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
@@ -16,7 +17,7 @@ func Test_decodeConfig(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *config
+		want    *legacyConfig
 		wantErr bool
 	}{
 		/*
@@ -27,8 +28,8 @@ func Test_decodeConfig(t *testing.T) {
 actions:
   - pause
 `)},
-			&config{
-				Settings: &settings{
+			&legacyConfig{
+				Settings: &config.Settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
 					FontFamily:   nil,
@@ -52,8 +53,8 @@ settings:
 actions:
   - pause
 `)},
-			&config{
-				Settings: &settings{
+			&legacyConfig{
+				Settings: &config.Settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
 					FontFamily:   util.String("FontName"),
@@ -88,8 +89,8 @@ actions:
     count: 10
     speed: 500
 `)},
-			&config{
-				Settings: &settings{
+			&legacyConfig{
+				Settings: &config.Settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
 					FontFamily:   nil,

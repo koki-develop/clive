@@ -5,7 +5,7 @@ import (
 )
 
 type configLoadedMsg struct {
-	config *config
+	config *legacyConfig
 }
 
 type ttydStartedMsg struct {
