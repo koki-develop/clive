@@ -17,6 +17,8 @@ type Model struct {
 	ttyd *ttyd.Ttyd
 	page *rod.Page
 
+	quitting bool
+
 	spinner spinner.Model
 }
 

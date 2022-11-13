@@ -11,6 +11,7 @@ import (
 type loadConfigMsg struct{ config *config.Config }
 type startTtydMsg struct{ ttyd *ttyd.Ttyd }
 type openMsg struct{ page *rod.Page }
+type quitMsg struct{}
 type errMsg struct{ err error }
 
 // TODO: implement
@@ -38,6 +39,15 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, m.open
 	case openMsg:
 		m.page = msg.page
+	case quitMsg:
+		m.quitting = true
+		return m, nil
+	case errMsg:
+		m.err = msg.err
+		if m.running() {
+			return m, tea.Quit
+		}
+		return m, m.quit
 	}
 
 	return m, nil
@@ -72,4 +82,8 @@ func (m *Model) open() tea.Msg {
 	}
 
 	return openMsg{page}
+}
+
+func (m *Model) quit() tea.Msg {
+	return quitMsg{}
 }
