@@ -136,13 +136,36 @@ func (m *Model) runPause(action *config.PauseAction) tea.Msg {
 }
 
 func (m *Model) runType(action *config.TypeAction) tea.Msg {
+	// TODO: implement
 	time.Sleep(200 * time.Millisecond)
 	return runMsg{}
 }
 
 func (m *Model) runKey(action *config.KeyAction) tea.Msg {
-	time.Sleep(200 * time.Millisecond)
+	for i := 0; i < action.Count; i++ {
+		if err := m.runKeyOnce(action); err != nil {
+			return errMsg{err}
+		}
+		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		if m.quitting {
+			return nil
+		}
+	}
+
 	return runMsg{}
+}
+
+func (m *Model) runKeyOnce(action *config.KeyAction) error {
+	k, ok := config.SpecialKeyMap[action.Key]
+	if !ok {
+		return nil
+	}
+
+	if err := m.page.Keyboard.Type(k); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (m *Model) runSleep(action *config.SleepAction) tea.Msg {
