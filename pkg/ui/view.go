@@ -32,7 +32,7 @@ func (m *Model) View() string {
 }
 
 func (m *Model) errView() string {
-	return "error" // TODO: implement
+	return styleErrorHeader.Render("Error") + "\n" + m.err.Error() + "\n\n" + m.quittingView()
 }
 
 func (m *Model) loadingConfigView() string {

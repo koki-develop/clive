@@ -65,7 +65,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	case errMsg:
 		m.err = msg.err
-		if m.running() {
+		if !m.running() {
 			return m, tea.Quit
 		}
 		return m, m.quit
