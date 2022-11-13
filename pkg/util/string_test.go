@@ -87,3 +87,8 @@ func TestPaddingRight(t *testing.T) {
 	}
 
 }
+
+func TestString(t *testing.T) {
+	s := "hello"
+	assert.Equal(t, &s, String(s))
+}

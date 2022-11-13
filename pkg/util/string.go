@@ -42,3 +42,7 @@ func PaddingRight(s string, l int) string {
 
 	return buf.String()
 }
+
+func String(v string) *string {
+	return &v
+}

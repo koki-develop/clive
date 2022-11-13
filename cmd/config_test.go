@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/koki-develop/clive/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -55,9 +56,9 @@ actions:
 				Settings: &settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
-					FontFamily:   ptrString("FontName"),
+					FontFamily:   util.String("FontName"),
 					DefaultSpeed: 999,
-					BrowserBin:   ptrString("/path/to/browser"),
+					BrowserBin:   util.String("/path/to/browser"),
 				},
 				Actions: []action{
 					&pauseAction{},
