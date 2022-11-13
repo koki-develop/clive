@@ -9,7 +9,6 @@ import (
 	"github.com/koki-develop/clive/pkg/util"
 )
 
-// TODO: implement
 func (m *Model) View() string {
 	if m.err != nil {
 		return m.errView()
