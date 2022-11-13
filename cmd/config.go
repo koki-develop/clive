@@ -26,7 +26,7 @@ type configYaml struct {
 	Actions  []interface{}          `yaml:"actions"`
 }
 
-type config struct {
+type legacyConfig struct {
 	Settings *settings
 	Actions  []action
 }
@@ -41,7 +41,7 @@ type settings struct {
 
 var validSettingsFields = []string{"loginCommand", "fontSize", "fontFamily", "defaultSpeed", "browserBin"}
 
-func loadConfig(p string) (*config, error) {
+func loadConfig(p string) (*legacyConfig, error) {
 	f, err := os.Open(p)
 	if err != nil {
 		return nil, err
@@ -56,7 +56,7 @@ func loadConfig(p string) (*config, error) {
 	return cfg, nil
 }
 
-func decodeConfig(f io.Reader) (*config, error) {
+func decodeConfig(f io.Reader) (*legacyConfig, error) {
 	var y configYaml
 	if err := yaml.NewDecoder(f).Decode(&y); err != nil {
 		return nil, err
@@ -79,7 +79,7 @@ func decodeConfig(f io.Reader) (*config, error) {
 		actions = append(actions, action)
 	}
 
-	return &config{
+	return &legacyConfig{
 		Settings: settings,
 		Actions:  actions,
 	}, nil

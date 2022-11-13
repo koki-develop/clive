@@ -16,7 +16,7 @@ func Test_decodeConfig(t *testing.T) {
 	}
 	tests := []struct {
 		args    args
-		want    *config
+		want    *legacyConfig
 		wantErr bool
 	}{
 		/*
@@ -27,7 +27,7 @@ func Test_decodeConfig(t *testing.T) {
 actions:
   - pause
 `)},
-			&config{
+			&legacyConfig{
 				Settings: &settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
@@ -52,7 +52,7 @@ settings:
 actions:
   - pause
 `)},
-			&config{
+			&legacyConfig{
 				Settings: &settings{
 					LoginCommand: []string{"hoge", "fuga"},
 					FontSize:     999,
@@ -88,7 +88,7 @@ actions:
     count: 10
     speed: 500
 `)},
-			&config{
+			&legacyConfig{
 				Settings: &settings{
 					LoginCommand: []string{"bash", "--login"},
 					FontSize:     22,
