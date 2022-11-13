@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/go-rod/rod"
+	"github.com/koki-develop/clive/pkg/ttyd"
 )
 
 type configLoadedMsg struct {
@@ -9,7 +10,7 @@ type configLoadedMsg struct {
 }
 
 type ttydStartedMsg struct {
-	Ttyd *ttyd
+	Ttyd *ttyd.Ttyd
 }
 
 type browserLaunchedMsg struct {

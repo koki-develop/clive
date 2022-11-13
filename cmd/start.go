@@ -12,6 +12,7 @@ import (
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
 	"github.com/go-rod/rod/lib/proto"
+	"github.com/koki-develop/clive/pkg/ttyd"
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +26,7 @@ type startModel struct {
 	Err                error
 	Spinner            spinner.Model
 	Config             *legacyConfig
-	Ttyd               *ttyd
+	Ttyd               *ttyd.Ttyd
 	Browser            *rod.Browser
 	Page               *rod.Page
 	CurrentActionIndex int
@@ -56,7 +57,7 @@ func (m *startModel) loadConfig() tea.Msg {
 }
 
 func (m *startModel) startTtyd() tea.Msg {
-	ttyd, err := newTtyd(m.Config.Settings.LoginCommand)
+	ttyd, err := ttyd.NewTtyd(m.Config.Settings.LoginCommand)
 	if err != nil {
 		return errMsg{err}
 	}
