@@ -169,7 +169,10 @@ func (m *Model) runKeyOnce(action *config.KeyAction) error {
 }
 
 func (m *Model) runSleep(action *config.SleepAction) tea.Msg {
-	time.Sleep(200 * time.Millisecond)
+	time.Sleep(time.Duration(action.Sleep) * time.Millisecond)
+	if m.quitting {
+		return nil
+	}
 	return runMsg{}
 }
 
