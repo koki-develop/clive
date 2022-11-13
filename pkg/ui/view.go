@@ -31,6 +31,10 @@ func (m *Model) View() string {
 }
 
 func (m *Model) errView() string {
+	if !m.running() {
+		return ""
+	}
+
 	return styleErrorHeader.Render("Error") + "\n" + m.err.Error() + "\n\n" + m.quittingView()
 }
 
