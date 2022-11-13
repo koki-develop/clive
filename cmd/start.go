@@ -12,6 +12,7 @@ import (
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
 	"github.com/go-rod/rod/lib/proto"
+	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -293,7 +294,7 @@ func (m *startModel) pauseBeforeQuitView() string {
 }
 
 func (m *startModel) actionsView() string {
-	from := max(0, m.CurrentActionIndex-3)
+	from := util.Max(0, m.CurrentActionIndex-3)
 	show := 20
 	digits := len(strconv.Itoa(len(m.Config.Actions)))
 

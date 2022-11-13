@@ -4,13 +4,6 @@ import (
 	"bytes"
 )
 
-func max(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
-}
-
 func paddingRight(s string, l int) string {
 	l -= len(s)
 	if l <= 0 {
