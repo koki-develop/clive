@@ -111,7 +111,7 @@ func parseTypeAction(stgs *Settings, m map[string]interface{}) (*TypeAction, err
 		Speed: stgs.DefaultSpeed,
 	}
 	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, err
+		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
 	}
 
 	return &action, nil
@@ -133,7 +133,7 @@ func parseKeyAction(settings *Settings, m map[string]interface{}) (*KeyAction, e
 		Speed: settings.DefaultSpeed,
 	}
 	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, err
+		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
 	}
 
 	if _, ok := SpecialKeyMap[action.Key]; !ok {
@@ -161,7 +161,7 @@ func parseSleepAction(settings *Settings, m map[string]interface{}) (*SleepActio
 
 	var action SleepAction
 	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, err
+		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
 	}
 
 	return &action, nil
@@ -180,7 +180,7 @@ func parsePauseAction(settings *Settings, m map[string]interface{}) (*PauseActio
 
 	var action PauseAction
 	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, err
+		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
 	}
 
 	return &action, nil
@@ -202,7 +202,7 @@ func parseCtrlAction(settings *Settings, m map[string]interface{}) (*CtrlAction,
 		Speed: settings.DefaultSpeed,
 	}
 	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, err
+		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
 	}
 
 	return &action, nil
