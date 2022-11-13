@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"github.com/go-rod/rod"
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
 )
 
 type configLoadedMsg struct {
-	config *legacyConfig
+	config *config.Config
 }
 
 type ttydStartedMsg struct {
