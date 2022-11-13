@@ -20,7 +20,6 @@ type pauseMsg struct{}
 type quitMsg struct{}
 type errMsg struct{ err error }
 
-// TODO: implement
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	// spinner
