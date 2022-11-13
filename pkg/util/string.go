@@ -46,3 +46,12 @@ func PaddingRight(s string, l int) string {
 func String(v string) *string {
 	return &v
 }
+
+func Contains(slice []string, r string) bool {
+	for _, l := range slice {
+		if l == r {
+			return true
+		}
+	}
+	return false
+}

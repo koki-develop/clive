@@ -181,7 +181,7 @@ func parseCtrlAction(settings *settings, m map[string]interface{}) (*ctrlAction,
 func validateFields(m map[string]interface{}, validFields []string) error {
 	invalidFields := []string{}
 	for k := range m {
-		if !contains(validFields, k) {
+		if !util.Contains(validFields, k) {
 			invalidFields = append(invalidFields, k)
 		}
 	}
