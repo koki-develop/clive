@@ -1,31 +1,30 @@
-package cmd
+package config
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/koki-develop/clive/pkg/config"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_parseTypeAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *config.TypeAction
+		want    *TypeAction
 		wantErr bool
 	}{
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type": "Hello World",
 				},
 			},
-			&config.TypeAction{
+			&TypeAction{
 				Type:  "Hello World",
 				Count: 1,
 				Speed: 10,
@@ -34,14 +33,14 @@ func Test_parseTypeAction(t *testing.T) {
 		},
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"type":  "Hello World",
 					"count": 10,
 					"speed": 500,
 				},
 			},
-			&config.TypeAction{
+			&TypeAction{
 				Type:  "Hello World",
 				Count: 10,
 				Speed: 500,
@@ -64,22 +63,22 @@ func Test_parseTypeAction(t *testing.T) {
 
 func Test_parseKeyAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *config.KeyAction
+		want    *KeyAction
 		wantErr bool
 	}{
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key": "enter",
 				},
 			},
-			&config.KeyAction{
+			&KeyAction{
 				Key:   "enter",
 				Count: 1,
 				Speed: 10,
@@ -88,14 +87,14 @@ func Test_parseKeyAction(t *testing.T) {
 		},
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"key":   "enter",
 					"count": 10,
 					"speed": 500,
 				},
 			},
-			&config.KeyAction{
+			&KeyAction{
 				Key:   "enter",
 				Count: 10,
 				Speed: 500,
@@ -118,12 +117,12 @@ func Test_parseKeyAction(t *testing.T) {
 
 func Test_parseSleepAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *config.SleepAction
+		want    *SleepAction
 		wantErr bool
 	}{
 		{
@@ -133,7 +132,7 @@ func Test_parseSleepAction(t *testing.T) {
 					"sleep": 3000,
 				},
 			},
-			&config.SleepAction{
+			&SleepAction{
 				Sleep: 3000,
 			},
 			false,
@@ -154,12 +153,12 @@ func Test_parseSleepAction(t *testing.T) {
 
 func Test_parsePauseAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *config.PauseAction
+		want    *PauseAction
 		wantErr bool
 	}{
 		{
@@ -169,7 +168,7 @@ func Test_parsePauseAction(t *testing.T) {
 					"pause": nil,
 				},
 			},
-			&config.PauseAction{},
+			&PauseAction{},
 			false,
 		},
 		{
@@ -179,7 +178,7 @@ func Test_parsePauseAction(t *testing.T) {
 					"pause": struct{}{},
 				},
 			},
-			&config.PauseAction{},
+			&PauseAction{},
 			false,
 		},
 	}
@@ -198,22 +197,22 @@ func Test_parsePauseAction(t *testing.T) {
 
 func Test_parseCtrlAction(t *testing.T) {
 	type args struct {
-		settings *config.Settings
+		settings *Settings
 		m        map[string]interface{}
 	}
 	tests := []struct {
 		args    args
-		want    *config.CtrlAction
+		want    *CtrlAction
 		wantErr bool
 	}{
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl": "c",
 				},
 			},
-			&config.CtrlAction{
+			&CtrlAction{
 				Ctrl:  "c",
 				Count: 1,
 				Speed: 10,
@@ -222,14 +221,14 @@ func Test_parseCtrlAction(t *testing.T) {
 		},
 		{
 			args{
-				&config.Settings{DefaultSpeed: 10},
+				&Settings{DefaultSpeed: 10},
 				map[string]interface{}{
 					"ctrl":  "c",
 					"count": 10,
 					"speed": 500,
 				},
 			},
-			&config.CtrlAction{
+			&CtrlAction{
 				Ctrl:  "c",
 				Count: 10,
 				Speed: 500,

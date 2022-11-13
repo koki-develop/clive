@@ -48,7 +48,7 @@ func decodeConfig(f io.Reader) (*legacyConfig, error) {
 
 	var actions []config.Action
 	for _, a := range y.Actions {
-		action, err := parseAction(settings, a)
+		action, err := config.ParseAction(settings, a)
 		if err != nil {
 			return nil, err
 		}

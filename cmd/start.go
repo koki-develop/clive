@@ -140,7 +140,7 @@ func (m *startModel) runPauseAction(action *config.PauseAction) tea.Msg {
 func (m *startModel) runTypeAction(action *config.TypeAction) tea.Msg {
 	for i := 0; i < action.Count; i++ {
 		for _, c := range action.Type {
-			k, ok := keymap[c]
+			k, ok := config.KeyMap[c]
 			if ok {
 				if err := m.Page.Keyboard.Type(k); err != nil {
 					return errMsg{err}
@@ -167,7 +167,7 @@ func (m *startModel) runTypeAction(action *config.TypeAction) tea.Msg {
 }
 
 func (m *startModel) runKeyAction(action *config.KeyAction) tea.Msg {
-	k, ok := specialkeymap[action.Key]
+	k, ok := config.SpecialKeyMap[action.Key]
 	for i := 0; i < action.Count; i++ {
 		if ok {
 			if err := m.Page.Keyboard.Type(k); err != nil {
@@ -196,7 +196,7 @@ func (m *startModel) runCtrlAction(action *config.CtrlAction) tea.Msg {
 			return errMsg{err}
 		}
 		for _, r := range action.Ctrl {
-			if k, ok := keymap[r]; ok {
+			if k, ok := config.KeyMap[r]; ok {
 				if err := m.Page.Keyboard.Type(k); err != nil {
 					return errMsg{err}
 				}

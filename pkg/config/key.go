@@ -1,4 +1,4 @@
-package cmd
+package config
 
 import "github.com/go-rod/rod/lib/input"
 
@@ -7,7 +7,7 @@ func shift(k input.Key) input.Key {
 	return k
 }
 
-var keymap = map[rune]input.Key{
+var KeyMap = map[rune]input.Key{
 	// numbers row
 	'`':  input.Backquote,
 	'~':  shift(input.Backquote),
@@ -118,7 +118,7 @@ var keymap = map[rune]input.Key{
 	'\t': input.Tab,
 }
 
-var specialkeymap = map[string]input.Key{
+var SpecialKeyMap = map[string]input.Key{
 	"esc":       input.Escape,
 	"backspace": input.Backspace,
 	"tab":       input.Tab,
