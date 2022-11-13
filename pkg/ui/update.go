@@ -7,6 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
+	"github.com/go-rod/rod/lib/input"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
 )
@@ -177,6 +178,35 @@ func (m *Model) runSleep(action *config.SleepAction) tea.Msg {
 }
 
 func (m *Model) runCtrl(action *config.CtrlAction) tea.Msg {
-	time.Sleep(200 * time.Millisecond)
+	for i := 0; i < action.Count; i++ {
+		if err := m.runCtrlOnce(action); err != nil {
+			return errMsg{err}
+		}
+		time.Sleep(time.Duration(action.Speed) * time.Millisecond)
+		if m.quitting {
+			return nil
+		}
+	}
+
 	return runMsg{}
+}
+
+func (m *Model) runCtrlOnce(action *config.CtrlAction) error {
+	if err := m.page.Keyboard.Press(input.ControlLeft); err != nil {
+		return err
+	}
+	for _, r := range action.Ctrl {
+		k, ok := config.KeyMap[r]
+		if !ok {
+			continue
+		}
+		if err := m.page.Keyboard.Type(k); err != nil {
+			return err
+		}
+	}
+	if err := m.page.Keyboard.Release(input.ControlLeft); err != nil {
+		return err
+	}
+
+	return nil
 }
