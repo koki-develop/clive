@@ -4,11 +4,13 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/koki-develop/clive/pkg/config"
+	"github.com/koki-develop/clive/pkg/ttyd"
 )
 
 type Model struct {
 	configFile string
 	config     *config.Config
+	ttyd       *ttyd.Ttyd
 
 	err error
 
@@ -28,7 +30,14 @@ func (m *Model) Err() error {
 	return m.err
 }
 
-// TODO: implement
 func (m *Model) Close() error {
+	if m.ttyd == nil {
+		return nil
+	}
+
+	if err := m.ttyd.Command.Process.Kill(); err != nil {
+		return err
+	}
+
 	return nil
 }
