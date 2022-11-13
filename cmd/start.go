@@ -371,7 +371,7 @@ var startCmd = &cobra.Command{
 	Short: "Start cLive actions",
 	Long:  "Start cLive actions.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		m := ui.New()
+		m := ui.New(configFilename)
 		defer m.Close()
 
 		p := tea.NewProgram(m)

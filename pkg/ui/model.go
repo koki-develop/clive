@@ -3,9 +3,13 @@ package ui
 import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/koki-develop/clive/pkg/config"
 )
 
 type Model struct {
+	configFile string
+	config     *config.Config
+
 	err error
 
 	spinner spinner.Model
@@ -13,9 +17,10 @@ type Model struct {
 
 var _ tea.Model = (*Model)(nil)
 
-func New() *Model {
+func New(configFile string) *Model {
 	return &Model{
-		spinner: spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styleSpinner)),
+		configFile: configFile,
+		spinner:    spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styleSpinner)),
 	}
 }
 
