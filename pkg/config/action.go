@@ -59,7 +59,7 @@ type PauseAction struct{}
 
 var pauseActionValidFields = []string{"pause"}
 
-func (action *PauseAction) String() string {
+func (*PauseAction) String() string {
 	return "Pause: Press enter to continue"
 }
 

@@ -63,6 +63,82 @@ func TestKeyAction_String(t *testing.T) {
 	}
 }
 
+func TestSleepAction_String(t *testing.T) {
+	type fields struct {
+		Sleep int
+	}
+	tests := []struct {
+		fields fields
+		want   string
+	}{
+		{
+			fields{Sleep: 1000},
+			"Sleep: 1000ms",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			action := &SleepAction{
+				Sleep: tt.fields.Sleep,
+			}
+			got := action.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestPauseAction_String(t *testing.T) {
+	type fields struct{}
+	tests := []struct {
+		fields fields
+		want   string
+	}{
+		{
+			fields{},
+			"Pause: Press enter to continue",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			action := &PauseAction{}
+			got := action.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func TestCtrlAction_String(t *testing.T) {
+	type fields struct {
+		Ctrl  string
+		Count int
+		Speed int
+	}
+	tests := []struct {
+		fields fields
+		want   string
+	}{
+		{
+			fields{Ctrl: "c", Count: 1, Speed: 10},
+			"Ctrl+c",
+		},
+		{
+			fields{Ctrl: "cccc", Count: 1, Speed: 10},
+			"Ctrl+cccc",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			action := &CtrlAction{
+				Ctrl:  tt.fields.Ctrl,
+				Count: tt.fields.Count,
+				Speed: tt.fields.Speed,
+			}
+			got := action.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func Test_parseTypeAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
