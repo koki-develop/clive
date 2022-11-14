@@ -35,6 +35,34 @@ func TestTypeAction_String(t *testing.T) {
 	}
 }
 
+func TestKeyAction_String(t *testing.T) {
+	type fields struct {
+		Key   string
+		Count int
+		Speed int
+	}
+	tests := []struct {
+		fields fields
+		want   string
+	}{
+		{
+			fields{Key: "enter", Count: 1, Speed: 10},
+			"Key: enter",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			action := &KeyAction{
+				Key:   tt.fields.Key,
+				Count: tt.fields.Count,
+				Speed: tt.fields.Speed,
+			}
+			got := action.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func Test_parseTypeAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
