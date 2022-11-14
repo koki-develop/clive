@@ -132,39 +132,30 @@ func Test_parseSleepAction(t *testing.T) {
 }
 
 func Test_parsePauseAction(t *testing.T) {
-	type args struct {
-		settings *Settings
-		m        map[string]interface{}
-	}
 	tests := []struct {
-		args    args
+		input   map[string]interface{}
 		want    *PauseAction
 		wantErr bool
 	}{
 		{
-			args{
-				nil,
-				map[string]interface{}{
-					"pause": nil,
-				},
-			},
+			map[string]interface{}{"pause": nil},
 			&PauseAction{},
 			false,
 		},
 		{
-			args{
-				nil,
-				map[string]interface{}{
-					"pause": struct{}{},
-				},
-			},
+			map[string]interface{}{"pause": struct{}{}},
 			&PauseAction{},
 			false,
+		},
+		{
+			map[string]interface{}{"pause": nil, "a": "A"},
+			nil,
+			true,
 		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parsePauseAction(tt.args.settings, tt.args.m)
+			got, err := parsePauseAction(nil, tt.input)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {

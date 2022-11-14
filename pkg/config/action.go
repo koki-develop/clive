@@ -162,12 +162,7 @@ func parsePauseAction(settings *Settings, m map[string]interface{}) (*PauseActio
 		return nil, err
 	}
 
-	var action PauseAction
-	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
-	}
-
-	return &action, nil
+	return &PauseAction{}, nil
 }
 
 func parseCtrlAction(settings *Settings, m map[string]interface{}) (*CtrlAction, error) {
