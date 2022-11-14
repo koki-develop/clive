@@ -28,7 +28,7 @@ type TypeAction struct {
 }
 
 func (action *TypeAction) String() string {
-	return fmt.Sprintf("Type: %s", util.TruncateString(action.Type, 37))
+	return fmt.Sprintf("Type: %s", action.Type)
 }
 
 var typeActionValidFields = []string{"type", "count", "speed"}
