@@ -23,3 +23,24 @@ func TestNewErrInvalidAction(t *testing.T) {
 		})
 	}
 }
+
+func TestErrInvalidAction_Error(t *testing.T) {
+	tests := []struct {
+		action interface{}
+		want   string
+	}{
+		{
+			map[string]interface{}{"test": "action"},
+			`invalid action {"test":"action"}`,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			err := ErrInvalidAction{
+				action: tt.action,
+			}
+			got := err.Error()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
