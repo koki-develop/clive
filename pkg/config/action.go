@@ -28,7 +28,7 @@ type TypeAction struct {
 }
 
 func (action *TypeAction) String() string {
-	return fmt.Sprintf("Type: %s", util.TruncateString(action.Type, 37))
+	return fmt.Sprintf("Type: %s", action.Type)
 }
 
 var typeActionValidFields = []string{"type", "count", "speed"}
@@ -59,7 +59,7 @@ type PauseAction struct{}
 
 var pauseActionValidFields = []string{"pause"}
 
-func (action *PauseAction) String() string {
+func (*PauseAction) String() string {
 	return "Pause: Press enter to continue"
 }
 
@@ -162,12 +162,7 @@ func parsePauseAction(settings *Settings, m map[string]interface{}) (*PauseActio
 		return nil, err
 	}
 
-	var action PauseAction
-	if err := mapstructure.Decode(m, &action); err != nil {
-		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
-	}
-
-	return &action, nil
+	return &PauseAction{}, nil
 }
 
 func parseCtrlAction(settings *Settings, m map[string]interface{}) (*CtrlAction, error) {

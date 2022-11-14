@@ -76,8 +76,13 @@ func (m *Model) actionsView() string {
 			}
 		}
 
+		s, trunc := util.TruncateString(action.String(), 40)
+		if trunc {
+			s += styleTruncated.Render("...")
+		}
+
 		num := util.PaddingRight(fmt.Sprintf("#%d", i+1), digits+1)
-		rows = append(rows, fmt.Sprintf("%s %s%s", style.Render(num), cursor, style.Render(action.String())))
+		rows = append(rows, fmt.Sprintf("%s %s%s", style.Render(num), cursor, style.Render(s)))
 	}
 
 	return styleActionHeader.Render("Actions") + "\n" + strings.Join(rows, "\n")

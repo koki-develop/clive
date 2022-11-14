@@ -13,38 +13,46 @@ func TestTruncateString(t *testing.T) {
 		l int
 	}
 	tests := []struct {
-		args args
-		want string
+		args  args
+		want  string
+		want1 bool
 	}{
 		{
 			args{"aaaaaaaaa", 10},
 			"aaaaaaaaa",
+			false,
 		},
 		{
 			args{"aaaaaaaaaa", 10},
 			"aaaaaaaaaa",
+			false,
 		},
 		{
 			args{"aaaaaaaaaaa", 10},
-			"aaaaaaaaaa\x1b[2m...\x1b[0m",
+			"aaaaaaaaaa",
+			true,
 		},
 		{
 			args{"aaaaaaaaa\naaaaa", 10},
-			"aaaaaaaaa\x1b[2m...\x1b[0m",
+			"aaaaaaaaa",
+			true,
 		},
 		{
 			args{"aaaaaaaaaa\naaaaa", 10},
-			"aaaaaaaaaa\x1b[2m...\x1b[0m",
+			"aaaaaaaaaa",
+			true,
 		},
 		{
 			args{"aaaaaaaaaaa\naaaaa", 10},
-			"aaaaaaaaaa\x1b[2m...\x1b[0m",
+			"aaaaaaaaaa",
+			true,
 		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got := TruncateString(tt.args.s, tt.args.l)
+			got, got1 := TruncateString(tt.args.s, tt.args.l)
 			assert.Equal(t, tt.want, got)
+			assert.Equal(t, tt.want1, got1)
 		})
 	}
 }
