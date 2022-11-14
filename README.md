@@ -12,6 +12,7 @@ Automates terminal operations and lets you view them live via a browser.
 <a href="./LICENSE"><img src="https://img.shields.io/github/license/koki-develop/clive?style=flat" /></a>
 <a href="https://github.com/koki-develop/clive/actions/workflows/ci.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/koki-develop/clive/ci?logo=github&style=flat" /></a>
 <a href="https://codeclimate.com/github/koki-develop/clive/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/koki-develop/clive?logo=codeclimate&style=flat" /></a>
+<a href="https://codecov.io/github/koki-develop/clive"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/koki-develop/clive?logo=codecov" /></a>
 </p>
 
 ![](./examples/demo/demo.gif)
