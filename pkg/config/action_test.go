@@ -7,6 +7,34 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestTypeAction_String(t *testing.T) {
+	type fields struct {
+		Type  string
+		Count int
+		Speed int
+	}
+	tests := []struct {
+		fields fields
+		want   string
+	}{
+		{
+			fields{"Hello World", 1, 10},
+			"Type: Hello World",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			action := &TypeAction{
+				Type:  tt.fields.Type,
+				Count: tt.fields.Count,
+				Speed: tt.fields.Speed,
+			}
+			got := action.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func Test_parseTypeAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
