@@ -55,49 +55,42 @@ func Test_parseTypeAction(t *testing.T) {
 }
 
 func Test_parseKeyAction(t *testing.T) {
-	type args struct {
-		settings *Settings
-		m        map[string]interface{}
-	}
+	stgs := &Settings{DefaultSpeed: 10}
+
 	tests := []struct {
-		args    args
+		input   map[string]interface{}
 		want    *KeyAction
 		wantErr bool
 	}{
 		{
-			args{
-				&Settings{DefaultSpeed: 10},
-				map[string]interface{}{
-					"key": "enter",
-				},
-			},
-			&KeyAction{
-				Key:   "enter",
-				Count: 1,
-				Speed: 10,
-			},
+			map[string]interface{}{"key": "enter"},
+			&KeyAction{Key: "enter", Count: 1, Speed: stgs.DefaultSpeed},
 			false,
 		},
 		{
-			args{
-				&Settings{DefaultSpeed: 10},
-				map[string]interface{}{
-					"key":   "enter",
-					"count": 10,
-					"speed": 500,
-				},
-			},
-			&KeyAction{
-				Key:   "enter",
-				Count: 10,
-				Speed: 500,
-			},
+			map[string]interface{}{"key": "enter", "count": 10},
+			&KeyAction{Key: "enter", Count: 10, Speed: stgs.DefaultSpeed},
 			false,
+		},
+		{
+			map[string]interface{}{"key": "enter", "speed": 500},
+			&KeyAction{Key: "enter", Count: 1, Speed: 500},
+			false,
+		},
+		{
+			map[string]interface{}{"key": "enter", "count": 10, "speed": 500},
+			&KeyAction{Key: "enter", Count: 10, Speed: 500},
+			false,
+		},
+		{
+			map[string]interface{}{"key": "enter", "a": "A"},
+			nil,
+			true,
 		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseKeyAction(tt.args.settings, tt.args.m)
+			got, err := parseKeyAction(stgs, tt.input)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
