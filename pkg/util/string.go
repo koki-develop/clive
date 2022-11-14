@@ -4,11 +4,9 @@ import (
 	"bytes"
 	"strings"
 	"unicode/utf8"
-
-	"github.com/charmbracelet/lipgloss"
 )
 
-func TruncateString(s string, l int) string {
+func TruncateString(s string, l int) (string, bool) {
 	rows := strings.Split(s, "\n")
 	trunc := false
 	if len(rows) > 1 {
@@ -19,11 +17,8 @@ func TruncateString(s string, l int) string {
 		s = string([]rune(s)[:l])
 		trunc = true
 	}
-	if trunc {
-		s += lipgloss.NewStyle().Faint(true).Render("...")
-	}
 
-	return s
+	return s, trunc
 }
 
 func PaddingRight(s string, l int) string {
