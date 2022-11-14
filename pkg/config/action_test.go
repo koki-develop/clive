@@ -167,49 +167,42 @@ func Test_parsePauseAction(t *testing.T) {
 }
 
 func Test_parseCtrlAction(t *testing.T) {
-	type args struct {
-		settings *Settings
-		m        map[string]interface{}
-	}
+	stgs := &Settings{DefaultSpeed: 10}
+
 	tests := []struct {
-		args    args
+		input   map[string]interface{}
 		want    *CtrlAction
 		wantErr bool
 	}{
 		{
-			args{
-				&Settings{DefaultSpeed: 10},
-				map[string]interface{}{
-					"ctrl": "c",
-				},
-			},
-			&CtrlAction{
-				Ctrl:  "c",
-				Count: 1,
-				Speed: 10,
-			},
+			map[string]interface{}{"ctrl": "c"},
+			&CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
 			false,
 		},
 		{
-			args{
-				&Settings{DefaultSpeed: 10},
-				map[string]interface{}{
-					"ctrl":  "c",
-					"count": 10,
-					"speed": 500,
-				},
-			},
-			&CtrlAction{
-				Ctrl:  "c",
-				Count: 10,
-				Speed: 500,
-			},
+			map[string]interface{}{"ctrl": "c", "count": 10},
+			&CtrlAction{Ctrl: "c", Count: 10, Speed: stgs.DefaultSpeed},
 			false,
+		},
+		{
+			map[string]interface{}{"ctrl": "c", "speed": 500},
+			&CtrlAction{Ctrl: "c", Count: 1, Speed: 500},
+			false,
+		},
+		{
+			map[string]interface{}{"ctrl": "c", "count": 10, "speed": 500},
+			&CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
+			false,
+		},
+		{
+			map[string]interface{}{"ctrl": "c", "a": "A"},
+			nil,
+			true,
 		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseCtrlAction(tt.args.settings, tt.args.m)
+			got, err := parseCtrlAction(stgs, tt.input)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
