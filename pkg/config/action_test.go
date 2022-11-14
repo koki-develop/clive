@@ -102,31 +102,25 @@ func Test_parseKeyAction(t *testing.T) {
 }
 
 func Test_parseSleepAction(t *testing.T) {
-	type args struct {
-		settings *Settings
-		m        map[string]interface{}
-	}
 	tests := []struct {
-		args    args
+		input   map[string]interface{}
 		want    *SleepAction
 		wantErr bool
 	}{
 		{
-			args{
-				nil,
-				map[string]interface{}{
-					"sleep": 3000,
-				},
-			},
-			&SleepAction{
-				Sleep: 3000,
-			},
+			map[string]interface{}{"sleep": 3000},
+			&SleepAction{Sleep: 3000},
 			false,
+		},
+		{
+			map[string]interface{}{"sleep": 3000, "a": "A"},
+			nil,
+			true,
 		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := parseSleepAction(tt.args.settings, tt.args.m)
+			got, err := parseSleepAction(nil, tt.input)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {
