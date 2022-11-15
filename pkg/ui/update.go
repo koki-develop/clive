@@ -84,12 +84,9 @@ func (m *Model) loadConfig() tea.Msg {
 }
 
 func (m *Model) startTtyd() tea.Msg {
-	ttyd, err := ttyd.NewTtyd(m.config.Settings.LoginCommand)
-	if err != nil {
-		return errMsg{err}
-	}
+	ttyd := ttyd.New(m.config.Settings.LoginCommand)
 
-	if err := ttyd.Command.Start(); err != nil {
+	if err := ttyd.Start(); err != nil {
 		return errMsg{err}
 	}
 
@@ -97,7 +94,7 @@ func (m *Model) startTtyd() tea.Msg {
 }
 
 func (m *Model) open() tea.Msg {
-	page, err := openPage(m.config, m.ttyd.Port)
+	page, err := openPage(m.config, *m.ttyd.Port())
 	if err != nil {
 		return errMsg{err}
 	}

@@ -7,14 +7,22 @@ import (
 )
 
 type Ttyd struct {
-	Port    int
-	Command *exec.Cmd
+	Args []string
+
+	port    *int
+	command *exec.Cmd
 }
 
-func NewTtyd(cmd []string) (*Ttyd, error) {
+func New(args []string) *Ttyd {
+	return &Ttyd{
+		Args: args,
+	}
+}
+
+func (ttyd *Ttyd) Start() error {
 	port, err := randomUnusedPort()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	args := []string{
@@ -25,12 +33,31 @@ func NewTtyd(cmd []string) (*Ttyd, error) {
 		"-t", "cursorBlink=true",
 		"--",
 	}
-	args = append(args, cmd...)
+	args = append(args, ttyd.Args...)
 
-	return &Ttyd{
-		Port:    port,
-		Command: exec.Command("ttyd", args...),
-	}, nil
+	ttyd.port = &port
+	ttyd.command = exec.Command("ttyd", args...)
+	if err := ttyd.command.Start(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ttyd *Ttyd) Port() *int {
+	return ttyd.port
+}
+
+func (ttyd *Ttyd) Close() error {
+	if ttyd.command == nil {
+		return nil
+	}
+
+	if err := ttyd.command.Process.Kill(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func randomUnusedPort() (int, error) {
