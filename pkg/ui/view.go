@@ -48,7 +48,6 @@ func (m *Model) openingView() string {
 func (m *Model) actionsView() string {
 	from := util.Max(0, m.currentActionIndex-3)
 	show := 20
-	digits := util.Digits(len(m.config.Actions))
 
 	rows := []string{}
 	for i, action := range m.config.Actions {
@@ -62,18 +61,10 @@ func (m *Model) actionsView() string {
 
 		var style lipgloss.Style
 
-		cursor := "  "
 		if m.currentActionIndex > i {
 			style = styleDone
 		} else if m.currentActionIndex == i {
 			style = styleActive
-			if !m.quitting {
-				if m.pausing {
-					cursor = "> "
-				} else {
-					cursor = m.spinner.View()
-				}
-			}
 		}
 
 		s, trunc := util.TruncateString(action.String(), 40)
@@ -81,11 +72,27 @@ func (m *Model) actionsView() string {
 			s += styleTruncated.Render("...")
 		}
 
+		digits := util.Digits(len(m.config.Actions))
 		num := util.PaddingRight(fmt.Sprintf("#%d", i+1), digits+1)
+		cursor := m.cursorView(i)
 		rows = append(rows, fmt.Sprintf("%s %s%s", style.Render(num), cursor, style.Render(s)))
 	}
 
 	return styleActionHeader.Render("Actions") + "\n" + strings.Join(rows, "\n")
+}
+
+func (m *Model) cursorView(idx int) string {
+	cursor := "  "
+	if m.currentActionIndex != idx {
+		return cursor
+	}
+	if m.quitting {
+		return cursor
+	}
+	if m.pausing {
+		return "> "
+	}
+	return m.spinner.View()
 }
 
 func (m *Model) quittingView() string {
