@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"io"
 	"strings"
 	"testing"
 
@@ -11,22 +10,16 @@ import (
 )
 
 func Test_Decode(t *testing.T) {
-	type args struct {
-		r io.Reader
-	}
 	tests := []struct {
-		args    args
+		yaml    string
 		want    *Config
 		wantErr bool
 	}{
-		/*
-		 * Settings
-		 */
 		{
-			args{strings.NewReader(`
+			`
 actions:
   - pause
-`)},
+`,
 			&Config{
 				Settings: &Settings{
 					LoginCommand: []string{"bash", "--login"},
@@ -41,23 +34,24 @@ actions:
 			},
 			false,
 		},
+
 		{
-			args{strings.NewReader(`
+			`
 settings:
   loginCommand: ["hoge", "fuga"]
-  fontSize: 999
+  fontSize: 100
   fontFamily: FontName
-  defaultSpeed: 999
+  defaultSpeed: 200
   browserBin: /path/to/browser
 actions:
   - pause
-`)},
+`,
 			&Config{
 				Settings: &Settings{
 					LoginCommand: []string{"hoge", "fuga"},
-					FontSize:     999,
+					FontSize:     100,
 					FontFamily:   util.String("FontName"),
-					DefaultSpeed: 999,
+					DefaultSpeed: 200,
 					BrowserBin:   util.String("/path/to/browser"),
 				},
 				Actions: []Action{
@@ -66,11 +60,8 @@ actions:
 			},
 			false,
 		},
-		/*
-		 * Actions
-		 */
 		{
-			args{strings.NewReader(`
+			`
 actions:
   - type: Hello
   - type: Hello
@@ -87,7 +78,7 @@ actions:
   - ctrl: c
     count: 10
     speed: 500
-`)},
+`,
 			&Config{
 				Settings: &Settings{
 					LoginCommand: []string{"bash", "--login"},
@@ -110,10 +101,38 @@ actions:
 			},
 			false,
 		},
+		{
+			`
+a: A
+actions:
+  - pause
+`,
+			nil,
+			true,
+		},
+		{
+			"settings: hello world",
+			nil,
+			true,
+		},
+		{
+			"actions: hello world",
+			nil,
+			true,
+		},
+		{
+			`
+actions:
+  - type: hello world
+    unknownField: value
+`,
+			nil,
+			true,
+		},
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			got, err := Decode(tt.args.r)
+			got, err := Decode(strings.NewReader(tt.yaml))
 
 			if tt.wantErr {
 				assert.Error(t, err)
