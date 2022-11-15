@@ -41,6 +41,15 @@ func Decode(r io.Reader) (*Config, error) {
 		return nil, err
 	}
 
+	cfg, err := DecodeMap(m)
+	if err != nil {
+		return nil, err
+	}
+
+	return cfg, nil
+}
+
+func DecodeMap(m map[string]interface{}) (*Config, error) {
 	invalidFields := []string{}
 	for k := range m {
 		if !util.Contains([]string{"settings", "actions"}, k) {
