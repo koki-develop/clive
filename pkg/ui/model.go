@@ -43,7 +43,7 @@ func (m *Model) Close() error {
 		return nil
 	}
 
-	if err := m.ttyd.Command.Process.Kill(); err != nil {
+	if err := m.ttyd.Close(); err != nil {
 		return err
 	}
 

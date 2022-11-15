@@ -2,46 +2,47 @@ package ttyd
 
 import (
 	"fmt"
-	"net"
 	"os/exec"
 )
 
 type Ttyd struct {
-	Port    int
-	Command *exec.Cmd
+	Port int
+
+	command *exec.Cmd
 }
 
-func NewTtyd(cmd []string) (*Ttyd, error) {
-	port, err := randomUnusedPort()
-	if err != nil {
-		return nil, err
-	}
-
-	args := []string{
+func New(cmd []string, port int) *Ttyd {
+	args := append([]string{
 		fmt.Sprintf("--port=%d", port),
 		// See: https://github.com/tsl0922/ttyd/blob/main/man/ttyd.man.md#client-optoins
 		"-t", "rendererType=canvas",
 		"-t", "disableResizeOverlay=true",
 		"-t", "cursorBlink=true",
 		"--",
-	}
-	args = append(args, cmd...)
+	}, cmd...)
 
 	return &Ttyd{
 		Port:    port,
-		Command: exec.Command("ttyd", args...),
-	}, nil
+		command: exec.Command("ttyd", args...),
+	}
 }
 
-func randomUnusedPort() (int, error) {
-	addr, err := net.Listen("tcp", ":0")
-	if err != nil {
-		return 0, err
+func (t *Ttyd) Start() error {
+	if err := t.command.Start(); err != nil {
+		return err
 	}
 
-	if err = addr.Close(); err != nil {
-		return 0, err
+	return nil
+}
+
+func (ttyd *Ttyd) Close() error {
+	if ttyd.command == nil {
+		return nil
 	}
 
-	return addr.Addr().(*net.TCPAddr).Port, nil
+	if err := ttyd.command.Process.Kill(); err != nil {
+		return err
+	}
+
+	return nil
 }
