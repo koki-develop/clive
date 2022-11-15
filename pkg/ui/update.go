@@ -94,7 +94,7 @@ func (m *Model) startTtyd() tea.Msg {
 }
 
 func (m *Model) open() tea.Msg {
-	page, err := openPage(m.config, *m.ttyd.Port())
+	page, err := openPage(m.config, *m.ttyd.Port)
 	if err != nil {
 		return errMsg{err}
 	}

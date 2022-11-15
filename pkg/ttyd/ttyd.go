@@ -8,8 +8,8 @@ import (
 
 type Ttyd struct {
 	Args []string
+	Port *int
 
-	port    *int
 	command *exec.Cmd
 }
 
@@ -19,8 +19,8 @@ func New(args []string) *Ttyd {
 	}
 }
 
-func (ttyd *Ttyd) Start() error {
-	port, err := randomUnusedPort()
+func (t *Ttyd) Start() error {
+	port, err := t.randomUnusedPort()
 	if err != nil {
 		return err
 	}
@@ -33,19 +33,15 @@ func (ttyd *Ttyd) Start() error {
 		"-t", "cursorBlink=true",
 		"--",
 	}
-	args = append(args, ttyd.Args...)
+	args = append(args, t.Args...)
 
-	ttyd.port = &port
-	ttyd.command = exec.Command("ttyd", args...)
-	if err := ttyd.command.Start(); err != nil {
+	t.Port = &port
+	t.command = exec.Command("ttyd", args...)
+	if err := t.command.Start(); err != nil {
 		return err
 	}
 
 	return nil
-}
-
-func (ttyd *Ttyd) Port() *int {
-	return ttyd.port
 }
 
 func (ttyd *Ttyd) Close() error {
@@ -60,7 +56,7 @@ func (ttyd *Ttyd) Close() error {
 	return nil
 }
 
-func randomUnusedPort() (int, error) {
+func (t *Ttyd) randomUnusedPort() (int, error) {
 	addr, err := net.Listen("tcp", ":0")
 	if err != nil {
 		return 0, err
