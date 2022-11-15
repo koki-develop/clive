@@ -10,6 +10,7 @@ import (
 	"github.com/go-rod/rod/lib/input"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
+	"github.com/koki-develop/clive/pkg/util"
 )
 
 type loadConfigMsg struct{ config *config.Config }
@@ -84,8 +85,12 @@ func (m *Model) loadConfig() tea.Msg {
 }
 
 func (m *Model) startTtyd() tea.Msg {
-	ttyd := ttyd.New(m.config.Settings.LoginCommand)
+	port, err := util.RandomUnusedTCPPort()
+	if err != nil {
+		return errMsg{err}
+	}
 
+	ttyd := ttyd.New(m.config.Settings.LoginCommand, port)
 	if err := ttyd.Start(); err != nil {
 		return errMsg{err}
 	}
@@ -94,7 +99,7 @@ func (m *Model) startTtyd() tea.Msg {
 }
 
 func (m *Model) open() tea.Msg {
-	page, err := openPage(m.config, *m.ttyd.Port)
+	page, err := openPage(m.config, m.ttyd.Port)
 	if err != nil {
 		return errMsg{err}
 	}
