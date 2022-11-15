@@ -2,8 +2,10 @@ package util
 
 import "net"
 
+var netListen = net.Listen
+
 func RandomUnusedTCPPort() (int, error) {
-	addr, err := net.Listen("tcp", ":0")
+	addr, err := netListen("tcp", ":0")
 	if err != nil {
 		return 0, err
 	}
