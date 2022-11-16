@@ -144,7 +144,7 @@ func Test_parseTypeAction(t *testing.T) {
 
 	tests := []struct {
 		input   map[string]interface{}
-		want    *TypeAction
+		want    Action
 		wantErr bool
 	}{
 		{
@@ -191,7 +191,7 @@ func Test_parseKeyAction(t *testing.T) {
 
 	tests := []struct {
 		input   map[string]interface{}
-		want    *KeyAction
+		want    Action
 		wantErr bool
 	}{
 		{
@@ -236,7 +236,7 @@ func Test_parseKeyAction(t *testing.T) {
 func Test_parseSleepAction(t *testing.T) {
 	tests := []struct {
 		input   map[string]interface{}
-		want    *SleepAction
+		want    Action
 		wantErr bool
 	}{
 		{
@@ -266,7 +266,7 @@ func Test_parseSleepAction(t *testing.T) {
 func Test_parsePauseAction(t *testing.T) {
 	tests := []struct {
 		input   map[string]interface{}
-		want    *PauseAction
+		want    Action
 		wantErr bool
 	}{
 		{
@@ -303,7 +303,7 @@ func Test_parseCtrlAction(t *testing.T) {
 
 	tests := []struct {
 		input   map[string]interface{}
-		want    *CtrlAction
+		want    Action
 		wantErr bool
 	}{
 		{
