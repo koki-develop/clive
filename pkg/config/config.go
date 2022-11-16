@@ -65,6 +65,15 @@ func DecodeMap(m map[string]interface{}) (*Config, error) {
 		return nil, errors.WithMessage(ErrInvalidConfig, err.Error())
 	}
 
+	cfg, err := yamlToConfig(&y)
+	if err != nil {
+		return nil, err
+	}
+
+	return cfg, nil
+}
+
+func yamlToConfig(y *configYaml) (*Config, error) {
 	stgs, err := DecodeSettings(y.Settings)
 	if err != nil {
 		return nil, err
