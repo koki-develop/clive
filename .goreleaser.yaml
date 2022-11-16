@@ -5,6 +5,7 @@ builds:
       - linux
       - windows
       - darwin
+
 archives:
   - replacements:
       darwin: Darwin
@@ -12,5 +13,13 @@ archives:
       windows: Windows
       386: i386
       amd64: x86_64
+
 checksum:
   name_template: 'checksums.txt'
+
+brews:
+  - tap:
+      owner: koki-develop
+      name: homebrew-tap
+    homepage: https://github.com/koki-develop/clive
+    description: Automates terminal operations and lets you view them live via a browser.
