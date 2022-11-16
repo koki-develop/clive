@@ -8,6 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
+	"github.com/koki-develop/clive/pkg/browser"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
 	"github.com/koki-develop/clive/pkg/util"
@@ -107,6 +108,38 @@ func (m *Model) open() tea.Msg {
 	return openMsg{page}
 }
 
+func openPage(cfg *config.Config, port int) (*rod.Page, error) {
+	url := fmt.Sprintf("http://localhost:%d", port)
+	p, err := browser.Open(cfg.Settings.BrowserBin, url)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := setupPage(cfg.Settings, p); err != nil {
+		return nil, err
+	}
+
+	return p, nil
+}
+
+func setupPage(stgs *config.Settings, page *rod.Page) error {
+	// font family
+	if stgs.FontFamily != nil {
+		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *stgs.FontFamily)); err != nil {
+			return err
+		}
+	}
+
+	// font size
+	if _, err := page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", stgs.FontSize)); err != nil {
+		return err
+	}
+	if _, err := page.Eval("term.fit"); err != nil {
+		return err
+	}
+
+	return nil
+}
 func (m *Model) quit() tea.Msg {
 	return quitMsg{}
 }
