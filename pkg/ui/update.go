@@ -64,6 +64,9 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	case quitMsg:
 		m.quitting = true
+		if m.config.Settings.SkipPauseBeforeQuit {
+			return m, tea.Quit
+		}
 		return m, nil
 	case errMsg:
 		m.err = msg.err
