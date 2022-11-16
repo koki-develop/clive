@@ -29,6 +29,7 @@ Automates terminal operations and lets you view them live via a browser.
 - [コマンド](#コマンド)
   - [`init`](#clive-init)
   - [`start`](#clive-start)
+  - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
 - [設定](#設定)
   - [`actions`](#actions)
@@ -119,6 +120,18 @@ $ clive start
 ```
 
 | フラグ | デフォルト | 説明 |
+| --- | --- | --- |
+| `-c`, `--config` | `./clive.yml` | 設定ファイル名。 |
+
+### `clive validate`
+
+設定ファイルを検証します。
+
+```sh
+$ clive validate
+```
+
+| Flag | Default | Description |
 | --- | --- | --- |
 | `-c`, `--config` | `./clive.yml` | 設定ファイル名。 |
 
