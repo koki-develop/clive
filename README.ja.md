@@ -279,6 +279,7 @@ actions:
 - [`fontFamily`](#fontfamily) - フォントファミリー。
 - [`defaultSpeed`](#defaultspeed) - デフォルトの入力速度。
 - [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップ。
 
 #### `loginCommand`
 
@@ -332,6 +333,17 @@ settings:
 # e.g.
 settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # Sidekick を使う
+```
+
+#### `skipPauseBeforeQuit`
+
+`true` に設定すると終了前の一時停止をスキップします。  
+デフォルト: `false`
+
+```yaml
+# e.g.
+settings:
+  skipPauseBeforeQuit: true
 ```
 
 ## サンプル
