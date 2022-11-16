@@ -24,21 +24,21 @@ English | <a href="./README.ja.md">日本語</a>
 
 # cLive
 
-- [Prerequisite](#prerequisite)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Commands](#commands)
+- [Prerequisite](#information_source-prerequisite)
+- [Installation](#zap-installation)
+- [Getting Started](#beginner-getting-started)
+- [Commands](#rocket-commands)
   - [`init`](#clive-init)
   - [`start`](#clive-start)
   - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
-- [Configuration](#configuration)
+- [Configuration](#gear-configuration)
   - [`actions`](#actions)
   - [`settings`](#settings)
-- [Examples](#examples)
-- [License](#license)
+- [Examples](#book-examples)
+- [License](#memo-license)
 
-## Prerequisite
+## :information_source: Prerequisite
 
 cLive requires [ttyd](https://tsl0922.github.io/ttyd/) to be installed.  
 For example, if you use homebrew, you can install it with `brew install`.
@@ -49,10 +49,10 @@ $ brew install ttyd
 
 See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more information.
 
-## Installation
+## :zap: Installation
 
 > **Note**
-> There are prerequisites for using cLive. See [`Prerequisite`](#prerequisite) for details.
+> There are prerequisites for using cLive. See [`Prerequisite`](#information_source-prerequisite) for details.
 
 If you use homebrew, you can install cLive with `brew install`.
 
@@ -68,7 +68,7 @@ $ go install github.com/koki-develop/clive@latest
 
 Or download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
 
-## Getting Started
+## :beginner: Getting Started
 
 First, run `clive init`.
 
@@ -99,7 +99,7 @@ Finally, run `clive start` to launch the browser and start cLive.
 $ clive start
 ```
 
-## Commands
+## :rocket: Commands
 
 Available commands:
 
@@ -122,7 +122,7 @@ $ clive init
 ### `clive start`
 
 Load config file and start cLive.  
-See [`Configuration`](#configuration) for config file.
+See [`Configuration`](#gear-configuration) for config file.
 
 ```sh
 $ clive start
@@ -164,7 +164,7 @@ Available shells:
 - powershell
 - zsh
 
-## Configuration
+## :gear: Configuration
 
 Config file consists of `actions` and `settings`.
 
@@ -349,10 +349,10 @@ settings:
   skipPauseBeforeQuit: true
 ```
 
-## Examples
+## :book: Examples
 
 For more examples see the [`examples/`](./examples/) directory.
 
-## License
+## :memo: License
 
 [MIT License](./LICENSE)
