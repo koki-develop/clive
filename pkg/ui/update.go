@@ -208,12 +208,21 @@ func (m *Model) typeChar(c rune) error {
 		if err != nil {
 			return err
 		}
-		if err := area.Input(string(c)); err != nil {
+		if err := m.input(area, string(c)); err != nil {
 			return err
 		}
-		if err := m.page.WaitIdle(time.Minute); err != nil {
-			return err
-		}
+	}
+
+	return nil
+}
+
+func (m *Model) input(elm *rod.Element, text string) error {
+	if err := elm.Input(text); err != nil {
+		return err
+	}
+
+	if err := m.page.WaitIdle(time.Minute); err != nil {
+		return err
 	}
 
 	return nil
