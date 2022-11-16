@@ -24,19 +24,19 @@ English | <a href="./README.ja.md">日本語</a>
 
 # cLive
 
-- [Prerequisite](#prerequisite)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [Commands](#commands)
+- [Prerequisite](#information_source-prerequisite)
+- [Installation](#zap-installation)
+- [Getting Started](#beginner-getting-started)
+- [Commands](#rocket-commands)
   - [`init`](#clive-init)
   - [`start`](#clive-start)
   - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
-- [Configuration](#configuration)
+- [Configuration](#gear-configuration)
   - [`actions`](#actions)
   - [`settings`](#settings)
-- [Examples](#examples)
-- [License](#license)
+- [Examples](#book-examples)
+- [License](#memo-license)
 
 ## :information_source: Prerequisite
 
@@ -52,7 +52,7 @@ See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more 
 ## :zap: Installation
 
 > **Note**
-> There are prerequisites for using cLive. See [`Prerequisite`](#prerequisite) for details.
+> There are prerequisites for using cLive. See [`Prerequisite`](#information_source-prerequisite) for details.
 
 If you use homebrew, you can install cLive with `brew install`.
 
@@ -122,7 +122,7 @@ $ clive init
 ### `clive start`
 
 Load config file and start cLive.  
-See [`Configuration`](#configuration) for config file.
+See [`Configuration`](#gear-configuration) for config file.
 
 ```sh
 $ clive start
