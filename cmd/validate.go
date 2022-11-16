@@ -3,20 +3,21 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/koki-develop/clive/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 var validateCmd = &cobra.Command{
 	Use:   "validate",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Validate a config file",
+	Long:  "Validate a config file.",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if _, err := config.Load(configFilename); err != nil {
+			return err
+		}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("validate called")
+		fmt.Printf("Config file %s is valid!\n", configFilename)
+		return nil
 	},
 }
 
