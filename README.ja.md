@@ -40,7 +40,7 @@ Automates terminal operations and lets you view them live via a browser.
 ## 前提条件
 
 cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) がインストールされている必要があります。  
-例えば homebrew を使用している場合、 `brew install ttyd` でインストールすることができます。
+例えば homebrew を使用している場合、 `brew install` でインストールすることができます。
 
 ```sh
 $ brew install ttyd
@@ -53,7 +53,13 @@ $ brew install ttyd
 > **Note**
 > cLive を使用するには前提条件があります。詳しくは [`前提条件`](#前提条件) を参照してください。
 
-cLive は `go install` でインストールすることができます。
+もし homebrew を使用している場合、 `brew install` でインストールすることができます。
+
+```sh
+$ brew install koki-develop/tap/clive
+```
+
+また、 `go install` でもインストールすることができます。
 
 ```sh
 $ go install github.com/koki-develop/clive@latest
