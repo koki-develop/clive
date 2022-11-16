@@ -7,7 +7,7 @@ var (
 )
 
 func init() {
-	for _, cmd := range []*cobra.Command{startCmd, initCmd} {
+	for _, cmd := range []*cobra.Command{startCmd, initCmd, validateCmd} {
 		cmd.Flags().StringVarP(&configFilename, "config", "c", "./clive.yml", "config file name")
 	}
 }

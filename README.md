@@ -30,6 +30,7 @@ English | <a href="./README.ja.md">日本語</a>
 - [Commands](#commands)
   - [`init`](#clive-init)
   - [`start`](#clive-start)
+  - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
 - [Configuration](#configuration)
   - [`actions`](#actions)
@@ -119,6 +120,18 @@ See [`Configuration`](#configuration) for config file.
 
 ```sh
 $ clive start
+```
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-c`, `--config` | `./clive.yml` | Config file name. |
+
+### `clive validate`
+
+Validate a config file.
+
+```sh
+$ clive validate
 ```
 
 | Flag | Default | Description |
