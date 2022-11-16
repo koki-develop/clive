@@ -38,7 +38,7 @@ English | <a href="./README.ja.md">日本語</a>
 - [Examples](#examples)
 - [License](#license)
 
-## Prerequisite
+## :information_source: Prerequisite
 
 cLive requires [ttyd](https://tsl0922.github.io/ttyd/) to be installed.  
 For example, if you use homebrew, you can install it with `brew install`.
@@ -49,7 +49,7 @@ $ brew install ttyd
 
 See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more information.
 
-## Installation
+## :zap: Installation
 
 > **Note**
 > There are prerequisites for using cLive. See [`Prerequisite`](#prerequisite) for details.
@@ -68,7 +68,7 @@ $ go install github.com/koki-develop/clive@latest
 
 Or download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
 
-## Getting Started
+## :beginner: Getting Started
 
 First, run `clive init`.
 
@@ -99,7 +99,7 @@ Finally, run `clive start` to launch the browser and start cLive.
 $ clive start
 ```
 
-## Commands
+## :rocket: Commands
 
 Available commands:
 
@@ -164,7 +164,7 @@ Available shells:
 - powershell
 - zsh
 
-## Configuration
+## :gear: Configuration
 
 Config file consists of `actions` and `settings`.
 
@@ -349,10 +349,10 @@ settings:
   skipPauseBeforeQuit: true
 ```
 
-## Examples
+## :book: Examples
 
 For more examples see the [`examples/`](./examples/) directory.
 
-## License
+## :memo: License
 
 [MIT License](./LICENSE)
