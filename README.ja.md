@@ -23,21 +23,21 @@ Automates terminal operations and lets you view them live via a browser.
 
 # cLive
 
-- [前提条件](#前提条件)
-- [インストール](#インストール)
-- [基本的な使い方](#基本的な使い方)
-- [コマンド](#コマンド)
+- [前提条件](#information_source-前提条件)
+- [インストール](#zap-インストール)
+- [基本的な使い方](#beginner-基本的な使い方)
+- [コマンド](#rocket-コマンド)
   - [`init`](#clive-init)
   - [`start`](#clive-start)
   - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
-- [設定](#設定)
+- [設定](#gear-設定)
   - [`actions`](#actions)
   - [`settings`](#settings)
-- [サンプル](#サンプル)
-- [ライセンス](#ライセンス)
+- [サンプル](#book-サンプル)
+- [ライセンス](#memo-ライセンス)
 
-## 前提条件
+## :information_source: 前提条件
 
 cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) がインストールされている必要があります。  
 例えば homebrew を使用している場合、 `brew install` でインストールすることができます。
@@ -48,10 +48,10 @@ $ brew install ttyd
 
 それ以外のインストール方法については [ttyd のドキュメント](https://github.com/tsl0922/ttyd#installation)を参照してください。
 
-## インストール
+## :zap: インストール
 
 > **Note**
-> cLive を使用するには前提条件があります。詳しくは [`前提条件`](#前提条件) を参照してください。
+> cLive を使用するには前提条件があります。詳しくは [`前提条件`](#information_source-前提条件) を参照してください。
 
 もし homebrew を使用している場合、 `brew install` でインストールすることができます。
 
@@ -67,7 +67,7 @@ $ go install github.com/koki-develop/clive@latest
 
 もしくは [Releases ページ](https://github.com/koki-develop/clive/releases/latest)からバイナリをダウンロードしてください。
 
-## 基本的な使い方
+## :beginner: 基本的な使い方
 
 まず `clive init` を実行します。
 
@@ -98,7 +98,7 @@ actions:
 $ clive start
 ```
 
-## コマンド
+## :rocket: コマンド
 
 - [`init`](#clive-init) - 設定ファイルを作成します。
 - [`start`](#clive-start) - 設定ファイルを読み込み、 cLive を開始します。
@@ -119,7 +119,7 @@ $ clive init
 ### `clive start`
 
 設定ファイルを読み込み、 cLive を開始します。
-設定ファイルについては[`設定`](#設定)を参照してください。
+設定ファイルについては[`設定`](#gear-設定)を参照してください。
 
 ```sh
 $ clive start
@@ -161,7 +161,7 @@ $ clive completion bash --help
 - powershell
 - zsh
 
-## 設定
+## :gear: 設定
 
 設定ファイルは `actions` と `settings` で構成されます。
 
@@ -346,10 +346,10 @@ settings:
   skipPauseBeforeQuit: true
 ```
 
-## サンプル
+## :book: サンプル
 
 それ以外のサンプルについては [`examples/`](./examples/) ディレクトリを参照してください。
 
-## ライセンス
+## :memo: ライセンス
 
 [MIT License](./LICENSE)
