@@ -7,11 +7,12 @@ import (
 )
 
 type Settings struct {
-	LoginCommand []string `mapstructure:"loginCommand"`
-	FontSize     int      `mapstructure:"fontSize"`
-	FontFamily   *string  `mapstructure:"fontFamily"`
-	DefaultSpeed int      `mapstructure:"defaultSpeed"`
-	BrowserBin   *string  `mapstructure:"browserBin"`
+	LoginCommand        []string `mapstructure:"loginCommand"`
+	FontSize            int      `mapstructure:"fontSize"`
+	FontFamily          *string  `mapstructure:"fontFamily"`
+	DefaultSpeed        int      `mapstructure:"defaultSpeed"`
+	BrowserBin          *string  `mapstructure:"browserBin"`
+	SkipPauseBeforeQuit bool     `mapstructure:"skipPauseBeforeQuit"`
 }
 
 var settingsFields = []string{
@@ -20,15 +21,17 @@ var settingsFields = []string{
 	"fontFamily",
 	"defaultSpeed",
 	"browserBin",
+	"skipPauseBeforeQuit",
 }
 
 func DecodeSettings(m map[string]interface{}) (*Settings, error) {
 	stgs := Settings{
-		LoginCommand: []string{"bash", "--login"},
-		FontSize:     22,
-		FontFamily:   nil,
-		DefaultSpeed: 10,
-		BrowserBin:   nil,
+		LoginCommand:        []string{"bash", "--login"},
+		FontSize:            22,
+		FontFamily:          nil,
+		DefaultSpeed:        10,
+		BrowserBin:          nil,
+		SkipPauseBeforeQuit: false,
 	}
 	if m == nil {
 		return &stgs, nil

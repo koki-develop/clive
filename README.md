@@ -282,6 +282,7 @@ Available settings:
 - [`fontFamily`](#fontfamily) - Font family
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
 - [`browserBin`](#browserbin) - Path to executable browser binary.
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - Skip pause before quitting.
 
 #### `loginCommand`
 
@@ -335,6 +336,17 @@ See [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/maste
 # e.g.
 settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
+```
+
+#### `skipPauseBeforeQuit`
+
+If set to `true`, skip pause before quitting.  
+Default: `false`
+
+```yaml
+# e.g.
+settings:
+  skipPauseBeforeQuit: true
 ```
 
 ## Examples

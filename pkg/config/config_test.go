@@ -22,11 +22,12 @@ actions:
 `,
 			&Config{
 				Settings: &Settings{
-					LoginCommand: []string{"bash", "--login"},
-					FontSize:     22,
-					FontFamily:   nil,
-					DefaultSpeed: 10,
-					BrowserBin:   nil,
+					LoginCommand:        []string{"bash", "--login"},
+					FontSize:            22,
+					FontFamily:          nil,
+					DefaultSpeed:        10,
+					BrowserBin:          nil,
+					SkipPauseBeforeQuit: false,
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -43,16 +44,18 @@ settings:
   fontFamily: FONT_FAMILY
   defaultSpeed: 200
   browserBin: BROWSER_BIN
+  skipPauseBeforeQuit: true
 actions:
   - pause
 `,
 			&Config{
 				Settings: &Settings{
-					LoginCommand: []string{"hoge", "fuga"},
-					FontSize:     100,
-					FontFamily:   util.String("FONT_FAMILY"),
-					DefaultSpeed: 200,
-					BrowserBin:   util.String("BROWSER_BIN"),
+					LoginCommand:        []string{"hoge", "fuga"},
+					FontSize:            100,
+					FontFamily:          util.String("FONT_FAMILY"),
+					DefaultSpeed:        200,
+					BrowserBin:          util.String("BROWSER_BIN"),
+					SkipPauseBeforeQuit: true,
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -81,11 +84,12 @@ actions:
 `,
 			&Config{
 				Settings: &Settings{
-					LoginCommand: []string{"bash", "--login"},
-					FontSize:     22,
-					FontFamily:   nil,
-					DefaultSpeed: 10,
-					BrowserBin:   nil,
+					LoginCommand:        []string{"bash", "--login"},
+					FontSize:            22,
+					FontFamily:          nil,
+					DefaultSpeed:        10,
+					BrowserBin:          nil,
+					SkipPauseBeforeQuit: false,
 				},
 				Actions: []Action{
 					&TypeAction{Type: "Hello", Count: 1, Speed: 10},
@@ -156,11 +160,12 @@ func TestDecodeMap(t *testing.T) {
 			},
 			&Config{
 				Settings: &Settings{
-					LoginCommand: []string{"bash", "--login"},
-					FontSize:     22,
-					FontFamily:   nil,
-					DefaultSpeed: 10,
-					BrowserBin:   nil,
+					LoginCommand:        []string{"bash", "--login"},
+					FontSize:            22,
+					FontFamily:          nil,
+					DefaultSpeed:        10,
+					BrowserBin:          nil,
+					SkipPauseBeforeQuit: false,
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -171,21 +176,23 @@ func TestDecodeMap(t *testing.T) {
 		{
 			map[string]interface{}{
 				"settings": map[string]interface{}{
-					"loginCommand": []interface{}{"hoge", "fuga"},
-					"fontSize":     100,
-					"fontFamily":   "FONT_FAMILY",
-					"defaultSpeed": 200,
-					"browserBin":   "BROWSER_BIN",
+					"loginCommand":        []interface{}{"hoge", "fuga"},
+					"fontSize":            100,
+					"fontFamily":          "FONT_FAMILY",
+					"defaultSpeed":        200,
+					"browserBin":          "BROWSER_BIN",
+					"skipPauseBeforeQuit": true,
 				},
 				"actions": []interface{}{"pause"},
 			},
 			&Config{
 				Settings: &Settings{
-					LoginCommand: []string{"hoge", "fuga"},
-					FontSize:     100,
-					FontFamily:   util.String("FONT_FAMILY"),
-					DefaultSpeed: 200,
-					BrowserBin:   util.String("BROWSER_BIN"),
+					LoginCommand:        []string{"hoge", "fuga"},
+					FontSize:            100,
+					FontFamily:          util.String("FONT_FAMILY"),
+					DefaultSpeed:        200,
+					BrowserBin:          util.String("BROWSER_BIN"),
+					SkipPauseBeforeQuit: true,
 				},
 				Actions: []Action{
 					&PauseAction{},
