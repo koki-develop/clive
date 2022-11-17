@@ -103,7 +103,7 @@ func (m *Model) startTtyd() tea.Msg {
 }
 
 func (m *Model) open() tea.Msg {
-	page, err := openPage(m.config, m.ttyd.Port)
+	page, err := m.openPage()
 	if err != nil {
 		return errMsg{err}
 	}
@@ -111,30 +111,30 @@ func (m *Model) open() tea.Msg {
 	return openMsg{page}
 }
 
-func openPage(cfg *config.Config, port int) (*rod.Page, error) {
-	url := fmt.Sprintf("http://localhost:%d", port)
-	p, err := browser.Open(cfg.Settings.BrowserBin, url)
+func (m *Model) openPage() (*rod.Page, error) {
+	url := fmt.Sprintf("http://localhost:%d", m.ttyd.Port)
+	p, err := browser.Open(m.config.Settings.BrowserBin, url)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := setupPage(cfg.Settings, p); err != nil {
+	if err := m.setupPage(p); err != nil {
 		return nil, err
 	}
 
 	return p, nil
 }
 
-func setupPage(stgs *config.Settings, page *rod.Page) error {
+func (m *Model) setupPage(page *rod.Page) error {
 	// font family
-	if stgs.FontFamily != nil {
-		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *stgs.FontFamily)); err != nil {
+	if m.config.Settings.FontFamily != nil {
+		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily)); err != nil {
 			return err
 		}
 	}
 
 	// font size
-	if _, err := page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", stgs.FontSize)); err != nil {
+	if _, err := page.Eval(fmt.Sprintf("() => term.options.fontSize = %d", m.config.Settings.FontSize)); err != nil {
 		return err
 	}
 	if _, err := page.Eval("term.fit"); err != nil {
