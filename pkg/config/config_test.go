@@ -28,6 +28,7 @@ actions:
 					DefaultSpeed:        10,
 					SkipPauseBeforeQuit: false,
 					BrowserBin:          nil,
+					Headless:            false,
 					Width:               nil,
 					Height:              nil,
 				},
@@ -46,6 +47,7 @@ settings:
   fontFamily: FONT_FAMILY
   defaultSpeed: 200
   skipPauseBeforeQuit: true
+  headless: true
   browserBin: BROWSER_BIN
   width: 1600
   height: 800
@@ -60,6 +62,7 @@ actions:
 					DefaultSpeed:        200,
 					SkipPauseBeforeQuit: true,
 					BrowserBin:          util.String("BROWSER_BIN"),
+					Headless:            true,
 					Width:               util.Int(1600),
 					Height:              util.Int(800),
 				},
@@ -96,6 +99,7 @@ actions:
 					DefaultSpeed:        10,
 					SkipPauseBeforeQuit: false,
 					BrowserBin:          nil,
+					Headless:            false,
 					Width:               nil,
 					Height:              nil,
 				},
@@ -174,6 +178,7 @@ func TestDecodeMap(t *testing.T) {
 					DefaultSpeed:        10,
 					SkipPauseBeforeQuit: false,
 					BrowserBin:          nil,
+					Headless:            false,
 					Width:               nil,
 					Height:              nil,
 				},
@@ -192,6 +197,7 @@ func TestDecodeMap(t *testing.T) {
 					"defaultSpeed":        200,
 					"skipPauseBeforeQuit": true,
 					"browserBin":          "BROWSER_BIN",
+					"headless":            true,
 					"width":               1600,
 					"height":              800,
 				},
@@ -205,6 +211,7 @@ func TestDecodeMap(t *testing.T) {
 					DefaultSpeed:        200,
 					SkipPauseBeforeQuit: true,
 					BrowserBin:          util.String("BROWSER_BIN"),
+					Headless:            true,
 					Width:               util.Int(1600),
 					Height:              util.Int(800),
 				},
@@ -235,6 +242,7 @@ func TestDecodeMap(t *testing.T) {
 					FontFamily:   nil,
 					DefaultSpeed: 10,
 					BrowserBin:   nil,
+					Headless:     false,
 					Width:        nil,
 					Height:       nil,
 				},
