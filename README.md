@@ -281,8 +281,8 @@ Available settings:
 - [`fontSize`](#fontsize) - Font size.
 - [`fontFamily`](#fontfamily) - Font family
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
-- [`browserBin`](#browserbin) - Path to executable browser binary.
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - Skip pause before quitting.
+- [`browserBin`](#browserbin) - Path to executable browser binary.
 - [`width`](#width) - Window width.
 - [`height`](#height) - Window height.
 
@@ -329,17 +329,6 @@ settings:
   defaultSpeed: 100
 ```
 
-#### `browserBin`
-
-Set path to executable binary for the browser used.  
-See [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
-
-```yaml
-# e.g.
-settings:
-  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
-```
-
 #### `skipPauseBeforeQuit`
 
 If set to `true`, skip pause before quitting.  
@@ -349,6 +338,17 @@ Default: `false`
 # e.g.
 settings:
   skipPauseBeforeQuit: true
+```
+
+#### `browserBin`
+
+Set path to executable binary for the browser used.  
+See [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
+
+```yaml
+# e.g.
+settings:
+  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
 ```
 
 #### `width`

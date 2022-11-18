@@ -278,8 +278,8 @@ actions:
 - [`fontSize`](#fontsize) - フォントサイズ。
 - [`fontFamily`](#fontfamily) - フォントファミリー。
 - [`defaultSpeed`](#defaultspeed) - デフォルトの入力速度。
-- [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップ。
+- [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
 - [`width`](#width) - ウィンドウの幅。
 - [`height`](#height) - ウィンドウの高さ。
 
@@ -326,17 +326,6 @@ settings:
   defaultSpeed: 100
 ```
 
-#### `browserBin`
-
-ブラウザの実行可能なバイナリへのパスを設定します。  
-サポートしているブラウザについては [go-rod のドキュメント](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) を参照してください。
-
-```yaml
-# e.g.
-settings:
-  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # Sidekick を使う
-```
-
 #### `skipPauseBeforeQuit`
 
 `true` に設定すると終了前の一時停止をスキップします。  
@@ -346,6 +335,17 @@ settings:
 # e.g.
 settings:
   skipPauseBeforeQuit: true
+```
+
+#### `browserBin`
+
+ブラウザの実行可能なバイナリへのパスを設定します。  
+サポートしているブラウザについては [go-rod のドキュメント](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) を参照してください。
+
+```yaml
+# e.g.
+settings:
+  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # Sidekick を使う
 ```
 
 #### `width`
