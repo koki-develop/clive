@@ -28,6 +28,8 @@ actions:
 					DefaultSpeed:        10,
 					BrowserBin:          nil,
 					SkipPauseBeforeQuit: false,
+					Width:               nil,
+					Height:              nil,
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -45,6 +47,8 @@ settings:
   defaultSpeed: 200
   browserBin: BROWSER_BIN
   skipPauseBeforeQuit: true
+  width: 1600
+  height: 800
 actions:
   - pause
 `,
@@ -56,6 +60,8 @@ actions:
 					DefaultSpeed:        200,
 					BrowserBin:          util.String("BROWSER_BIN"),
 					SkipPauseBeforeQuit: true,
+					Width:               util.Int(1600),
+					Height:              util.Int(800),
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -90,6 +96,8 @@ actions:
 					DefaultSpeed:        10,
 					BrowserBin:          nil,
 					SkipPauseBeforeQuit: false,
+					Width:               nil,
+					Height:              nil,
 				},
 				Actions: []Action{
 					&TypeAction{Type: "Hello", Count: 1, Speed: 10},
@@ -166,6 +174,8 @@ func TestDecodeMap(t *testing.T) {
 					DefaultSpeed:        10,
 					BrowserBin:          nil,
 					SkipPauseBeforeQuit: false,
+					Width:               nil,
+					Height:              nil,
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -182,6 +192,8 @@ func TestDecodeMap(t *testing.T) {
 					"defaultSpeed":        200,
 					"browserBin":          "BROWSER_BIN",
 					"skipPauseBeforeQuit": true,
+					"width":               1600,
+					"height":              800,
 				},
 				"actions": []interface{}{"pause"},
 			},
@@ -193,6 +205,8 @@ func TestDecodeMap(t *testing.T) {
 					DefaultSpeed:        200,
 					BrowserBin:          util.String("BROWSER_BIN"),
 					SkipPauseBeforeQuit: true,
+					Width:               util.Int(1600),
+					Height:              util.Int(800),
 				},
 				Actions: []Action{
 					&PauseAction{},
@@ -221,6 +235,8 @@ func TestDecodeMap(t *testing.T) {
 					FontFamily:   nil,
 					DefaultSpeed: 10,
 					BrowserBin:   nil,
+					Width:        nil,
+					Height:       nil,
 				},
 				Actions: []Action{
 					&TypeAction{Type: "Hello", Count: 1, Speed: 10},

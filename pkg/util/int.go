@@ -12,3 +12,7 @@ func Max(x, y int) int {
 func Digits(n int) int {
 	return len(strconv.Itoa(n))
 }
+
+func Int(v int) *int {
+	return &v
+}

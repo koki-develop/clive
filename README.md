@@ -283,6 +283,8 @@ Available settings:
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
 - [`browserBin`](#browserbin) - Path to executable browser binary.
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - Skip pause before quitting.
+- [`width`](#width) - Window width.
+- [`height`](#height) - Window height.
 
 #### `loginCommand`
 
@@ -347,6 +349,26 @@ Default: `false`
 # e.g.
 settings:
   skipPauseBeforeQuit: true
+```
+
+#### `width`
+
+Window width.
+
+```yaml
+# e.g.
+settings:
+  width: 1600
+```
+
+#### `height`
+
+Window height.
+
+```yaml
+# e.g.
+settings:
+  height: 800
 ```
 
 ## :book: Examples

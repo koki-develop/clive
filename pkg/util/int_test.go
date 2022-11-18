@@ -81,3 +81,8 @@ func TestDigits(t *testing.T) {
 		})
 	}
 }
+
+func TestInt(t *testing.T) {
+	i := 1
+	assert.Equal(t, &i, Int(i))
+}

@@ -280,6 +280,8 @@ actions:
 - [`defaultSpeed`](#defaultspeed) - デフォルトの入力速度。
 - [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップ。
+- [`width`](#width) - ウィンドウの幅。
+- [`height`](#height) - ウィンドウの高さ。
 
 #### `loginCommand`
 
@@ -344,6 +346,26 @@ settings:
 # e.g.
 settings:
   skipPauseBeforeQuit: true
+```
+
+#### `width`
+
+ウィンドウの幅。
+
+```yaml
+# e.g.
+settings:
+  width: 1600
+```
+
+#### `height`
+
+ウィンドウの高さ。
+
+```yaml
+# e.g.
+settings:
+  height: 800
 ```
 
 ## :book: サンプル
