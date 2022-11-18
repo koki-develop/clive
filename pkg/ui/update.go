@@ -114,7 +114,7 @@ func (m *Model) open() tea.Msg {
 
 func (m *Model) openPage() (*rod.Page, error) {
 	url := fmt.Sprintf("http://localhost:%d", m.ttyd.Port)
-	p, err := browser.Open(m.config.Settings.BrowserBin, url)
+	p, err := browser.Open(&browser.BrowserConfig{Bin: m.config.Settings.BrowserBin, URL: url, Headless: m.config.Settings.Headless})
 	if err != nil {
 		return nil, err
 	}
