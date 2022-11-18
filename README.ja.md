@@ -278,7 +278,7 @@ actions:
 - [`fontSize`](#fontsize) - フォントサイズ。
 - [`fontFamily`](#fontfamily) - フォントファミリー。
 - [`defaultSpeed`](#defaultspeed) - デフォルトの入力速度。
-- [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップ。
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップするかどうか。
 - [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
 - [`headless`](#headless) - ブラウザをヘッドレスモードで動作させるかどうか。
 - [`width`](#width) - ウィンドウの幅。
@@ -329,7 +329,7 @@ settings:
 
 #### `skipPauseBeforeQuit`
 
-`true` に設定すると終了前の一時停止をスキップします。  
+終了前の一時停止をスキップするかどうか。  
 デフォルト: `false`
 
 ```yaml

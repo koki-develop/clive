@@ -281,7 +281,7 @@ Available settings:
 - [`fontSize`](#fontsize) - Font size.
 - [`fontFamily`](#fontfamily) - Font family
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
-- [`skipPauseBeforeQuit`](#skippausebeforequit) - Skip pause before quitting.
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pause before quitting.
 - [`browserBin`](#browserbin) - Path to executable browser binary.
 - [`headless`](#headless) - Whether to run browser in headless mode.
 - [`width`](#width) - Window width.
@@ -332,7 +332,7 @@ settings:
 
 #### `skipPauseBeforeQuit`
 
-If set to `true`, skip pause before quitting.  
+Whether to skip pause before quitting.  
 Default: `false`
 
 ```yaml
