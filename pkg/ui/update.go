@@ -8,6 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
+	"github.com/go-rod/rod/lib/proto"
 	"github.com/koki-develop/clive/pkg/browser"
 	"github.com/koki-develop/clive/pkg/config"
 	"github.com/koki-develop/clive/pkg/ttyd"
@@ -126,6 +127,13 @@ func (m *Model) openPage() (*rod.Page, error) {
 }
 
 func (m *Model) setupPage(page *rod.Page) error {
+	// window size
+	if m.config.Settings.Width != nil || m.config.Settings.Height != nil {
+		if err := page.SetWindow(&proto.BrowserBounds{Width: m.config.Settings.Width, Height: m.config.Settings.Height}); err != nil {
+			return err
+		}
+	}
+
 	// font family
 	if m.config.Settings.FontFamily != nil {
 		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily)); err != nil {
