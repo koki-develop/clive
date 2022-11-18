@@ -8,13 +8,19 @@ import (
 	"github.com/go-rod/rod/lib/proto"
 )
 
-func Open(bin *string, url string) (*rod.Page, error) {
-	b, err := launchBrowser(bin)
+type BrowserConfig struct {
+	Bin      *string
+	URL      string
+	Headless bool
+}
+
+func Open(cfg *BrowserConfig) (*rod.Page, error) {
+	b, err := launchBrowser(cfg)
 	if err != nil {
 		return nil, err
 	}
 
-	p, err := b.Page(proto.TargetCreateTarget{URL: url})
+	p, err := b.Page(proto.TargetCreateTarget{URL: cfg.URL})
 	if err != nil {
 		return nil, err
 	}
@@ -25,15 +31,15 @@ func Open(bin *string, url string) (*rod.Page, error) {
 	return p, nil
 }
 
-func launchBrowser(bin *string) (*rod.Browser, error) {
+func launchBrowser(cfg *BrowserConfig) (*rod.Browser, error) {
 	path, _ := launcher.LookPath()
-	if bin != nil {
-		path = *bin
+	if cfg.Bin != nil {
+		path = *cfg.Bin
 	}
 
 	u, err := launcher.New().
 		Leakless(true).
-		Headless(false).
+		Headless(cfg.Headless).
 		Bin(path).
 		Launch()
 	if err != nil {

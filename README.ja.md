@@ -278,8 +278,9 @@ actions:
 - [`fontSize`](#fontsize) - フォントサイズ。
 - [`fontFamily`](#fontfamily) - フォントファミリー。
 - [`defaultSpeed`](#defaultspeed) - デフォルトの入力速度。
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップするかどうか。
 - [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
-- [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップ。
+- [`headless`](#headless) - ブラウザをヘッドレスモードで動作させるかどうか。
 - [`width`](#width) - ウィンドウの幅。
 - [`height`](#height) - ウィンドウの高さ。
 
@@ -326,6 +327,17 @@ settings:
   defaultSpeed: 100
 ```
 
+#### `skipPauseBeforeQuit`
+
+終了前の一時停止をスキップするかどうか。  
+デフォルト: `false`
+
+```yaml
+# e.g.
+settings:
+  skipPauseBeforeQuit: true
+```
+
 #### `browserBin`
 
 ブラウザの実行可能なバイナリへのパスを設定します。  
@@ -337,15 +349,15 @@ settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # Sidekick を使う
 ```
 
-#### `skipPauseBeforeQuit`
+#### `headless`
 
-`true` に設定すると終了前の一時停止をスキップします。  
+ブラウザをヘッドレスモードで動作させるかどうか。  
 デフォルト: `false`
 
 ```yaml
 # e.g.
 settings:
-  skipPauseBeforeQuit: true
+  headless: true
 ```
 
 #### `width`

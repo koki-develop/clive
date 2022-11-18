@@ -281,8 +281,9 @@ Available settings:
 - [`fontSize`](#fontsize) - Font size.
 - [`fontFamily`](#fontfamily) - Font family
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pause before quitting.
 - [`browserBin`](#browserbin) - Path to executable browser binary.
-- [`skipPauseBeforeQuit`](#skippausebeforequit) - Skip pause before quitting.
+- [`headless`](#headless) - Whether to run browser in headless mode.
 - [`width`](#width) - Window width.
 - [`height`](#height) - Window height.
 
@@ -329,6 +330,17 @@ settings:
   defaultSpeed: 100
 ```
 
+#### `skipPauseBeforeQuit`
+
+Whether to skip pause before quitting.  
+Default: `false`
+
+```yaml
+# e.g.
+settings:
+  skipPauseBeforeQuit: true
+```
+
 #### `browserBin`
 
 Set path to executable binary for the browser used.  
@@ -340,15 +352,15 @@ settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
 ```
 
-#### `skipPauseBeforeQuit`
+#### `headless`
 
-If set to `true`, skip pause before quitting.  
+Whether to run browser in headless mode.  
 Default: `false`
 
 ```yaml
 # e.g.
 settings:
-  skipPauseBeforeQuit: true
+  headless: true
 ```
 
 #### `width`
