@@ -283,6 +283,7 @@ Available settings:
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - Skip pause before quitting.
 - [`browserBin`](#browserbin) - Path to executable browser binary.
+- [`headless`](#headless) - Whether to run browser in headless mode.
 - [`width`](#width) - Window width.
 - [`height`](#height) - Window height.
 
@@ -349,6 +350,17 @@ See [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/maste
 # e.g.
 settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
+```
+
+#### `headless`
+
+Whether to run browser in headless mode.  
+Default: `false`
+
+```yaml
+# e.g.
+settings:
+  headless: true
 ```
 
 #### `width`

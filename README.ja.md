@@ -280,6 +280,7 @@ actions:
 - [`defaultSpeed`](#defaultspeed) - デフォルトの入力速度。
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - 終了前の一時停止をスキップ。
 - [`browserBin`](#browserbin) - ブラウザの実行可能なバイナリへのパス。
+- [`headless`](#headless) - ブラウザをヘッドレスモードで動作させるかどうか。
 - [`width`](#width) - ウィンドウの幅。
 - [`height`](#height) - ウィンドウの高さ。
 
@@ -346,6 +347,17 @@ settings:
 # e.g.
 settings:
   browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # Sidekick を使う
+```
+
+#### `headless`
+
+ブラウザをヘッドレスモードで動作させるかどうか。  
+デフォルト: `false`
+
+```yaml
+# e.g.
+settings:
+  headless: true
 ```
 
 #### `width`
