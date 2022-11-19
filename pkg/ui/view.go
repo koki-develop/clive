@@ -9,8 +9,10 @@ import (
 )
 
 func (m *Model) View() string {
+	s := ""
+
 	if m.err != nil {
-		return m.errView()
+		s += m.errView() + "\n\n"
 	}
 
 	if m.config == nil {
@@ -21,7 +23,8 @@ func (m *Model) View() string {
 		return m.openingView()
 	}
 
-	s := m.actionsView()
+	s += m.actionsView()
+
 	if m.quitting {
 		s += "\n\n" + m.quittingView()
 	}
@@ -34,7 +37,7 @@ func (m *Model) errView() string {
 		return ""
 	}
 
-	return styleErrorHeader.Render("Error") + "\n" + m.err.Error() + "\n\n" + m.quittingView()
+	return styleErrorHeader.Render("Error") + "\n" + m.err.Error()
 }
 
 func (m *Model) loadingConfigView() string {
