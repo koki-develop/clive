@@ -276,7 +276,7 @@ actions:
 #### `screenshot`
 
 Take a screenshot.  
-Screenshots are saved in `screenshots/`.
+Screenshots you take are saved in `screenshots/`.
 
 ```yaml
 # e.g.

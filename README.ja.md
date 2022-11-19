@@ -273,7 +273,7 @@ actions:
 #### `screenshot`
 
 スクリーンショットを撮影します。  
-スクリーンショットは `screenshots/` に保存されます.
+撮影したスクリーンショットは `screenshots/` に保存されます.
 
 ```yaml
 # e.g.
