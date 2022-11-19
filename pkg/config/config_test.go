@@ -90,6 +90,8 @@ actions:
   - ctrl: c
     count: 10
     speed: 500
+  - screenshot
+  - screenshot:
 `,
 			&Config{
 				Settings: &Settings{
@@ -113,6 +115,8 @@ actions:
 					&PauseAction{},
 					&CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
 					&CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
+					&ScreenshotAction{},
+					&ScreenshotAction{},
 				},
 			},
 			false,
@@ -231,8 +235,12 @@ func TestDecodeMap(t *testing.T) {
 					map[string]interface{}{"sleep": 1000},
 					"pause",
 					map[string]interface{}{"pause": nil},
+					map[string]interface{}{"pause": struct{}{}},
 					map[string]interface{}{"ctrl": "c"},
 					map[string]interface{}{"ctrl": "c", "count": 10, "speed": 500},
+					"screenshot",
+					map[string]interface{}{"screenshot": nil},
+					map[string]interface{}{"screenshot": struct{}{}},
 				},
 			},
 			&Config{
@@ -254,8 +262,12 @@ func TestDecodeMap(t *testing.T) {
 					&SleepAction{Sleep: 1000},
 					&PauseAction{},
 					&PauseAction{},
+					&PauseAction{},
 					&CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
 					&CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
+					&ScreenshotAction{},
+					&ScreenshotAction{},
+					&ScreenshotAction{},
 				},
 			},
 			false,
