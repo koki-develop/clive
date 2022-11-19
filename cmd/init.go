@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,7 @@ var initCmd = &cobra.Command{
 				return err
 			}
 
-			f, err := os.Create(configFilename)
+			f, err := util.CreateFile(configFilename)
 			if err != nil {
 				return err
 			}
