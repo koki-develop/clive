@@ -178,6 +178,7 @@ $ clive completion bash --help
 - [`ctrl`](#ctrl) - Ctrl キーを他のキーと一緒に入力します。
 - [`sleep`](#sleep) - 指定した時間スリープします。
 - [`pause`](#pause) - アクションを一時停止します。
+- [`screenshot`](#screenshot) - スクリーンショットを撮影します。
 
 #### `type`
 
@@ -267,6 +268,17 @@ actions:
 # e.g.
 actions:
   - pause
+```
+
+#### `screenshot`
+
+スクリーンショットを撮影します。  
+スクリーンショットは `screenshots/` に保存されます.
+
+```yaml
+# e.g.
+actions:
+  - screenshot
 ```
 
 ### `settings`
