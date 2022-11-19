@@ -19,6 +19,7 @@ var (
 	_ Action = (*SleepAction)(nil)
 	_ Action = (*PauseAction)(nil)
 	_ Action = (*CtrlAction)(nil)
+	_ Action = (*ScreenshotAction)(nil)
 )
 
 type TypeAction struct {
@@ -75,12 +76,21 @@ func (action *CtrlAction) String() string {
 	return fmt.Sprintf("Ctrl+%s", action.Ctrl)
 }
 
+type ScreenshotAction struct{}
+
+var screenshotActionValidFields = []string{"screenshot"}
+
+func (action *ScreenshotAction) String() string {
+	return "Take a screenshot"
+}
+
 var parseFuncMap = map[string]func(*Settings, map[string]interface{}) (Action, error){
-	"type":  parseTypeAction,
-	"key":   parseKeyAction,
-	"ctrl":  parseCtrlAction,
-	"sleep": parseSleepAction,
-	"pause": parsePauseAction,
+	"type":       parseTypeAction,
+	"key":        parseKeyAction,
+	"ctrl":       parseCtrlAction,
+	"sleep":      parseSleepAction,
+	"pause":      parsePauseAction,
+	"screenshot": parseScreenshotAction,
 }
 
 func ParseAction(stgs *Settings, v interface{}) (Action, error) {
@@ -89,9 +99,11 @@ func ParseAction(stgs *Settings, v interface{}) (Action, error) {
 		switch v {
 		case "pause":
 			return &PauseAction{}, nil
+		case "screenshot":
+			return &ScreenshotAction{}, nil
 		}
 	case map[string]interface{}:
-		for _, k := range []string{"type", "key", "ctrl", "sleep", "pause"} {
+		for _, k := range []string{"type", "key", "ctrl", "sleep", "pause", "screenshot"} {
 			if _, ok := v[k]; ok {
 				return parseFuncMap[k](stgs, v)
 			}
@@ -177,6 +189,14 @@ func parseCtrlAction(settings *Settings, m map[string]interface{}) (Action, erro
 	}
 
 	return &action, nil
+}
+
+func parseScreenshotAction(settings *Settings, m map[string]interface{}) (Action, error) {
+	if err := validateActionFields(m, screenshotActionValidFields); err != nil {
+		return nil, err
+	}
+
+	return &ScreenshotAction{}, nil
 }
 
 func validateActionFields(m map[string]interface{}, valid []string) error {
