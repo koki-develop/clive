@@ -311,7 +311,7 @@ func (m *Model) runCtrlOnce(action *config.CtrlAction) error {
 }
 
 func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
-	if _, err := m.page.Eval("() => term.options.cursorBlink = false"); err != nil {
+	if err := m.setCursorBlink(false); err != nil {
 		return errMsg{err}
 	}
 
@@ -321,7 +321,7 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 		return errMsg{err}
 	}
 
-	if _, err := m.page.Eval("() => term.options.cursorBlink = true"); err != nil {
+	if err := m.setCursorBlink(true); err != nil {
 		return errMsg{err}
 	}
 
@@ -336,4 +336,11 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 	}
 
 	return runMsg{}
+}
+
+func (m *Model) setCursorBlink(v bool) error {
+	if _, err := m.page.Eval(fmt.Sprintf("() => term.options.cursorBlink = %t", v)); err != nil {
+		return err
+	}
+	return nil
 }
