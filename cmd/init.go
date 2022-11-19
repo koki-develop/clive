@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -16,13 +17,14 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Create a config file",
 	Long:  "Create a config file.",
+	Args:  cobra.MaximumNArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if _, err := os.Stat(configFilename); err != nil {
 			if !errors.Is(err, os.ErrNotExist) {
 				return err
 			}
 
-			f, err := os.Create(configFilename)
+			f, err := util.CreateFile(configFilename)
 			if err != nil {
 				return err
 			}
