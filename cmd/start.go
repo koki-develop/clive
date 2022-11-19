@@ -10,6 +10,7 @@ var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Start cLive actions",
 	Long:  "Start cLive actions.",
+	Args:  cobra.MaximumNArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		m := ui.New(configFilename)
 		defer m.Close()
