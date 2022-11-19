@@ -172,6 +172,8 @@ func (m *Model) run() tea.Msg {
 		return m.runSleep(action)
 	case *config.CtrlAction:
 		return m.runCtrl(action)
+	case *config.ScreenshotAction:
+		return m.runScreenshot(action)
 	default:
 		return errMsg{fmt.Errorf("unknown action: %#v", action)}
 	}
@@ -306,4 +308,31 @@ func (m *Model) runCtrlOnce(action *config.CtrlAction) error {
 
 	time.Sleep(time.Duration(action.Speed) * time.Millisecond)
 	return nil
+}
+
+func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
+	if _, err := m.page.Eval("() => term.options.cursorBlink = false"); err != nil {
+		return errMsg{err}
+	}
+
+	buf, err := m.page.Screenshot(false, nil)
+	if err != nil {
+		return errMsg{err}
+	}
+
+	if _, err := m.page.Eval("() => term.options.cursorBlink = true"); err != nil {
+		return errMsg{err}
+	}
+
+	f, err := util.CreateFile(fmt.Sprintf("screenshots/%d.png", m.currentActionIndex+1))
+	if err != nil {
+		return errMsg{err}
+	}
+	defer f.Close()
+
+	if _, err := f.Write(buf); err != nil {
+		return errMsg{err}
+	}
+
+	return runMsg{}
 }
