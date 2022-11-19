@@ -4,8 +4,6 @@ github.com/aymanbagabas/go-osc52 v1.0.3/go.mod h1:zT8H+Rk4VSabYN90pWyugflM3ZhpTZ
 github.com/charmbracelet/bubbles v0.14.0 h1:DJfCwnARfWjZLvMglhSQzo76UZ2gucuHPy9jLWX45Og=
 github.com/charmbracelet/bubbles v0.14.0/go.mod h1:bbeTiXwPww4M031aGi8UK2HT9RDWoiNibae+1yCMtcc=
 github.com/charmbracelet/bubbletea v0.21.0/go.mod h1:GgmJMec61d08zXsOhqRC/AiOx4K4pmz+VIcRIm1FKr4=
-github.com/charmbracelet/bubbletea v0.23.0 h1:oGChhsNcm7kltiTdjxJbVlyh93N5fycluO7MsA2JEeg=
-github.com/charmbracelet/bubbletea v0.23.0/go.mod h1:JAfGK/3/pPKHTnAS8JIE2u9f61BjWTQY57RbT25aMXU=
 github.com/charmbracelet/bubbletea v0.23.1 h1:CYdteX1wCiCzKNUlwm25ZHBIc1GXlYFyUIte8WPvhck=
 github.com/charmbracelet/bubbletea v0.23.1/go.mod h1:JAfGK/3/pPKHTnAS8JIE2u9f61BjWTQY57RbT25aMXU=
 github.com/charmbracelet/harmonica v0.2.0/go.mod h1:KSri/1RMQOZLbw7AHqgcBycp8pgJnQMYYT8QZRqZ1Ao=
@@ -80,6 +78,8 @@ github.com/ysmood/gson v0.7.1 h1:zKL2MTGtynxdBdlZjyGsvEOZ7dkxaY5TH6QhAbTgz0Q=
 github.com/ysmood/gson v0.7.1/go.mod h1:3Kzs5zDl21g5F/BlLTNcuAGAYLKt2lV5G8D1zF3RNmg=
 github.com/ysmood/leakless v0.8.0 h1:BzLrVoiwxikpgEQR0Lk8NyBN5Cit2b1z+u0mgL4ZJak=
 github.com/ysmood/leakless v0.8.0/go.mod h1:R8iAXPRaG97QJwqxs74RdwzcRHT1SWCGTNqY8q0JvMQ=
+golang.org/x/mod v0.7.0 h1:LapD9S96VoQRhi/GrNTqeBJFrUjs5UHCAtTlgwA5oZA=
+golang.org/x/mod v0.7.0/go.mod h1:iBbtSCu2XBx23ZKBPSOrRkjjQPZFPuis4dIYUhu/chs=
 golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
