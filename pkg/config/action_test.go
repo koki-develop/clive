@@ -139,6 +139,26 @@ func TestCtrlAction_String(t *testing.T) {
 	}
 }
 
+func TestScreenshotAction_String(t *testing.T) {
+	type fields struct{}
+	tests := []struct {
+		fields fields
+		want   string
+	}{
+		{
+			fields{},
+			"Take a screenshot",
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			action := &ScreenshotAction{}
+			got := action.String()
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
 func Test_parseTypeAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
@@ -335,6 +355,41 @@ func Test_parseCtrlAction(t *testing.T) {
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
 			got, err := parseCtrlAction(stgs, tt.input)
+			if tt.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+			assert.Equal(t, tt.want, got)
+		})
+	}
+}
+
+func Test_parseScreenshotAction(t *testing.T) {
+	tests := []struct {
+		input   map[string]interface{}
+		want    Action
+		wantErr bool
+	}{
+		{
+			map[string]interface{}{"screenshot": nil},
+			&ScreenshotAction{},
+			false,
+		},
+		{
+			map[string]interface{}{"screenshot": struct{}{}},
+			&ScreenshotAction{},
+			false,
+		},
+		{
+			map[string]interface{}{"screenshot": nil, "a": "A"},
+			nil,
+			true,
+		},
+	}
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
+			got, err := parseScreenshotAction(nil, tt.input)
 			if tt.wantErr {
 				assert.Error(t, err)
 			} else {

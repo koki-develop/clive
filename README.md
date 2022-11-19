@@ -181,6 +181,7 @@ Available actions:
 - [`ctrl`](#ctrl) - Enter the ctrl key with other keys.
 - [`sleep`](#sleep) - Sleep for a specific number of milliseconds.
 - [`pause`](#pause) - Pause actions.
+- [`screenshot`](#screenshot) - Take a screenshot.
 
 #### `type`
 
@@ -270,6 +271,17 @@ Press enter to continue.
 # e.g.
 actions:
   - pause
+```
+
+#### `screenshot`
+
+Take a screenshot.  
+Screenshots you take are saved in `screenshots/`.
+
+```yaml
+# e.g.
+actions:
+  - screenshot
 ```
 
 ### `settings`
