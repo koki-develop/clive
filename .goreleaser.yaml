@@ -1,6 +1,6 @@
 builds:
   - ldflags:
-      - -s -w -X github.com/koki-develop/clive/cmd.version={{.Version}}
+      - -s -w -X github.com/koki-develop/clive/cmd.version=v{{.Version}}
     env:
       - CGO_ENABLED=0
     goos:
