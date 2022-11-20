@@ -42,6 +42,8 @@ func Contains(slice []string, r string) bool {
 }
 
 func Border(str string, style lipgloss.Style) string {
+	// NOTE: Don't use `lipgloss.Border“.
+	//	See https://github.com/charmbracelet/lipgloss/issues/40 .
 	lines := strings.Split(str, "\n")
 	width := text.LongestLineLen(str)
 
