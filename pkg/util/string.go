@@ -2,8 +2,12 @@ package util
 
 import (
 	"bytes"
+	"fmt"
 	"strings"
 	"unicode/utf8"
+
+	"github.com/charmbracelet/lipgloss"
+	"github.com/jedib0t/go-pretty/v6/text"
 )
 
 func TruncateString(s string, l int) (string, bool) {
@@ -49,4 +53,22 @@ func Contains(slice []string, r string) bool {
 		}
 	}
 	return false
+}
+
+func Border(str string, style lipgloss.Style) string {
+	lines := strings.Split(str, "\n")
+	width := text.LongestLineLen(str)
+
+	b := strings.Repeat("─", width+2)
+	bt := style.Render(fmt.Sprintf("┌%s┐", b))
+	bb := style.Render(fmt.Sprintf("└%s┘", b))
+
+	rslt := []string{bt}
+	for _, line := range lines {
+		b := style.Render("│")
+		rslt = append(rslt, fmt.Sprintf("%s %s %s", b, PaddingRight(line, width), b))
+	}
+	rslt = append(rslt, bb)
+
+	return strings.Join(rslt, "\n")
 }
