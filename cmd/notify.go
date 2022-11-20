@@ -35,7 +35,9 @@ func notifyNewRelease(w io.Writer) error {
 			return err
 		}
 		release = *r
-		s.Set("release", release)
+		if err := s.Set("release", release); err != nil {
+			return err
+		}
 	}
 
 	if util.Version(release.Name).Newer(util.Version(version)) {
