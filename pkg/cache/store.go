@@ -16,7 +16,7 @@ type Store struct {
 	ttl      time.Duration
 }
 
-func NewStore() (*Store, error) {
+func NewStore(ttl time.Duration) (*Store, error) {
 	p, err := os.UserCacheDir()
 	if err != nil {
 		return nil, err
@@ -24,7 +24,7 @@ func NewStore() (*Store, error) {
 
 	return &Store{
 		rootPath: filepath.Join(p, "clive"),
-		ttl:      24 * time.Hour,
+		ttl:      ttl,
 	}, nil
 }
 

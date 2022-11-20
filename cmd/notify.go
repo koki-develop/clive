@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"io"
+	"time"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/koki-develop/clive/pkg/cache"
@@ -12,7 +13,7 @@ import (
 )
 
 func notifyNewRelease(w io.Writer) error {
-	s, err := cache.NewStore()
+	s, err := cache.NewStore(12 * time.Hour)
 	if err != nil {
 		return err
 	}
@@ -24,7 +25,9 @@ func notifyNewRelease(w io.Writer) error {
 
 	var release github.Release
 	if c != nil && !c.Expired() {
-		c.Bind(&release)
+		// TBD: Might be too noisy to notify every time.
+		// c.Bind(&release)
+		return nil
 	} else {
 		cl := github.New()
 		r, err := cl.GetLatestRelease("koki-develop", "clive")
