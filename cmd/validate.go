@@ -17,7 +17,7 @@ var validateCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Printf("Config file %s is valid!\n", configFilename)
+		_, _ = fmt.Printf("Config file %s is valid!\n", configFilename)
 		return nil
 	},
 }

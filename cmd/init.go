@@ -2,9 +2,7 @@ package cmd
 
 import (
 	_ "embed"
-	"errors"
 	"fmt"
-	"os"
 
 	"github.com/koki-develop/clive/pkg/util"
 	"github.com/spf13/cobra"
@@ -19,26 +17,26 @@ var initCmd = &cobra.Command{
 	Long:  "Create a config file.",
 	Args:  cobra.MaximumNArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if _, err := os.Stat(configFilename); err != nil {
-			if !errors.Is(err, os.ErrNotExist) {
-				return err
-			}
-
-			f, err := util.CreateFile(configFilename)
-			if err != nil {
-				return err
-			}
-			defer f.Close()
-
-			if _, err := f.Write(configInitTemplate); err != nil {
-				return err
-			}
-
-			fmt.Printf("Created %s\n", configFilename)
-			return nil
+		exists, err := util.Exists(configFilename)
+		if err != nil {
+			return err
+		}
+		if exists {
+			return fmt.Errorf("%s already exists", configFilename)
 		}
 
-		return fmt.Errorf("%s already exists", configFilename)
+		f, err := util.CreateFile(configFilename)
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+
+		if _, err := f.Write(configInitTemplate); err != nil {
+			return err
+		}
+
+		_, _ = fmt.Printf("Created %s\n", configFilename)
+		return nil
 	},
 }
 

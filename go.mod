@@ -7,10 +7,12 @@ require (
 	github.com/charmbracelet/bubbletea v0.23.1
 	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/go-rod/rod v0.112.0
+	github.com/jedib0t/go-pretty/v6 v6.4.2
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.6.1
 	github.com/stretchr/testify v1.8.1
+	golang.org/x/mod v0.7.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
