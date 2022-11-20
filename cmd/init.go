@@ -35,7 +35,7 @@ var initCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Printf("Created %s\n", configFilename)
+		_, _ = fmt.Printf("Created %s\n", configFilename)
 		return nil
 	},
 }
