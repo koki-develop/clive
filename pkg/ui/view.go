@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/koki-develop/clive/pkg/styles"
 	"github.com/koki-develop/clive/pkg/util"
 )
 
@@ -37,7 +38,7 @@ func (m *Model) errView() string {
 		return ""
 	}
 
-	return styleErrorHeader.Render("Error") + "\n" + m.err.Error()
+	return styles.StyleErrorHeader.Render("Error") + "\n" + m.err.Error()
 }
 
 func (m *Model) loadingConfigView() string {
@@ -65,14 +66,14 @@ func (m *Model) actionsView() string {
 		var style lipgloss.Style
 
 		if m.currentActionIndex > i {
-			style = styleDone
+			style = styles.StyleDone
 		} else if m.currentActionIndex == i {
-			style = styleActive
+			style = styles.StyleActive
 		}
 
 		s, trunc := util.TruncateString(action.String(), 40)
 		if trunc {
-			s += styleTruncated.Render("...")
+			s += styles.StyleTruncated.Render("...")
 		}
 
 		digits := util.Digits(len(m.config.Actions))
@@ -81,7 +82,7 @@ func (m *Model) actionsView() string {
 		rows = append(rows, fmt.Sprintf("%s %s%s", style.Render(num), cursor, style.Render(s)))
 	}
 
-	return styleActionHeader.Render("Actions") + "\n" + strings.Join(rows, "\n")
+	return styles.StyleActionHeader.Render("Actions") + "\n" + strings.Join(rows, "\n")
 }
 
 func (m *Model) cursorView(idx int) string {
@@ -99,5 +100,5 @@ func (m *Model) cursorView(idx int) string {
 }
 
 func (m *Model) quittingView() string {
-	return styleActive.Render("Press enter to quit")
+	return styles.StyleActive.Render("Press enter to quit")
 }

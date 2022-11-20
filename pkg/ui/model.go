@@ -5,6 +5,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
 	"github.com/koki-develop/clive/pkg/config"
+	"github.com/koki-develop/clive/pkg/styles"
 	"github.com/koki-develop/clive/pkg/ttyd"
 )
 
@@ -30,7 +31,7 @@ func New(configFile string) *Model {
 	return &Model{
 		configFile:         configFile,
 		currentActionIndex: 0,
-		spinner:            spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styleSpinner)),
+		spinner:            spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styles.StyleSpinner)),
 	}
 }
 
