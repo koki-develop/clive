@@ -16,8 +16,8 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestNewNetListener(t *testing.T) {
-	l := NewNetListener()
+func TestNewListener(t *testing.T) {
+	l := NewListener()
 
 	expected, actual := reflect.ValueOf(net.Listen).Pointer(), reflect.ValueOf(l.listen).Pointer()
 
@@ -25,7 +25,7 @@ func TestNewNetListener(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestNetListener_RandomUnusedTCPPort(t *testing.T) {
+func TestListener_RandomUnusedTCPPort(t *testing.T) {
 	type mocks struct {
 		net      *mockNet
 		listener *mockListener
@@ -71,7 +71,7 @@ func TestNetListener_RandomUnusedTCPPort(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("#%d", i), func(t *testing.T) {
-			l := &NetListener{
+			l := &Listener{
 				listen: tt.mocks.net.Listen,
 			}
 

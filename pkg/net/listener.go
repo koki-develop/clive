@@ -2,23 +2,23 @@ package net
 
 import "net"
 
-type INetListener interface {
+type IListener interface {
 	RandomUnusedTCPPort() (int, error)
 }
 
-type NetListener struct {
+type Listener struct {
 	listen func(network, address string) (net.Listener, error)
 }
 
-var _ INetListener = (*NetListener)(nil)
+var _ IListener = (*Listener)(nil)
 
-func NewNetListener() *NetListener {
-	return &NetListener{
+func NewListener() *Listener {
+	return &Listener{
 		listen: net.Listen,
 	}
 }
 
-func (l *NetListener) RandomUnusedTCPPort() (int, error) {
+func (l *Listener) RandomUnusedTCPPort() (int, error) {
 	addr, err := l.listen("tcp", ":0")
 	if err != nil {
 		return 0, err
