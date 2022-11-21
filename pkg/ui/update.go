@@ -11,7 +11,6 @@ import (
 	"github.com/go-rod/rod/lib/proto"
 	"github.com/koki-develop/clive/pkg/browser"
 	"github.com/koki-develop/clive/pkg/config"
-	"github.com/koki-develop/clive/pkg/net"
 	"github.com/koki-develop/clive/pkg/ttyd"
 	"github.com/koki-develop/clive/pkg/util"
 )
@@ -91,8 +90,7 @@ func (m *Model) loadConfig() tea.Msg {
 }
 
 func (m *Model) startTtyd() tea.Msg {
-	l := net.NewListener()
-	port, err := l.RandomUnusedTCPPort()
+	port, err := m.netListener.RandomUnusedTCPPort()
 	if err != nil {
 		return errMsg{err}
 	}

@@ -5,6 +5,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
 	"github.com/koki-develop/clive/pkg/config"
+	"github.com/koki-develop/clive/pkg/net"
 	"github.com/koki-develop/clive/pkg/styles"
 	"github.com/koki-develop/clive/pkg/ttyd"
 )
@@ -23,6 +24,8 @@ type Model struct {
 	quitting           bool
 
 	spinner spinner.Model
+
+	netListener net.IListener
 }
 
 var _ tea.Model = (*Model)(nil)
@@ -32,6 +35,7 @@ func New(configFile string) *Model {
 		configFile:         configFile,
 		currentActionIndex: 0,
 		spinner:            spinner.New(spinner.WithSpinner(spinner.Dot), spinner.WithStyle(styles.StyleSpinner)),
+		netListener:        net.NewListener(),
 	}
 }
 
