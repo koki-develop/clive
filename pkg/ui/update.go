@@ -90,7 +90,7 @@ func (m *Model) loadConfig() tea.Msg {
 }
 
 func (m *Model) startTtyd() tea.Msg {
-	port, err := util.RandomUnusedTCPPort()
+	port, err := m.netListener.RandomUnusedTCPPort()
 	if err != nil {
 		return errMsg{err}
 	}
