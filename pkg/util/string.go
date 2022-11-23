@@ -32,15 +32,6 @@ func String(v string) *string {
 	return &v
 }
 
-func Contains[T comparable](slice []T, r T) bool {
-	for _, l := range slice {
-		if l == r {
-			return true
-		}
-	}
-	return false
-}
-
 func Border(str string, style lipgloss.Style) string {
 	// NOTE: Don't use `lipgloss.Border“.
 	//	See https://github.com/charmbracelet/lipgloss/issues/40 .
