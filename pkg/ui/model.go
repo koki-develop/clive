@@ -22,6 +22,7 @@ type Model struct {
 	currentActionIndex int
 	pausing            bool
 	quitting           bool
+	note               string
 
 	spinner spinner.Model
 
