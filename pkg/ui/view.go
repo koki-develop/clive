@@ -30,6 +30,10 @@ func (m *Model) View() string {
 		s += "\n\n" + m.quittingView()
 	}
 
+	if m.note != "" {
+		s += "\n\n" + m.noteView()
+	}
+
 	return s
 }
 
@@ -101,4 +105,10 @@ func (m *Model) cursorView(idx int) string {
 
 func (m *Model) quittingView() string {
 	return styles.StyleActive.Render("Press enter to quit")
+}
+
+func (m *Model) noteView() string {
+	s := styles.StyleNoteHeader.Render("Note") + "\n"
+	s += m.note
+	return s
 }
