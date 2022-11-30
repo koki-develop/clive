@@ -20,6 +20,7 @@ var (
 	_ Action = (*PauseAction)(nil)
 	_ Action = (*CtrlAction)(nil)
 	_ Action = (*ScreenshotAction)(nil)
+	_ Action = (*NoteAction)(nil)
 )
 
 type TypeAction struct {
@@ -84,6 +85,16 @@ func (action *ScreenshotAction) String() string {
 	return "Take a screenshot"
 }
 
+type NoteAction struct {
+	Note string `mapstructure:"note"`
+}
+
+var noteActionValidFields = []string{"note"}
+
+func (action *NoteAction) String() string {
+	return "Write note"
+}
+
 var parseFuncMap = map[string]func(*Settings, map[string]interface{}) (Action, error){
 	"type":       parseTypeAction,
 	"key":        parseKeyAction,
@@ -91,7 +102,10 @@ var parseFuncMap = map[string]func(*Settings, map[string]interface{}) (Action, e
 	"sleep":      parseSleepAction,
 	"pause":      parsePauseAction,
 	"screenshot": parseScreenshotAction,
+	"note":       parseNoteAction,
 }
+
+var actionKeys = []string{"type", "key", "ctrl", "sleep", "pause", "screenshot", "note"}
 
 func ParseAction(stgs *Settings, v interface{}) (Action, error) {
 	switch v := v.(type) {
@@ -103,7 +117,7 @@ func ParseAction(stgs *Settings, v interface{}) (Action, error) {
 			return &ScreenshotAction{}, nil
 		}
 	case map[string]interface{}:
-		for _, k := range []string{"type", "key", "ctrl", "sleep", "pause", "screenshot"} {
+		for _, k := range actionKeys {
 			if _, ok := v[k]; ok {
 				return parseFuncMap[k](stgs, v)
 			}
@@ -197,6 +211,19 @@ func parseScreenshotAction(settings *Settings, m map[string]interface{}) (Action
 	}
 
 	return &ScreenshotAction{}, nil
+}
+
+func parseNoteAction(settings *Settings, m map[string]interface{}) (Action, error) {
+	if err := validateActionFields(m, noteActionValidFields); err != nil {
+		return nil, err
+	}
+
+	action := NoteAction{}
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, err
+	}
+
+	return &action, nil
 }
 
 func validateActionFields(m map[string]interface{}, valid []string) error {
