@@ -20,6 +20,7 @@ type startTtydMsg struct{ ttyd *ttyd.Ttyd }
 type openMsg struct{ page *rod.Page }
 type runMsg struct{}
 type pauseMsg struct{}
+type noteMsg struct{ note string }
 type quitMsg struct{}
 type errMsg struct{ err error }
 
@@ -63,6 +64,10 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case pauseMsg:
 		m.pausing = true
 		return m, nil
+	case noteMsg:
+		m.currentActionIndex++
+		m.note = msg.note
+		return m, m.run
 	case quitMsg:
 		m.quitting = true
 		if m.config.Settings.SkipPauseBeforeQuit {
@@ -174,6 +179,8 @@ func (m *Model) run() tea.Msg {
 		return m.runCtrl(action)
 	case *config.ScreenshotAction:
 		return m.runScreenshot(action)
+	case *config.NoteAction:
+		return m.runNote(action)
 	default:
 		return errMsg{fmt.Errorf("unknown action: %#v", action)}
 	}
@@ -336,6 +343,10 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 	}
 
 	return runMsg{}
+}
+
+func (m *Model) runNote(action *config.NoteAction) tea.Msg {
+	return noteMsg{note: action.Note}
 }
 
 func (m *Model) setCursorBlink(v bool) error {
