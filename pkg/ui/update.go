@@ -134,6 +134,11 @@ func (m *Model) setupPage(page *rod.Page) error {
 		}
 	}
 
+	// title
+	if _, err := page.Eval("() => document.title = 'cLive'"); err != nil {
+		return err
+	}
+
 	// font family
 	if m.config.Settings.FontFamily != nil {
 		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily)); err != nil {
