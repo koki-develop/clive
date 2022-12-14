@@ -23,6 +23,8 @@ type pauseMsg struct{}
 type quitMsg struct{}
 type errMsg struct{ err error }
 
+var favicon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACASURBVHgB7dRLCsAgDEXRt7TsPEuzCi2IqIVic+nnQebnTiI9fUnJRC4DXNRKfb4kaqUeAxz1JMAxQF1PARwDtPUEwDFArz4a4BhgVD+5tS96VD8506r99d+tP4HdX38BYIoaWj8AmCKH1ncApuih9Q3ARAytrwAmamj9DjC9YRvd3NI8H6lTHgAAAABJRU5ErkJggg=="
+
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	// spinner
@@ -136,6 +138,12 @@ func (m *Model) setupPage(page *rod.Page) error {
 
 	// title
 	if _, err := page.Eval("() => document.title = 'cLive'"); err != nil {
+		return err
+	}
+
+	// favicon
+	if _, err := page.Eval(fmt.Sprintf(`() => document.querySelector('link[rel="icon"]').href = "%s"
+`, favicon)); err != nil {
 		return err
 	}
 
