@@ -15,6 +15,7 @@ func New(cmd []string, port int) *Ttyd {
 	args := append([]string{
 		fmt.Sprintf("--port=%d", port),
 		// See: https://github.com/tsl0922/ttyd/blob/main/man/ttyd.man.md#client-optoins
+		"-t", "titleFixed=cLive",
 		"-t", "rendererType=canvas",
 		"-t", "disableResizeOverlay=true",
 		"-t", "cursorBlink=true",
