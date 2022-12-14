@@ -136,11 +136,6 @@ func (m *Model) setupPage(page *rod.Page) error {
 		}
 	}
 
-	// title
-	if _, err := page.Eval("() => document.title = 'cLive'"); err != nil {
-		return err
-	}
-
 	// favicon
 	if _, err := page.Eval(fmt.Sprintf(`() => document.querySelector('link[rel="icon"]').href = "%s"
 `, favicon)); err != nil {
