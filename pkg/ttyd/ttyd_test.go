@@ -23,6 +23,7 @@ func TestNew(t *testing.T) {
 				command: exec.Command(
 					"ttyd",
 					"--port=999",
+					"-t", "titleFixed=cLive",
 					"-t", "rendererType=canvas",
 					"-t", "disableResizeOverlay=true",
 					"-t", "cursorBlink=true",
