@@ -31,3 +31,5 @@ brews:
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
     homepage: https://github.com/koki-develop/clive
     description: Automates terminal operations and lets you view them live via a browser.
+    dependencies:
+      - name: ttyd
