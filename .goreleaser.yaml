@@ -8,6 +8,9 @@ builds:
       - windows
       - darwin
 
+source:
+  enabled: true
+
 archives:
   - format: tar.gz
     name_template: >-
@@ -30,6 +33,10 @@ brews:
       name: homebrew-tap
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
     homepage: https://github.com/koki-develop/clive
-    description: Automates terminal operations and lets you view them live via a browser.
+    description: Automates terminal operations and lets you view them live via a browser
     dependencies:
       - name: ttyd
+    test: |
+      system "#{bin}/clive", "init"
+      system "#{bin}/clive", "validate"
+      assert_match "clive version v#{version}", shell_output("#{bin}/clive --version")
