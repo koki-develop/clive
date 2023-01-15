@@ -8,6 +8,9 @@ builds:
       - windows
       - darwin
 
+source:
+  enabled: true
+
 archives:
   - format: tar.gz
     name_template: >-
