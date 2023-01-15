@@ -10,6 +10,7 @@ builds:
 
 source:
   enabled: true
+  rlcp: true
 
 archives:
   - format: tar.gz
