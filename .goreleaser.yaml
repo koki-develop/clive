@@ -33,3 +33,7 @@ brews:
     description: Automates terminal operations and lets you view them live via a browser.
     dependencies:
       - name: ttyd
+    test: |
+      system "#{bin}/clive", "init"
+      system "#{bin}/clive", "validate"
+      assert_match "clive version v#{version}", shell_output("#{bin}/clive --version")
