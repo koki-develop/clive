@@ -31,5 +31,5 @@ func init() {
 
 	rootCmd.Version = version
 
-	_ = notifyNewRelease(os.Stdout)
+	_ = notifyNewRelease(os.Stderr)
 }
