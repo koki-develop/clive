@@ -1,13 +1,15 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/google/go-github/v49/github"
 	"github.com/koki-develop/clive/pkg/cache"
-	"github.com/koki-develop/clive/pkg/github"
+
 	"github.com/koki-develop/clive/pkg/styles"
 	"github.com/koki-develop/clive/pkg/util"
 )
@@ -23,26 +25,27 @@ func notifyNewRelease(w io.Writer) error {
 		return err
 	}
 
-	var release github.Release
+	var release github.RepositoryRelease
 	if c != nil && !c.Expired() {
-		// TBD: Might be too noisy to notify every time.
-		// c.Bind(&release)
+		// If the cache exists and has not expired, no notification is given.
 		return nil
 	} else {
-		cl := github.New()
-		r, err := cl.GetLatestRelease("koki-develop", "clive")
+		// Retrieve the latest release and save cache.
+		cl := github.NewClient(nil)
+		r, _, err := cl.Repositories.GetLatestRelease(context.Background(), "koki-develop", "clive")
 		if err != nil {
 			return err
 		}
 		release = *r
-		if err := s.Set("release", release); err != nil {
+		if err := s.Set("release", map[string]string{"name": *release.Name}); err != nil {
 			return err
 		}
 	}
 
-	if util.Version(release.Name).Newer(util.Version(version)) {
-		txt := styles.StyleNotificationText.Render(fmt.Sprintf("A new version (%s) is available!", release.Name))
-		link := fmt.Sprintf("See: %s", styles.StyleLink.Render(fmt.Sprintf("https://github.com/koki-develop/clive/releases/%s", release.Name)))
+	// If a newer version is released, notify it.
+	if util.Version(*release.Name).Newer(util.Version(version)) {
+		txt := styles.StyleNotificationText.Render(fmt.Sprintf("A new version (%s) is available!", *release.Name))
+		link := fmt.Sprintf("See: %s", styles.StyleLink.Render(fmt.Sprintf("https://github.com/koki-develop/clive/releases/%s", *release.Name)))
 		n := lipgloss.JoinVertical(lipgloss.Center, txt, link)
 		n = util.Border(n, styles.StyleNotificationBorder)
 
