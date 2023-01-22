@@ -194,8 +194,8 @@ $ clive completion bash --help
 # e.g.
 actions:
   - type: echo 'Hello World'
-    count: 10
-    speed: 100
+    count: 10 # Optional
+    speed: 100 # Optional
 ```
 
 #### `key`
@@ -223,8 +223,8 @@ actions:
 # e.g.
 actions:
   - key: enter
-    count: 10
-    speed: 100
+    count: 10 # Optional
+    speed: 100 # Optional
 ```
 
 #### `ctrl`
@@ -241,8 +241,8 @@ Ctrl キーを他のキーと一緒に入力する。
 # e.g.
 actions:
   - ctrl: c # Ctrl+c
-    count: 10
-    speed: 100
+    count: 10 # Optional
+    speed: 100 # Optional
 ```
 
 #### `sleep`

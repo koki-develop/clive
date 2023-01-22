@@ -197,8 +197,8 @@ Type characters.
 # e.g.
 actions:
   - type: echo 'Hello World'
-    count: 10
-    speed: 100
+    count: 10 # Optional
+    speed: 100 # Optional
 ```
 
 #### `key`
@@ -226,8 +226,8 @@ Available keys:
 # e.g.
 actions:
   - key: enter
-    count: 10
-    speed: 100
+    count: 10 # Optional
+    speed: 100 # Optional
 ```
 
 #### `ctrl`
@@ -244,8 +244,8 @@ Enter the ctrl key with other characters.
 # e.g.
 actions:
   - ctrl: c # Ctrl+c
-    count: 10
-    speed: 100
+    count: 10 # Optional
+    speed: 100 # Optional
 ```
 
 #### `sleep`
