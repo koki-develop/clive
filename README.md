@@ -41,26 +41,26 @@ English | <a href="./README.ja.md">日本語</a>
 ## :information_source: Prerequisite
 
 cLive requires [ttyd](https://tsl0922.github.io/ttyd/) to be installed.  
-For example, if you use homebrew, you can install it with `brew install`.
+For example, if you are using homebrew, you can install it with `brew install`.
 
 ```sh
 $ brew install ttyd
 ```
 
-See [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more information.
+See the [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for more information.
 
 ## :zap: Installation
 
 > **Note**
 > There are prerequisites for using cLive. See [`Prerequisite`](#information_source-prerequisite) for details.
 
-If you use homebrew, you can install cLive with `brew install`.
+If you are using homebrew, you can install cLive with `brew install`.
 
 ```sh
 $ brew install koki-develop/tap/clive
 ```
 
-It can also be installed with `go install`.
+It can also be installed using `go install`.
 
 ```sh
 $ go install github.com/koki-develop/clive@latest
@@ -103,8 +103,9 @@ $ clive start
 
 Available commands:
 
-- [`init`](#clive-init) - Create config file.
-- [`start`](#clive-start) - Load config file and start cLive.
+- [`init`](#clive-init) - Create a config file.
+- [`start`](#clive-start) - Start cLive actions.
+- [`validate`](#clive-validate) - Validate a config file.
 - [`completion`](#clive-completion) - Generate the autocompletion script for the specified shell.
 
 ### `clive init`
@@ -121,8 +122,8 @@ $ clive init
 
 ### `clive start`
 
-Load config file and start cLive.  
-See [`Configuration`](#gear-configuration) for config file.
+Start cLive actions.
+See [`Configuration`](#gear-configuration) for the config file.
 
 ```sh
 $ clive start
@@ -166,10 +167,10 @@ Available shells:
 
 ## :gear: Configuration
 
-Config file consists of `actions` and `settings`.
+The config file consists of `actions` and `settings`.
 
 - [`actions`](#actions) - Actions to run.
-- [`settings`](#settings) - Basic settings (font size, default speed, etc.).
+- [`settings`](#settings) - Basic settings (font size, default speed, etc.) .
 
 ### `actions`
 
@@ -178,8 +179,8 @@ Available actions:
 
 - [`type`](#type) - Type characters.
 - [`key`](#key) - Enter special keys.
-- [`ctrl`](#ctrl) - Enter the ctrl key with other keys.
-- [`sleep`](#sleep) - Sleep for a specific number of milliseconds.
+- [`ctrl`](#ctrl) - Press the Ctrl key with other keys.
+- [`sleep`](#sleep) - Sleep for a specified number of milliseconds.
 - [`pause`](#pause) - Pause actions.
 - [`screenshot`](#screenshot) - Take a screenshot.
 
@@ -190,7 +191,7 @@ Type characters.
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
 | `type` | **Yes** | N/A | Characters to type. |
-| `count` | No | `1` | Number of times the action is repeated. |
+| `count` | No | `1` | Number of times to repeat the action. |
 | `speed` | No | `10` | Interval between key typing (milliseconds). |
 
 ```yaml
@@ -219,7 +220,7 @@ Available keys:
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
 | `key` | **Yes** | N/A | Special key to type. |
-| `count` | No | `1` | Number of times the action is repeated. |
+| `count` | No | `1` | Number of times to repeat the action. |
 | `speed` | No | `10` | Interval between key typing (milliseconds). |
 
 ```yaml
@@ -232,12 +233,12 @@ actions:
 
 #### `ctrl`
 
-Enter the ctrl key with other characters.
+Press the Ctrl key with other keys.
 
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
 | `ctrl` | **Yes** | N/A | Characters to enter with the ctrl key. |
-| `count` | No | `1` | Number of times the action is repeated. |
+| `count` | No | `1` | Number of times to repeat the action. |
 | `speed` | No | `10` | Interval between key typing (milliseconds). |
 
 ```yaml
@@ -250,7 +251,7 @@ actions:
 
 #### `sleep`
 
-Sleep for a specific number of milliseconds.
+Sleep for a specified number of milliseconds.
 
 | Field | Required | Default | Description |
 | --- | --- | --- | --- |
@@ -291,17 +292,17 @@ Available settings:
 
 - [`loginCommand`](#logincommand) - Login command and args.
 - [`fontSize`](#fontsize) - Font size.
-- [`fontFamily`](#fontfamily) - Font family
+- [`fontFamily`](#fontfamily) - Font family.
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
-- [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pause before quitting.
-- [`browserBin`](#browserbin) - Path to executable browser binary.
-- [`headless`](#headless) - Whether to run browser in headless mode.
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pausing before quitting.
+- [`browserBin`](#browserbin) - Path to an executable browser binary.
+- [`headless`](#headless) - Whether to run the browser in headless mode.
 - [`width`](#width) - Window width.
 - [`height`](#height) - Window height.
 
 #### `loginCommand`
 
-Set command and args for logging into the shell.  
+Login command and args.  
 Default: `["bash", "--login"]`.
 
 ```yaml
@@ -312,7 +313,7 @@ settings:
 
 #### `fontSize`
 
-Set font size.  
+Font size.  
 Default: `22`
 
 ```yaml
@@ -323,7 +324,7 @@ settings:
 
 #### `fontFamily`
 
-Set font family.  
+Font family.
 
 ```yaml
 # e.g.
@@ -333,7 +334,7 @@ settings:
 
 #### `defaultSpeed`
 
-Set default interval between key typing (milliseconds).  
+Default interval between key typing.  
 Default: `10`
 
 ```yaml
@@ -344,7 +345,7 @@ settings:
 
 #### `skipPauseBeforeQuit`
 
-Whether to skip pause before quitting.  
+Whether to skip pausing before quitting.  
 Default: `false`
 
 ```yaml
@@ -355,8 +356,8 @@ settings:
 
 #### `browserBin`
 
-Set path to executable binary for the browser used.  
-See [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
+Path to an executable browser binary.  
+See the [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
 
 ```yaml
 # e.g.
@@ -366,7 +367,7 @@ settings:
 
 #### `headless`
 
-Whether to run browser in headless mode.  
+Whether to run the browser in headless mode.  
 Default: `false`
 
 ```yaml
