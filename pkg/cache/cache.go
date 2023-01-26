@@ -15,7 +15,7 @@ type Cache struct {
 
 func New(ttl time.Duration, data interface{}) *Cache {
 	return &Cache{
-		Expiration: time.Now().Add(24 * time.Hour),
+		Expiration: time.Now().Add(ttl),
 		Data:       data,
 	}
 }
