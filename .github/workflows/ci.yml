@@ -16,8 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: ./.github/actions/setup
-      - run: go build
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          args: release --rm-dist --snapshot
 
   lint:
     runs-on: ubuntu-latest
