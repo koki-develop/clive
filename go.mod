@@ -8,7 +8,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/go-rod/rod v0.112.6
 	github.com/google/go-github/v49 v49.1.0
-	github.com/jedib0t/go-pretty/v6 v6.4.4
+	github.com/jedib0t/go-pretty/v6 v6.4.6
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.6.1
