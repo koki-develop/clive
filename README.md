@@ -22,7 +22,6 @@ Automates terminal operations and lets you view them live via a browser.
 English | <a href="./README.ja.md">日本語</a>
 </p>
 
-
 # cLive
 
 - [Prerequisite](#information_source-prerequisite)
@@ -117,8 +116,8 @@ Create a config file.
 $ clive init
 ```
 
-| Flag | Default | Description |
-| --- | --- | --- |
+| Flag             | Default       | Description       |
+| ---------------- | ------------- | ----------------- |
 | `-c`, `--config` | `./clive.yml` | Config file name. |
 
 ### `clive start`
@@ -130,8 +129,8 @@ See [`Configuration`](#gear-configuration) for the config file.
 $ clive start
 ```
 
-| Flag | Default | Description |
-| --- | --- | --- |
+| Flag             | Default       | Description       |
+| ---------------- | ------------- | ----------------- |
 | `-c`, `--config` | `./clive.yml` | Config file name. |
 
 ### `clive validate`
@@ -142,8 +141,8 @@ Validate a config file.
 $ clive validate
 ```
 
-| Flag | Default | Description |
-| --- | --- | --- |
+| Flag             | Default       | Description       |
+| ---------------- | ------------- | ----------------- |
 | `-c`, `--config` | `./clive.yml` | Config file name. |
 
 ### `clive completion`
@@ -189,11 +188,11 @@ Available actions:
 
 Type characters.
 
-| Field | Required | Default | Description |
-| --- | --- | --- | --- |
-| `type` | **Yes** | N/A | Characters to type. |
-| `count` | No | `1` | Number of times to repeat the action. |
-| `speed` | No | `10` | Interval between key typing (milliseconds). |
+| Field   | Required | Default | Description                                 |
+| ------- | -------- | ------- | ------------------------------------------- |
+| `type`  | **Yes**  | N/A     | Characters to type.                         |
+| `count` | No       | `1`     | Number of times to repeat the action.       |
+| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
 
 ```yaml
 # e.g.
@@ -218,11 +217,11 @@ Available keys:
 - `down`
 - `space`
 
-| Field | Required | Default | Description |
-| --- | --- | --- | --- |
-| `key` | **Yes** | N/A | Special key to type. |
-| `count` | No | `1` | Number of times to repeat the action. |
-| `speed` | No | `10` | Interval between key typing (milliseconds). |
+| Field   | Required | Default | Description                                 |
+| ------- | -------- | ------- | ------------------------------------------- |
+| `key`   | **Yes**  | N/A     | Special key to type.                        |
+| `count` | No       | `1`     | Number of times to repeat the action.       |
+| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
 
 ```yaml
 # e.g.
@@ -236,11 +235,11 @@ actions:
 
 Press the Ctrl key with other keys.
 
-| Field | Required | Default | Description |
-| --- | --- | --- | --- |
-| `ctrl` | **Yes** | N/A | Characters to enter with the ctrl key. |
-| `count` | No | `1` | Number of times to repeat the action. |
-| `speed` | No | `10` | Interval between key typing (milliseconds). |
+| Field   | Required | Default | Description                                 |
+| ------- | -------- | ------- | ------------------------------------------- |
+| `ctrl`  | **Yes**  | N/A     | Characters to enter with the ctrl key.      |
+| `count` | No       | `1`     | Number of times to repeat the action.       |
+| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
 
 ```yaml
 # e.g.
@@ -254,9 +253,9 @@ actions:
 
 Sleep for a specified number of milliseconds.
 
-| Field | Required | Default | Description |
-| --- | --- | --- | --- |
-| `sleep` | **Yes** | N/A | Time to sleep (milliseconds). |
+| Field   | Required | Default | Description                   |
+| ------- | -------- | ------- | ----------------------------- |
+| `sleep` | **Yes**  | N/A     | Time to sleep (milliseconds). |
 
 ```yaml
 # e.g.
@@ -278,7 +277,8 @@ actions:
 #### `screenshot`
 
 Take a screenshot.  
-Screenshots you take are saved in `screenshots/`.
+Screenshots are saved in `screenshots/`.  
+The directory to save the screenshots can be changed in [`settings.screenshotsDir`](#screenshotsdir).
 
 ```yaml
 # e.g.
@@ -296,6 +296,7 @@ Available settings:
 - [`fontFamily`](#fontfamily) - Font family.
 - [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
 - [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pausing before quitting.
+- [`screenshotsDir`](#screenshotsdir) - Directory to save screenshots.
 - [`browserBin`](#browserbin) - Path to an executable browser binary.
 - [`headless`](#headless) - Whether to run the browser in headless mode.
 - [`width`](#width) - Window width.
@@ -353,6 +354,17 @@ Default: `false`
 # e.g.
 settings:
   skipPauseBeforeQuit: true
+```
+
+#### `screenshotsDir`
+
+Directory to save screenshots.  
+Default: `screenshots`
+
+```yaml
+# e.g.
+settings:
+  screenshotsDir: path/to/pictures
 ```
 
 #### `browserBin`
