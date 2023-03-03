@@ -12,6 +12,7 @@ type Settings struct {
 	FontFamily          *string  `mapstructure:"fontFamily"`
 	DefaultSpeed        int      `mapstructure:"defaultSpeed"`
 	SkipPauseBeforeQuit bool     `mapstructure:"skipPauseBeforeQuit"`
+	ScreenshotsDir      string   `mapstructure:"screenshotsDir"`
 	BrowserBin          *string  `mapstructure:"browserBin"`
 	Headless            bool     `mapstructure:"headless"`
 	Width               *int     `mapstructure:"width"`
@@ -24,6 +25,7 @@ var settingsFields = []string{
 	"fontFamily",
 	"defaultSpeed",
 	"skipPauseBeforeQuit",
+	"screenshotsDir",
 	"browserBin",
 	"headless",
 	"width",
@@ -37,6 +39,7 @@ func DecodeSettings(m map[string]interface{}) (*Settings, error) {
 		FontFamily:          nil,
 		DefaultSpeed:        10,
 		SkipPauseBeforeQuit: false,
+		ScreenshotsDir:      "screenshots",
 		BrowserBin:          nil,
 		Headless:            false,
 		Width:               nil,
