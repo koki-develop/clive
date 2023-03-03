@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fmt"
+	"path/filepath"
 	"time"
 
 	"github.com/charmbracelet/bubbles/spinner"
@@ -334,7 +335,8 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 		return errMsg{err}
 	}
 
-	f, err := util.CreateFile(fmt.Sprintf("%s/%d_%s.png", m.config.Settings.ScreenshotsDir, m.currentActionIndex+1, now.Format("20060102150405")))
+	p := filepath.Join(m.config.Settings.ScreenshotsDir, fmt.Sprintf("%d_%s.png", m.currentActionIndex+1, now.Format("20060102150405")))
+	f, err := util.CreateFile(p)
 	if err != nil {
 		return errMsg{err}
 	}
