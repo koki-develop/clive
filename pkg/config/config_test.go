@@ -27,6 +27,7 @@ actions:
 					FontFamily:          nil,
 					DefaultSpeed:        10,
 					SkipPauseBeforeQuit: false,
+					ScreenshotsDir:      "screenshots",
 					BrowserBin:          nil,
 					Headless:            false,
 					Width:               nil,
@@ -47,6 +48,7 @@ settings:
   fontFamily: FONT_FAMILY
   defaultSpeed: 200
   skipPauseBeforeQuit: true
+  screenshotsDir: SCREENSHOTS_DIR
   headless: true
   browserBin: BROWSER_BIN
   width: 1600
@@ -61,6 +63,7 @@ actions:
 					FontFamily:          util.String("FONT_FAMILY"),
 					DefaultSpeed:        200,
 					SkipPauseBeforeQuit: true,
+					ScreenshotsDir:      "SCREENSHOTS_DIR",
 					BrowserBin:          util.String("BROWSER_BIN"),
 					Headless:            true,
 					Width:               util.Int(1600),
@@ -100,6 +103,7 @@ actions:
 					FontFamily:          nil,
 					DefaultSpeed:        10,
 					SkipPauseBeforeQuit: false,
+					ScreenshotsDir:      "screenshots",
 					BrowserBin:          nil,
 					Headless:            false,
 					Width:               nil,
@@ -181,6 +185,7 @@ func TestDecodeMap(t *testing.T) {
 					FontFamily:          nil,
 					DefaultSpeed:        10,
 					SkipPauseBeforeQuit: false,
+					ScreenshotsDir:      "screenshots",
 					BrowserBin:          nil,
 					Headless:            false,
 					Width:               nil,
@@ -200,6 +205,7 @@ func TestDecodeMap(t *testing.T) {
 					"fontFamily":          "FONT_FAMILY",
 					"defaultSpeed":        200,
 					"skipPauseBeforeQuit": true,
+					"screenshotsDir":      "SCREENSHOTS_DIR",
 					"browserBin":          "BROWSER_BIN",
 					"headless":            true,
 					"width":               1600,
@@ -214,6 +220,7 @@ func TestDecodeMap(t *testing.T) {
 					FontFamily:          util.String("FONT_FAMILY"),
 					DefaultSpeed:        200,
 					SkipPauseBeforeQuit: true,
+					ScreenshotsDir:      "SCREENSHOTS_DIR",
 					BrowserBin:          util.String("BROWSER_BIN"),
 					Headless:            true,
 					Width:               util.Int(1600),
@@ -245,14 +252,16 @@ func TestDecodeMap(t *testing.T) {
 			},
 			&Config{
 				Settings: &Settings{
-					LoginCommand: []string{"bash", "--login"},
-					FontSize:     22,
-					FontFamily:   nil,
-					DefaultSpeed: 10,
-					BrowserBin:   nil,
-					Headless:     false,
-					Width:        nil,
-					Height:       nil,
+					LoginCommand:        []string{"bash", "--login"},
+					FontSize:            22,
+					FontFamily:          nil,
+					DefaultSpeed:        10,
+					SkipPauseBeforeQuit: false,
+					ScreenshotsDir:      "screenshots",
+					BrowserBin:          nil,
+					Headless:            false,
+					Width:               nil,
+					Height:              nil,
 				},
 				Actions: []Action{
 					&TypeAction{Type: "Hello", Count: 1, Speed: 10},
