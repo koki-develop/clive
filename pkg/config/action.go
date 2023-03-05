@@ -77,8 +77,8 @@ func (action *CtrlAction) String() string {
 }
 
 type ScreenshotAction struct {
-	File string `mapstructure:"file"`
-	Dir  string `mapstructure:"dir"`
+	File *string `mapstructure:"file"`
+	Dir  string  `mapstructure:"dir"`
 }
 
 var screenshotActionValidFields = []string{"screenshot", "file", "dir"}
@@ -101,9 +101,9 @@ func ParseAction(stgs *Settings, v interface{}) (Action, error) {
 	case string:
 		switch v {
 		case "pause":
-			return &PauseAction{}, nil
+			return parsePauseAction(stgs, map[string]interface{}{})
 		case "screenshot":
-			return &ScreenshotAction{}, nil
+			return parseScreenshotAction(stgs, map[string]interface{}{})
 		}
 	case map[string]interface{}:
 		for _, k := range []string{"type", "key", "ctrl", "sleep", "pause", "screenshot"} {
@@ -199,7 +199,15 @@ func parseScreenshotAction(settings *Settings, m map[string]interface{}) (Action
 		return nil, err
 	}
 
-	return &ScreenshotAction{}, nil
+	action := ScreenshotAction{
+		File: nil,
+		Dir:  settings.ScreenshotsDir,
+	}
+	if err := mapstructure.Decode(m, &action); err != nil {
+		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
+	}
+
+	return &action, nil
 }
 
 func validateActionFields(m map[string]interface{}, valid []string) error {

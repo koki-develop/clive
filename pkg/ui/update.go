@@ -325,7 +325,6 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 		return errMsg{err}
 	}
 
-	now := time.Now()
 	buf, err := m.page.Screenshot(false, nil)
 	if err != nil {
 		return errMsg{err}
@@ -335,7 +334,11 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 		return errMsg{err}
 	}
 
-	p := filepath.Join(m.config.Settings.ScreenshotsDir, fmt.Sprintf("%d_%s.png", m.currentActionIndex+1, now.Format("20060102150405")))
+	filename := fmt.Sprintf("%d_%s.png", m.currentActionIndex+1, time.Now().Format("20060102150405"))
+	if action.File != nil {
+		filename = *action.File
+	}
+	p := filepath.Join(action.Dir, filename)
 	f, err := util.CreateFile(p)
 	if err != nil {
 		return errMsg{err}
