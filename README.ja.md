@@ -274,14 +274,21 @@ actions:
 
 #### `screenshot`
 
-スクリーンショットを撮影します。  
-撮影したスクリーンショットは `screenshots/` に保存されます.  
-スクリーンショットを保存するディレクトリは [`settings.screenshotsDir`](#screenshotsdir) で変更することができます。
+スクリーンショットを撮影します。
+
+| Field  | Required | Default                                                 | Description                                |
+| ------ | -------- | ------------------------------------------------------- | ------------------------------------------ |
+| `file` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png`                   | スクリーンショットのファイル名。           |
+| `dir`  | No       | [`settings.screenshotsDir`](#screenshotsdir) の設定値。 | スクリーンショットを保存するディレクトリ。 |
 
 ```yaml
 # e.g.
 actions:
   - screenshot
+
+  - screenshot:
+    file: custom.png # Optional
+    dir: path/to/pictures # Optional
 ```
 
 ### `settings`
