@@ -76,9 +76,12 @@ func (action *CtrlAction) String() string {
 	return fmt.Sprintf("Ctrl+%s", action.Ctrl)
 }
 
-type ScreenshotAction struct{}
+type ScreenshotAction struct {
+	File string `mapstructure:"file"`
+	Dir  string `mapstructure:"dir"`
+}
 
-var screenshotActionValidFields = []string{"screenshot"}
+var screenshotActionValidFields = []string{"screenshot", "file", "dir"}
 
 func (action *ScreenshotAction) String() string {
 	return "Take a screenshot"
