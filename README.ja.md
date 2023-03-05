@@ -8,7 +8,8 @@ Automates terminal operations and lets you view them live via a browser.
 </p>
 
 <p align='center'>
-<a href="https://github.com/koki-develop/clive/releases/latest"><img src="https://img.shields.io/github/v/release/koki-develop/clive?style=flat" /></a>
+<a href="https://github.com/koki-develop/clive/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/koki-develop/clive?style=flat"></a>
+<a href="https://github.com/koki-develop/clive/releases/latest"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/koki-develop/clive/total?style=flat"></a>
 <a href="./LICENSE"><img src="https://img.shields.io/github/license/koki-develop/clive?style=flat" /></a>
 <a href="https://github.com/koki-develop/clive/actions/workflows/ci.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/koki-develop/clive/ci.yml?branch=main&logo=github&style=flat" /></a>
 <a href="https://codeclimate.com/github/koki-develop/clive/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/koki-develop/clive?logo=codeclimate&style=flat" /></a>
