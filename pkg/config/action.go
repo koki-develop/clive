@@ -77,11 +77,10 @@ func (action *CtrlAction) String() string {
 }
 
 type ScreenshotAction struct {
-	File *string `mapstructure:"file"`
-	Dir  string  `mapstructure:"dir"`
+	Screenshot *string `mapstructure:"screenshot"`
 }
 
-var screenshotActionValidFields = []string{"screenshot", "file", "dir"}
+var screenshotActionValidFields = []string{"screenshot"}
 
 func (action *ScreenshotAction) String() string {
 	return "Take a screenshot"
@@ -200,8 +199,7 @@ func parseScreenshotAction(settings *Settings, m map[string]interface{}) (Action
 	}
 
 	action := ScreenshotAction{
-		File: nil,
-		Dir:  settings.ScreenshotsDir,
+		Screenshot: nil,
 	}
 	if err := mapstructure.Decode(m, &action); err != nil {
 		return nil, errors.WithMessage(NewErrInvalidAction(m), err.Error())
