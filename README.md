@@ -277,7 +277,9 @@ actions:
 
 #### `screenshot`
 
-Take a screenshot.
+Take a screenshot.  
+Screenshots are saved in `screenshots/`.  
+The directory to save the screenshots can be changed in [`settings.screenshotsDir`](#screenshotsdir).
 
 | Field        | Required | Default                               | Description                  |
 | ------------ | -------- | ------------------------------------- | ---------------------------- |
