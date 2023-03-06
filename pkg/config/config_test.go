@@ -247,7 +247,7 @@ func TestDecodeMap(t *testing.T) {
 					map[string]interface{}{"ctrl": "c", "count": 10, "speed": 500},
 					"screenshot",
 					map[string]interface{}{"screenshot": nil},
-					map[string]interface{}{"screenshot": struct{}{}},
+					map[string]interface{}{"screenshot": "SCREENSHOT"},
 				},
 			},
 			&Config{
@@ -276,7 +276,7 @@ func TestDecodeMap(t *testing.T) {
 					&CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
 					&ScreenshotAction{},
 					&ScreenshotAction{},
-					&ScreenshotAction{},
+					&ScreenshotAction{Screenshot: util.String("SCREENSHOT")},
 				},
 			},
 			false,

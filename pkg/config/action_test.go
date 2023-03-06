@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/koki-develop/clive/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -377,8 +378,8 @@ func Test_parseScreenshotAction(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{"screenshot": struct{}{}},
-			&ScreenshotAction{},
+			map[string]interface{}{"screenshot": "SCREENSHOT"},
+			&ScreenshotAction{Screenshot: util.String("SCREENSHOT")},
 			false,
 		},
 		{
