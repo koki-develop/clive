@@ -279,19 +279,15 @@ actions:
 
 Take a screenshot.
 
-| Field  | Required | Default                                                    | Description                    |
-| ------ | -------- | ---------------------------------------------------------- | ------------------------------ |
-| `file` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png`                      | File name of the screenshot.   |
-| `dir`  | No       | Value of the [`settings.screenshotsDir`](#screenshotsdir). | Directory to save screenshots. |
+| Field        | Required | Default                               | Description                  |
+| ------------ | -------- | ------------------------------------- | ---------------------------- |
+| `screenshot` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png` | File name of the screenshot. |
 
 ```yaml
 # e.g.
 actions:
   - screenshot
-
-  - screenshot:
-    file: custom.png # Optional
-    dir: path/to/pictures # Optional
+  - screenshot: foobar.png # Optional
 ```
 
 ### `settings`

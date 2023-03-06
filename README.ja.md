@@ -276,19 +276,15 @@ actions:
 
 スクリーンショットを撮影します。
 
-| Field  | Required | Default                                                 | Description                                |
-| ------ | -------- | ------------------------------------------------------- | ------------------------------------------ |
-| `file` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png`                   | スクリーンショットのファイル名。           |
-| `dir`  | No       | [`settings.screenshotsDir`](#screenshotsdir) の設定値。 | スクリーンショットを保存するディレクトリ。 |
+| Field        | Required | Default                               | Description                      |
+| ------------ | -------- | ------------------------------------- | -------------------------------- |
+| `screenshot` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png` | スクリーンショットのファイル名。 |
 
 ```yaml
 # e.g.
 actions:
   - screenshot
-
-  - screenshot:
-    file: custom.png # Optional
-    dir: path/to/pictures # Optional
+  - screenshot: foobar.png # Optional
 ```
 
 ### `settings`
