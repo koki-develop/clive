@@ -281,10 +281,15 @@ Take a screenshot.
 Screenshots are saved in `screenshots/`.  
 The directory to save the screenshots can be changed in [`settings.screenshotsDir`](#screenshotsdir).
 
+| Field        | Required | Default                               | Description                  |
+| ------------ | -------- | ------------------------------------- | ---------------------------- |
+| `screenshot` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png` | File name of the screenshot. |
+
 ```yaml
 # e.g.
 actions:
   - screenshot
+  - screenshot: foobar.png # Optional
 ```
 
 ### `settings`
