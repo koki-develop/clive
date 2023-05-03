@@ -6,7 +6,7 @@ require (
 	github.com/charmbracelet/bubbles v0.15.0
 	github.com/charmbracelet/bubbletea v0.23.2
 	github.com/charmbracelet/lipgloss v0.7.1
-	github.com/go-rod/rod v0.112.8
+	github.com/go-rod/rod v0.112.9
 	github.com/google/go-github/v50 v50.2.0
 	github.com/jedib0t/go-pretty/v6 v6.4.6
 	github.com/mitchellh/mapstructure v1.5.0
@@ -38,6 +38,7 @@ require (
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/ysmood/fetchup v0.2.2 // indirect
 	github.com/ysmood/goob v0.4.0 // indirect
 	github.com/ysmood/gson v0.7.3 // indirect
 	github.com/ysmood/leakless v0.8.0 // indirect
