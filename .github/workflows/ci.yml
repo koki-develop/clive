@@ -21,7 +21,7 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: goreleaser/goreleaser-action@v4
         with:
-          args: release --rm-dist --snapshot
+          args: release --clean --snapshot
 
   lint:
     runs-on: ubuntu-latest
