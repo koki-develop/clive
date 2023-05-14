@@ -11,8 +11,8 @@ var version string
 
 var rootCmd = &cobra.Command{
 	Use:   "clive",
-	Short: "Automates terminal operations and lets you view them live via a browser",
-	Long:  "Automates terminal operations and lets you view them live via a browser.",
+	Short: "Automates terminal operations",
+	Long:  "Automates terminal operations.",
 }
 
 func Execute() {

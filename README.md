@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-Automates terminal operations and lets you view them live via a browser.
+Automates terminal operations.
 </p>
 
 <p align='center'>
