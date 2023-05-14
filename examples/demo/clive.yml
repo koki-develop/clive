@@ -10,7 +10,7 @@ actions:
   - ctrl: c
   - sleep: 1000
 
-  - type: cLive automates terminal operations.
+  - type: cLive automates terminal operations and lets you view them live via a browser.
   - ctrl: c
   - sleep: 1000
 
