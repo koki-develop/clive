@@ -12,7 +12,7 @@ var startCmd = &cobra.Command{
 	Long:  "Start cLive actions.",
 	Args:  cobra.MaximumNArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		m := ui.New(configFilename)
+		m := ui.New(flagConfig)
 		defer m.Close()
 
 		p := tea.NewProgram(m)

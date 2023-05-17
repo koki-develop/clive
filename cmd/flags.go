@@ -3,11 +3,11 @@ package cmd
 import "github.com/spf13/cobra"
 
 var (
-	configFilename string
+	flagConfig string
 )
 
 func init() {
 	for _, cmd := range []*cobra.Command{startCmd, initCmd, validateCmd} {
-		cmd.Flags().StringVarP(&configFilename, "config", "c", "./clive.yml", "config file name")
+		cmd.Flags().StringVarP(&flagConfig, "config", "c", "./clive.yml", "config file name")
 	}
 }

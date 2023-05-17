@@ -13,11 +13,11 @@ var validateCmd = &cobra.Command{
 	Long:  "Validate a config file.",
 	Args:  cobra.MaximumNArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		if _, err := config.Load(configFilename); err != nil {
+		if _, err := config.Load(flagConfig); err != nil {
 			return err
 		}
 
-		_, _ = fmt.Printf("Config file %s is valid!\n", configFilename)
+		_, _ = fmt.Printf("Config file %s is valid!\n", flagConfig)
 		return nil
 	},
 }
