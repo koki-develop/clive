@@ -2,7 +2,7 @@ package cmd
 
 import (
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/koki-develop/clive/pkg/ui"
+	"github.com/koki-develop/clive/internal/ui"
 	"github.com/spf13/cobra"
 )
 

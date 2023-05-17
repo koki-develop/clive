@@ -4,10 +4,10 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/go-rod/rod"
-	"github.com/koki-develop/clive/pkg/config"
-	"github.com/koki-develop/clive/pkg/net"
-	"github.com/koki-develop/clive/pkg/styles"
-	"github.com/koki-develop/clive/pkg/ttyd"
+	"github.com/koki-develop/clive/internal/config"
+	"github.com/koki-develop/clive/internal/net"
+	"github.com/koki-develop/clive/internal/styles"
+	"github.com/koki-develop/clive/internal/ttyd"
 )
 
 type Model struct {

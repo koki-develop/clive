@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/koki-develop/clive/pkg/config"
+	"github.com/koki-develop/clive/internal/config"
 	"github.com/spf13/cobra"
 )
 

@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/util"
 	"github.com/spf13/cobra"
 )
 
