@@ -7,7 +7,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version string
+var (
+	version string
+
+	flagConfig string
+)
 
 var rootCmd = &cobra.Command{
 	Use:   "clive",
@@ -48,4 +52,13 @@ func init() {
 	/*
 	 * flags
 	 */
+
+	for _, cmd := range []*cobra.Command{
+		startCmd,
+		initCmd,
+		validateCmd,
+	} {
+		// --config
+		cmd.Flags().StringVarP(&flagConfig, "config", "c", "./clive.yml", "config file name")
+	}
 }
