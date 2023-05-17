@@ -15,7 +15,7 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Create a config file",
 	Long:  "Create a config file.",
-	Args:  cobra.MaximumNArgs(0),
+	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		exists, err := util.Exists(flagConfig)
 		if err != nil {

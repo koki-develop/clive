@@ -10,7 +10,7 @@ var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Start cLive actions",
 	Long:  "Start cLive actions.",
-	Args:  cobra.MaximumNArgs(0),
+	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		m := ui.New(flagConfig)
 		defer m.Close()
