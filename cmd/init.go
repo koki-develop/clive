@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -15,17 +15,17 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Create a config file",
 	Long:  "Create a config file.",
-	Args:  cobra.MaximumNArgs(0),
+	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		exists, err := util.Exists(configFilename)
+		exists, err := util.Exists(flagConfig)
 		if err != nil {
 			return err
 		}
 		if exists {
-			return fmt.Errorf("%s already exists", configFilename)
+			return fmt.Errorf("%s already exists", flagConfig)
 		}
 
-		f, err := util.CreateFile(configFilename)
+		f, err := util.CreateFile(flagConfig)
 		if err != nil {
 			return err
 		}
@@ -35,11 +35,7 @@ var initCmd = &cobra.Command{
 			return err
 		}
 
-		_, _ = fmt.Printf("Created %s\n", configFilename)
+		_, _ = fmt.Printf("Created %s\n", flagConfig)
 		return nil
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(initCmd)
 }

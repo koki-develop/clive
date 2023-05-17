@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/koki-develop/clive/pkg/styles"
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/styles"
+	"github.com/koki-develop/clive/internal/util"
 )
 
 func (m *Model) View() string {

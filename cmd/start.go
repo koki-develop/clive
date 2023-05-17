@@ -2,7 +2,7 @@ package cmd
 
 import (
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/koki-develop/clive/pkg/ui"
+	"github.com/koki-develop/clive/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -10,9 +10,9 @@ var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Start cLive actions",
 	Long:  "Start cLive actions.",
-	Args:  cobra.MaximumNArgs(0),
+	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		m := ui.New(configFilename)
+		m := ui.New(flagConfig)
 		defer m.Close()
 
 		p := tea.NewProgram(m)
@@ -26,8 +26,4 @@ var startCmd = &cobra.Command{
 
 		return nil
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(startCmd)
 }

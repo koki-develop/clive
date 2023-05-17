@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/util"
 	"github.com/stretchr/testify/assert"
 )
 

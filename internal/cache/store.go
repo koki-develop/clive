@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/util"
 )
 
 type Store struct {

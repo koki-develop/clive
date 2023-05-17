@@ -8,10 +8,10 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/google/go-github/v52/github"
-	"github.com/koki-develop/clive/pkg/cache"
+	"github.com/koki-develop/clive/internal/cache"
 
-	"github.com/koki-develop/clive/pkg/styles"
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/styles"
+	"github.com/koki-develop/clive/internal/util"
 )
 
 func notifyNewRelease(w io.Writer) error {

@@ -10,10 +10,10 @@ import (
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/input"
 	"github.com/go-rod/rod/lib/proto"
-	"github.com/koki-develop/clive/pkg/browser"
-	"github.com/koki-develop/clive/pkg/config"
-	"github.com/koki-develop/clive/pkg/ttyd"
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/browser"
+	"github.com/koki-develop/clive/internal/config"
+	"github.com/koki-develop/clive/internal/ttyd"
+	"github.com/koki-develop/clive/internal/util"
 )
 
 type loadConfigMsg struct{ config *config.Config }

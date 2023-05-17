@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/koki-develop/clive/pkg/util"
+	"github.com/koki-develop/clive/internal/util"
 	"github.com/mitchellh/mapstructure"
 	"github.com/pkg/errors"
 )
