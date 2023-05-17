@@ -23,13 +23,29 @@ func Execute() {
 }
 
 func init() {
+	/*
+	 * version
+	 */
+
 	if version == "" {
 		if info, ok := debug.ReadBuildInfo(); ok {
 			version = info.Main.Version
 		}
 	}
-
 	rootCmd.Version = version
-
 	_ = notifyNewRelease(os.Stderr)
+
+	/*
+	 * commands
+	 */
+
+	rootCmd.AddCommand(
+		initCmd,
+		startCmd,
+		validateCmd,
+	)
+
+	/*
+	 * flags
+	 */
 }

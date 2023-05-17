@@ -21,7 +21,3 @@ var validateCmd = &cobra.Command{
 		return nil
 	},
 }
-
-func init() {
-	rootCmd.AddCommand(validateCmd)
-}
