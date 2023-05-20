@@ -55,19 +55,27 @@ $ brew install ttyd
 > **Note**
 > cLive を使用するには前提条件があります。詳しくは [`前提条件`](#information_source-前提条件) を参照してください。
 
-もし homebrew を使用している場合、 `brew install` でインストールすることができます。
+### Homebrew
+
+```sh
+$ brew install clive
+```
+
+### Homebrew Tap
 
 ```sh
 $ brew install koki-develop/tap/clive
 ```
 
-また、 `go install` でもインストールすることができます。
+### `go install`
 
 ```sh
 $ go install github.com/koki-develop/clive@latest
 ```
 
-もしくは [Releases ページ](https://github.com/koki-develop/clive/releases/latest)からバイナリをダウンロードしてください。
+### Releases
+
+[Releases ページ](https://github.com/koki-develop/clive/releases/latest)からバイナリをダウンロードしてください。
 
 ## :beginner: 基本的な使い方
 

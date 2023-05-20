@@ -55,19 +55,27 @@ See the [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for m
 > **Note**
 > There are prerequisites for using cLive. See [`Prerequisite`](#information_source-prerequisite) for details.
 
-If you are using homebrew, you can install cLive with `brew install`.
+### Homebrew
+
+```sh
+$ brew install clive
+```
+
+### Homebrew Tap
 
 ```sh
 $ brew install koki-develop/tap/clive
 ```
 
-It can also be installed using `go install`.
+### `go install`
 
 ```sh
 $ go install github.com/koki-develop/clive@latest
 ```
 
-Or download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
+### Releases
+
+Download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
 
 ## :beginner: Getting Started
 
