@@ -41,7 +41,7 @@ English | <a href="./README.ja.md">日本語</a>
 
 ## :information_source: Prerequisite
 
-cLive requires [ttyd](https://tsl0922.github.io/ttyd/) to be installed.  
+cLive requires [ttyd](https://tsl0922.github.io/ttyd/) (version `1.7.0` or higher) to be installed.  
 For example, if you are using homebrew, you can install it with `brew install`.
 
 ```sh

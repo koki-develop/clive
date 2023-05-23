@@ -41,7 +41,7 @@ Automates terminal operations.
 
 ## :information_source: 前提条件
 
-cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) がインストールされている必要があります。  
+cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) ( バージョン `1.7.0` 以上 ) がインストールされている必要があります。  
 例えば homebrew を使用している場合、 `brew install` でインストールすることができます。
 
 ```sh
