@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/google/go-github/v52/github"
+	"github.com/google/go-github/v53/github"
 	"github.com/koki-develop/clive/internal/cache"
 
 	"github.com/koki-develop/clive/internal/styles"
