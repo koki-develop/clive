@@ -19,9 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup
-      - uses: goreleaser/goreleaser-action@v4
-        with:
-          args: release --clean --snapshot
+      - run: go build .
 
   lint:
     runs-on: ubuntu-latest
