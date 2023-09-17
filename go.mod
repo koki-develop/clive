@@ -7,7 +7,7 @@ require (
 	github.com/charmbracelet/bubbletea v0.24.2
 	github.com/charmbracelet/lipgloss v0.7.1
 	github.com/go-rod/rod v0.114.1
-	github.com/google/go-github/v53 v53.2.0
+	github.com/google/go-github/v55 v55.0.0
 	github.com/google/go-github/v55 v55.0.0
 	github.com/jedib0t/go-pretty/v6 v6.4.6
 	github.com/mitchellh/mapstructure v1.5.0
