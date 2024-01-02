@@ -19,6 +19,8 @@ func New(cmd []string, port int) *Ttyd {
 		"-t", "rendererType=canvas",
 		"-t", "disableResizeOverlay=true",
 		"-t", "cursorBlink=true",
+		"--once",
+		"--writable",
 		"--",
 	}, cmd...)
 

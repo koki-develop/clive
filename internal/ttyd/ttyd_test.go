@@ -27,6 +27,8 @@ func TestNew(t *testing.T) {
 					"-t", "rendererType=canvas",
 					"-t", "disableResizeOverlay=true",
 					"-t", "cursorBlink=true",
+					"--once",
+					"--writable",
 					"--",
 					"hoge", "fuga",
 				),
