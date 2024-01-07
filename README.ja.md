@@ -41,7 +41,7 @@ Automates terminal operations.
 
 ## :information_source: 前提条件
 
-cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) ( バージョン `1.7.0` 以上 ) がインストールされている必要があります。  
+cLive は事前に [ttyd](https://tsl0922.github.io/ttyd/) ( バージョン `1.7.4` 以上 ) がインストールされている必要があります。  
 例えば homebrew を使用している場合、 `brew install` でインストールすることができます。
 
 ```sh
@@ -112,6 +112,7 @@ $ clive start
 
 - [`init`](#clive-init) - 設定ファイルを作成します。
 - [`start`](#clive-start) - 設定ファイルを読み込み、 cLive を開始します。
+- [`validate`](#clive-validate) - 設定ファイルの構文を検証します。
 - [`completion`](#clive-completion) - 指定されたシェルの自動補完スクリプトを生成します。
 
 ### `clive init`
