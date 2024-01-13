@@ -425,6 +425,12 @@ settings:
 
 それ以外のサンプルについては [`examples/`](./examples/) ディレクトリを参照してください。
 
+## :coffee: Buy me a coffee
+
+もしこのプロジェクトが気に入ったら、是非コーヒーをおごってください。
+
+<a href="https://www.buymeacoffee.com/koki.sato"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="217px" height="60px"></a>
+
 ## :memo: ライセンス
 
 [MIT License](./LICENSE)
