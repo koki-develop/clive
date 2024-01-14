@@ -52,7 +52,7 @@ See the [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for m
 
 ## :zap: Installation
 
-> ![NOTE]
+> [!NOTE]
 > There are prerequisites for using cLive. See [`Prerequisite`](#information_source-prerequisite) for details.
 
 ### Homebrew

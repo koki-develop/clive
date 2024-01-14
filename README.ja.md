@@ -52,7 +52,7 @@ $ brew install ttyd
 
 ## :zap: インストール
 
-> ![NOTE]
+> [!NOTE]
 > cLive を使用するには前提条件があります。詳しくは [`前提条件`](#information_source-前提条件) を参照してください。
 
 ### Homebrew
