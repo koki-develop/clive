@@ -1,0 +1,269 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "count-property": {
+            "title": "count",
+            "description": "A repetition count\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#actions",
+            "type": "integer",
+            "minimum": 0,
+            "default": 1
+        },
+        "speed-property": {
+            "title": "speed",
+            "description": "An interval between key typing in milliseconds\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#actions",
+            "type": "integer",
+            "minimum": 0,
+            "default": 10
+        }
+    },
+    "title": "clive settings",
+    "description": "clive settings\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#gear-configuration",
+    "type": "object",
+    "properties": {
+        "settings": {
+            "title": "settings",
+            "description": "clive settings\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#settings",
+            "type": "object",
+            "properties": {
+                "loginCommand": {
+                    "title": "login command",
+                    "description": "A login command with arguments\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#logincommand",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "examples": [
+                            "bash",
+                            "--login"
+                        ]
+                    },
+                    "minItems": 1,
+                    "default": [
+                        "bash",
+                        "--login"
+                    ]
+                },
+                "fontSize": {
+                    "title": "font size",
+                    "description": "A font size\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#fontsize",
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 22
+                },
+                "fontFamily": {
+                    "title": "font family",
+                    "description": "A font family\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#fontfamily",
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "[^ ]",
+                    "examples": [
+                        "monospace"
+                    ]
+                },
+                "defaultSpeed": {
+                    "title": "default speed",
+                    "description": "An interval between key typing in milliseconds\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#defaultspeed",
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 10
+                },
+                "skipPauseBeforeQuit": {
+                    "title": "skip pause before quit",
+                    "description": "Whether to skip pausing before quitting or not\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#skippausebeforequit",
+                    "type": "boolean",
+                    "default": false
+                },
+                "screenshotsDir": {
+                    "title": "screenshots directory",
+                    "description": "A directory to save screenshots\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#screenshotsdir",
+                    "type": "boolean",
+                    "default": false
+                },
+                "browserBin": {
+                    "title": "browser binary",
+                    "description": "A path to an executable browser binary\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#browserbin",
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "[^ ]",
+                    "default": "screenshots"
+                },
+                "headless": {
+                    "title": "headless",
+                    "description": "Whether to run a browser in a headless mode\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#headless",
+                    "type": "string",
+                    "minLength": 1,
+                    "pattern": "[^ ]",
+                    "examples": [
+                        "/Applications/Sidekick.app/Contents/MacOS/Sidekick"
+                    ]
+                },
+                "width": {
+                    "title": "width",
+                    "description": "A window width\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#width",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "height": {
+                    "title": "height",
+                    "description": "A window height\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#height",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "minProperties": 1,
+            "additionalProperties": false
+        },
+        "actions": {
+            "title": "actions",
+            "description": "Actions\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#actions",
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "title": "type",
+                        "description": "Type characters\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#type",
+                        "type": "object",
+                        "required": [
+                            "type"
+                        ],
+                        "properties": {
+                            "type": {
+                                "title": "type",
+                                "description": "Characters to type\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#type",
+                                "type": "string",
+                                "examples": [
+                                    "echo 'Hello World'"
+                                ]
+                            },
+                            "count": {
+                                "$ref": "#/definitions/count-property"
+                            },
+                            "speed": {
+                                "$ref": "#/definitions/speed-property"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "title": "key",
+                        "description": "Press special characters\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#key",
+                        "type": "object",
+                        "required": [
+                            "key"
+                        ],
+                        "properties": {
+                            "key": {
+                                "title": "key",
+                                "description": "Character to press\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#key",
+                                "type": "string",
+                                "enum": [
+                                    "esc",
+                                    "backspace",
+                                    "tab",
+                                    "enter",
+                                    "left",
+                                    "up",
+                                    "right",
+                                    "down",
+                                    "space"
+                                ]
+                            },
+                            "count": {
+                                "$ref": "#/definitions/count-property"
+                            },
+                            "speed": {
+                                "$ref": "#/definitions/speed-property"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "title": "ctrl",
+                        "description": "Press Ctrl with other character\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#ctrl",
+                        "type": "object",
+                        "required": [
+                            "ctrl"
+                        ],
+                        "properties": {
+                            "ctrl": {
+                                "title": "ctrl",
+                                "description": "Character to type alongside Ctrl\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#ctrl",
+                                "type": "string",
+                                "minLength": 1,
+                                "pattern": "[^ ]",
+                                "examples": [
+                                    "C"
+                                ]
+                            },
+                            "count": {
+                                "$ref": "#/definitions/count-property"
+                            },
+                            "speed": {
+                                "$ref": "#/definitions/speed-property"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "title": "sleep",
+                        "description": "Sleep for a specific number of milliseconds\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#sleep",
+                        "type": "object",
+                        "required": [
+                            "sleep"
+                        ],
+                        "properties": {
+                            "sleep": {
+                                "title": "sleep",
+                                "description": "A milliseconds amount\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#sleep",
+                                "type": "integer",
+                                "minimum": 0
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    {
+                        "title": "pause",
+                        "description": "Wait for Enter to be pressed\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#screenshot",
+                        "type": "string",
+                        "enum": [
+                            "pause"
+                        ]
+                    },
+                    {
+                        "title": "screenshot",
+                        "description": "Take a screenshot\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#screenshot",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "screenshot"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "required": [
+                                    "screenshot"
+                                ],
+                                "properties": {
+                                    "screenshot": {
+                                        "title": "screenshot",
+                                        "description": "A screenshot path\nhttps://github.com/koki-develop/clive?tab=readme-ov-file#screenshot",
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "pattern": "[^ ]",
+                                        "default": [
+                                            "ACTION_INDEX_yyyymmddHHMMSS.png"
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        ]
+                    }
+                ]
+            },
+            "minItems": 1
+        }
+    },
+    "minProperties": 1,
+    "additionalProperties": false
+}
