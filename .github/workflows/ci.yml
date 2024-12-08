@@ -26,4 +26,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - uses: golangci/golangci-lint-action@v3
+      - name: lint
+        run: golangci-lint run --verbose ./...
