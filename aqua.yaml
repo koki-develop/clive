@@ -1,0 +1,4 @@
+registries:
+- type: standard
+  ref: v4.269.0 # renovate: depName=aquaproj/aqua-registry
+packages:
