@@ -60,7 +60,7 @@ func DecodeSettings(m map[string]interface{}) (*Settings, error) {
 	}
 
 	if err := mapstructure.Decode(m, &stgs); err != nil {
-		return nil, errors.WithMessagef(ErrInvalidSettings, err.Error())
+		return nil, errors.WithMessagef(ErrInvalidSettings, "%s", err)
 	}
 
 	return &stgs, nil
