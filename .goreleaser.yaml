@@ -1,3 +1,5 @@
+version: 2
+
 builds:
   - ldflags:
       - -s -w -X github.com/koki-develop/clive/cmd.version=v{{.Version}}
@@ -10,7 +12,6 @@ builds:
 
 source:
   enabled: true
-  rlcp: true
 
 archives:
   - format: tar.gz
@@ -29,7 +30,7 @@ checksum:
   name_template: 'checksums.txt'
 
 brews:
-  - tap:
+  - repository:
       owner: koki-develop
       name: homebrew-tap
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
