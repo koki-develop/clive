@@ -1,0 +1,4 @@
+[tools]
+"aqua:golang/go" = "1.23.6"
+"aqua:golangci/golangci-lint" = "1.62.2"
+"aqua:goreleaser/goreleaser" = "v2.4.8"
