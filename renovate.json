@@ -11,5 +11,15 @@
   },
   "patch": {
     "stabilityDays": 2
-  }
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["^mise\\.toml$"],
+      "matchStrings": [
+        "\"go:(?<depName>[^\"]+)\"\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
+  ]
 }
