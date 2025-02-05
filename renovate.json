@@ -16,7 +16,7 @@
     {
       "fileMatch": ["^mise\\.toml$"],
       "matchStrings": [
-        "\"go:(?<depName>[^\"]+)\"\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+        "\"go:github\\.com/(?<depName>[^/]+/[^/]+)(?:/[^\"]+)?\"\\s*=\\s*\"(?<currentValue>[^\"]+)\""
       ],
       "datasourceTemplate": "github-tags",
       "extractVersionTemplate": "^v(?<version>.*)$"
