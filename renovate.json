@@ -1,25 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
-  ],
-  "major": {
-    "stabilityDays": 7
-  },
-  "minor": {
-    "stabilityDays": 3
-  },
-  "patch": {
-    "stabilityDays": 2
-  },
-  "regexManagers": [
-    {
-      "fileMatch": ["^mise\\.toml$"],
-      "matchStrings": [
-        "\"go:github\\.com/(?<depName>[^/]+/[^/]+)(?:/[^\"]+)?\"\\s*=\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      "datasourceTemplate": "github-tags",
-      "extractVersionTemplate": "^v(?<version>.*)$"
-    }
+    "github>koki-develop/renovate-config",
+    "github>koki-develop/renovate-config:mise"
   ]
 }
