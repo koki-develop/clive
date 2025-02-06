@@ -1,6 +1,8 @@
 module github.com/koki-develop/clive
 
-go 1.19
+go 1.22.0
+
+toolchain go1.23.6
 
 require (
 	github.com/charmbracelet/bubbles v0.16.1
@@ -13,7 +15,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/mod v0.12.0
+	golang.org/x/mod v0.23.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
