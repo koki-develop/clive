@@ -10,6 +10,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.8.0
 	github.com/go-rod/rod v0.115.0
 	github.com/google/go-github/v55 v55.0.0
+	github.com/google/go-github/v69 v69.2.0
 	github.com/jedib0t/go-pretty/v6 v6.4.9
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/errors v0.9.1
