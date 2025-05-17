@@ -384,7 +384,7 @@ See the [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/m
 ```yaml
 # e.g.
 settings:
-  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
+  browserBin: /Applications/Vivaldi.app/Contents/MacOS/Vivaldi # use Vivaldi
 ```
 
 #### `headless`
