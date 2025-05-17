@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// TODO: move to internal/cli
 var validateCmd = &cobra.Command{
 	Use:   "validate",
 	Short: "Validate a config file",

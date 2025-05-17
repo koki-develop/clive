@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// TODO: move to internal/cli
 var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Start cLive actions",
