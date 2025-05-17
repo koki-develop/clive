@@ -12,16 +12,11 @@ Automates terminal operations.
 <a href="https://github.com/koki-develop/clive/releases/latest"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/koki-develop/clive/total?style=flat"></a>
 <a href="./LICENSE"><img src="https://img.shields.io/github/license/koki-develop/clive?style=flat" /></a>
 <a href="https://github.com/koki-develop/clive/actions/workflows/ci.yml"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/koki-develop/clive/ci.yml?branch=main&logo=github&style=flat" /></a>
-<a href="https://codeclimate.com/github/koki-develop/clive/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability/koki-develop/clive?logo=codeclimate&style=flat" /></a>
 <a href="https://goreportcard.com/report/github.com/koki-develop/clive"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/koki-develop/clive" /></a>
 <a href="https://codecov.io/github/koki-develop/clive"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/koki-develop/clive?logo=codecov" /></a>
 </p>
 
 ![](./examples/demo/demo.gif)
-
-<p align="center">
-English | <a href="./README.ja.md">日本語</a>
-</p>
 
 # cLive
 
