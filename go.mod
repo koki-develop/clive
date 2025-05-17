@@ -2,7 +2,7 @@ module github.com/koki-develop/clive
 
 go 1.22.0
 
-toolchain go1.23.6
+toolchain go1.24.3
 
 require (
 	github.com/charmbracelet/bubbles v0.16.1
