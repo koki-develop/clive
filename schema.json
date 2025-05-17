@@ -59,10 +59,10 @@
           ]
         },
         "count": {
-          "$ref": "#/definitions/count-property"
+          "$ref": "#/definitions/count"
         },
         "speed": {
-          "$ref": "#/definitions/speed-property"
+          "$ref": "#/definitions/speed"
         }
       },
       "required": ["key"],
