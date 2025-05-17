@@ -27,7 +27,7 @@ func (c *CLI) Init(p *InitParams) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	if _, err := f.Write(configInitTemplate); err != nil {
 		return err

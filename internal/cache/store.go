@@ -53,7 +53,7 @@ func (s *Store) Set(key string, data any) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	c := New(s.ttl, data)
 	if err := c.Write(f); err != nil {
@@ -72,7 +72,7 @@ func (s *Store) load(p string) (*Cache, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	c, err := s.decode(f)
 	if err != nil {
