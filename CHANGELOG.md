@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.11](https://github.com/koki-develop/clive/compare/v0.12.10...v0.12.11) (2025-05-17)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/charmbracelet/bubbletea to v1 ([#137](https://github.com/koki-develop/clive/issues/137)) ([de55214](https://github.com/koki-develop/clive/commit/de55214b323c39e27fbc116dc4ac205ede139ca2))
+* **deps:** update module github.com/spf13/cobra to v1.9.1 ([#111](https://github.com/koki-develop/clive/issues/111)) ([a57725e](https://github.com/koki-develop/clive/commit/a57725e176979b3500beaa078ec565c1afc94b9e))
+
 ## [0.12.10](https://github.com/koki-develop/clive/compare/v0.12.9...v0.12.10) (2025-05-17)
 
 
