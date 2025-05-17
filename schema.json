@@ -171,12 +171,14 @@
         "screenshotsDir": {
           "description": "Directory to save screenshots.",
           "type": "string",
+          "minLength": 1,
           "default": "screenshots",
           "examples": ["path/to/pictures"]
         },
         "browserBin": {
           "description": "Path to an executable browser binary.",
           "type": "string",
+          "minLength": 1,
           "examples": ["/Applications/Vivaldi.app/Contents/MacOS/Vivaldi"]
         },
         "headless": {
