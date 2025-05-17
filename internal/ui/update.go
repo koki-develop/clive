@@ -194,7 +194,7 @@ func (m *Model) runPause(action *config.PauseAction) tea.Msg {
 }
 
 func (m *Model) runType(action *config.TypeAction) tea.Msg {
-	for i := 0; i < action.Count; i++ {
+	for range action.Count {
 		if err := m.runTypeOnce(action); err != nil {
 			return errMsg{err}
 		}
@@ -252,7 +252,7 @@ func (m *Model) input(elm *rod.Element, text string) error {
 }
 
 func (m *Model) runKey(action *config.KeyAction) tea.Msg {
-	for i := 0; i < action.Count; i++ {
+	for range action.Count {
 		if err := m.runKeyOnce(action); err != nil {
 			return errMsg{err}
 		}
@@ -287,7 +287,7 @@ func (m *Model) runSleep(action *config.SleepAction) tea.Msg {
 }
 
 func (m *Model) runCtrl(action *config.CtrlAction) tea.Msg {
-	for i := 0; i < action.Count; i++ {
+	for range action.Count {
 		if err := m.runCtrlOnce(action); err != nil {
 			return errMsg{err}
 		}

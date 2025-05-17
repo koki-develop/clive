@@ -164,32 +164,32 @@ func Test_parseTypeAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    Action
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{"type": "Hello World"},
+			map[string]any{"type": "Hello World"},
 			&TypeAction{Type: "Hello World", Count: 1, Speed: stgs.DefaultSpeed},
 			false,
 		},
 		{
-			map[string]interface{}{"type": "Hello World", "count": 10},
+			map[string]any{"type": "Hello World", "count": 10},
 			&TypeAction{Type: "Hello World", Count: 10, Speed: stgs.DefaultSpeed},
 			false,
 		},
 		{
-			map[string]interface{}{"type": "Hello World", "speed": 500},
+			map[string]any{"type": "Hello World", "speed": 500},
 			&TypeAction{Type: "Hello World", Count: 1, Speed: 500},
 			false,
 		},
 		{
-			map[string]interface{}{"type": "Hello World", "count": 10, "speed": 500},
+			map[string]any{"type": "Hello World", "count": 10, "speed": 500},
 			&TypeAction{Type: "Hello World", Count: 10, Speed: 500},
 			false,
 		},
 		{
-			map[string]interface{}{"type": "Hello World", "a": "A"},
+			map[string]any{"type": "Hello World", "a": "A"},
 			nil,
 			true,
 		},
@@ -211,32 +211,32 @@ func Test_parseKeyAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    Action
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{"key": "enter"},
+			map[string]any{"key": "enter"},
 			&KeyAction{Key: "enter", Count: 1, Speed: stgs.DefaultSpeed},
 			false,
 		},
 		{
-			map[string]interface{}{"key": "enter", "count": 10},
+			map[string]any{"key": "enter", "count": 10},
 			&KeyAction{Key: "enter", Count: 10, Speed: stgs.DefaultSpeed},
 			false,
 		},
 		{
-			map[string]interface{}{"key": "enter", "speed": 500},
+			map[string]any{"key": "enter", "speed": 500},
 			&KeyAction{Key: "enter", Count: 1, Speed: 500},
 			false,
 		},
 		{
-			map[string]interface{}{"key": "enter", "count": 10, "speed": 500},
+			map[string]any{"key": "enter", "count": 10, "speed": 500},
 			&KeyAction{Key: "enter", Count: 10, Speed: 500},
 			false,
 		},
 		{
-			map[string]interface{}{"key": "enter", "a": "A"},
+			map[string]any{"key": "enter", "a": "A"},
 			nil,
 			true,
 		},
@@ -256,17 +256,17 @@ func Test_parseKeyAction(t *testing.T) {
 
 func Test_parseSleepAction(t *testing.T) {
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    Action
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{"sleep": 3000},
+			map[string]any{"sleep": 3000},
 			&SleepAction{Sleep: 3000},
 			false,
 		},
 		{
-			map[string]interface{}{"sleep": 3000, "a": "A"},
+			map[string]any{"sleep": 3000, "a": "A"},
 			nil,
 			true,
 		},
@@ -286,22 +286,22 @@ func Test_parseSleepAction(t *testing.T) {
 
 func Test_parsePauseAction(t *testing.T) {
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    Action
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{"pause": nil},
+			map[string]any{"pause": nil},
 			&PauseAction{},
 			false,
 		},
 		{
-			map[string]interface{}{"pause": struct{}{}},
+			map[string]any{"pause": struct{}{}},
 			&PauseAction{},
 			false,
 		},
 		{
-			map[string]interface{}{"pause": nil, "a": "A"},
+			map[string]any{"pause": nil, "a": "A"},
 			nil,
 			true,
 		},
@@ -323,32 +323,32 @@ func Test_parseCtrlAction(t *testing.T) {
 	stgs := &Settings{DefaultSpeed: 10}
 
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    Action
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{"ctrl": "c"},
+			map[string]any{"ctrl": "c"},
 			&CtrlAction{Ctrl: "c", Count: 1, Speed: 10},
 			false,
 		},
 		{
-			map[string]interface{}{"ctrl": "c", "count": 10},
+			map[string]any{"ctrl": "c", "count": 10},
 			&CtrlAction{Ctrl: "c", Count: 10, Speed: stgs.DefaultSpeed},
 			false,
 		},
 		{
-			map[string]interface{}{"ctrl": "c", "speed": 500},
+			map[string]any{"ctrl": "c", "speed": 500},
 			&CtrlAction{Ctrl: "c", Count: 1, Speed: 500},
 			false,
 		},
 		{
-			map[string]interface{}{"ctrl": "c", "count": 10, "speed": 500},
+			map[string]any{"ctrl": "c", "count": 10, "speed": 500},
 			&CtrlAction{Ctrl: "c", Count: 10, Speed: 500},
 			false,
 		},
 		{
-			map[string]interface{}{"ctrl": "c", "a": "A"},
+			map[string]any{"ctrl": "c", "a": "A"},
 			nil,
 			true,
 		},
@@ -368,22 +368,22 @@ func Test_parseCtrlAction(t *testing.T) {
 
 func Test_parseScreenshotAction(t *testing.T) {
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    Action
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{"screenshot": nil},
+			map[string]any{"screenshot": nil},
 			&ScreenshotAction{},
 			false,
 		},
 		{
-			map[string]interface{}{"screenshot": "SCREENSHOT"},
+			map[string]any{"screenshot": "SCREENSHOT"},
 			&ScreenshotAction{Screenshot: util.String("SCREENSHOT")},
 			false,
 		},
 		{
-			map[string]interface{}{"screenshot": nil, "a": "A"},
+			map[string]any{"screenshot": nil, "a": "A"},
 			nil,
 			true,
 		},

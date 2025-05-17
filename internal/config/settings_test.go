@@ -10,7 +10,7 @@ import (
 
 func TestDecodeSettings(t *testing.T) {
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    *Settings
 		wantErr bool
 	}{
@@ -31,7 +31,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{},
+			map[string]any{},
 			&Settings{
 				LoginCommand:        []string{"bash", "--login"},
 				FontSize:            22,
@@ -47,7 +47,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"loginCommand": []string{"zsh", "--login"},
 			},
 			&Settings{
@@ -65,7 +65,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"fontSize": 100,
 			},
 			&Settings{
@@ -83,7 +83,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"fontFamily": "FONT_FAMILY",
 			},
 			&Settings{
@@ -101,7 +101,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"defaultSpeed": 200,
 			},
 			&Settings{
@@ -119,7 +119,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"skipPauseBeforeQuit": true,
 			},
 			&Settings{
@@ -137,7 +137,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"screenshotsDir": "SCREENSHOTS_DIR",
 			},
 			&Settings{
@@ -155,7 +155,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"browserBin": "BROWSER_BIN",
 			},
 			&Settings{
@@ -173,7 +173,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"headless": true,
 			},
 			&Settings{
@@ -191,7 +191,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"width": 2000,
 			},
 			&Settings{
@@ -209,7 +209,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"height": 1000,
 			},
 			&Settings{
@@ -227,7 +227,7 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"loginCommand":        []string{"zsh", "--login"},
 				"fontSize":            100,
 				"fontFamily":          "FONT_FAMILY",
@@ -254,14 +254,14 @@ func TestDecodeSettings(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"a": "A",
 			},
 			nil,
 			true,
 		},
 		{
-			map[string]interface{}{
+			map[string]any{
 				"loginCommand":        []string{"zsh", "--login"},
 				"fontSize":            100,
 				"fontFamily":          "FONT_FAMILY",

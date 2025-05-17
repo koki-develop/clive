@@ -46,7 +46,7 @@ func (s *Store) Get(key string) (*Cache, error) {
 	return c, nil
 }
 
-func (s *Store) Set(key string, data interface{}) error {
+func (s *Store) Set(key string, data any) error {
 	p := s.buildPath(key)
 
 	f, err := util.CreateFile(p)

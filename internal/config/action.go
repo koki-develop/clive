@@ -86,7 +86,7 @@ func (action *ScreenshotAction) String() string {
 	return "Take a screenshot"
 }
 
-var parseFuncMap = map[string]func(*Settings, map[string]interface{}) (Action, error){
+var parseFuncMap = map[string]func(*Settings, map[string]any) (Action, error){
 	"type":       parseTypeAction,
 	"key":        parseKeyAction,
 	"ctrl":       parseCtrlAction,
@@ -95,16 +95,16 @@ var parseFuncMap = map[string]func(*Settings, map[string]interface{}) (Action, e
 	"screenshot": parseScreenshotAction,
 }
 
-func ParseAction(stgs *Settings, v interface{}) (Action, error) {
+func ParseAction(stgs *Settings, v any) (Action, error) {
 	switch v := v.(type) {
 	case string:
 		switch v {
 		case "pause":
-			return parsePauseAction(stgs, map[string]interface{}{})
+			return parsePauseAction(stgs, map[string]any{})
 		case "screenshot":
-			return parseScreenshotAction(stgs, map[string]interface{}{})
+			return parseScreenshotAction(stgs, map[string]any{})
 		}
-	case map[string]interface{}:
+	case map[string]any:
 		for _, k := range []string{"type", "key", "ctrl", "sleep", "pause", "screenshot"} {
 			if _, ok := v[k]; ok {
 				return parseFuncMap[k](stgs, v)
@@ -115,7 +115,7 @@ func ParseAction(stgs *Settings, v interface{}) (Action, error) {
 	return nil, NewErrInvalidAction(v)
 }
 
-func parseTypeAction(stgs *Settings, m map[string]interface{}) (Action, error) {
+func parseTypeAction(stgs *Settings, m map[string]any) (Action, error) {
 	if err := validateActionFields(m, typeActionValidFields); err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func parseTypeAction(stgs *Settings, m map[string]interface{}) (Action, error) {
 	return &action, nil
 }
 
-func parseKeyAction(settings *Settings, m map[string]interface{}) (Action, error) {
+func parseKeyAction(settings *Settings, m map[string]any) (Action, error) {
 	if err := validateActionFields(m, keyActionValidFields); err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func parseKeyAction(settings *Settings, m map[string]interface{}) (Action, error
 	return &action, nil
 }
 
-func parseSleepAction(settings *Settings, m map[string]interface{}) (Action, error) {
+func parseSleepAction(settings *Settings, m map[string]any) (Action, error) {
 	if err := validateActionFields(m, sleepActionValidFields); err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ func parseSleepAction(settings *Settings, m map[string]interface{}) (Action, err
 	return &action, nil
 }
 
-func parsePauseAction(settings *Settings, m map[string]interface{}) (Action, error) {
+func parsePauseAction(settings *Settings, m map[string]any) (Action, error) {
 	if err := validateActionFields(m, pauseActionValidFields); err != nil {
 		return nil, err
 	}
@@ -177,7 +177,7 @@ func parsePauseAction(settings *Settings, m map[string]interface{}) (Action, err
 	return &PauseAction{}, nil
 }
 
-func parseCtrlAction(settings *Settings, m map[string]interface{}) (Action, error) {
+func parseCtrlAction(settings *Settings, m map[string]any) (Action, error) {
 	if err := validateActionFields(m, ctrlActionValidFields); err != nil {
 		return nil, err
 	}
@@ -193,7 +193,7 @@ func parseCtrlAction(settings *Settings, m map[string]interface{}) (Action, erro
 	return &action, nil
 }
 
-func parseScreenshotAction(settings *Settings, m map[string]interface{}) (Action, error) {
+func parseScreenshotAction(settings *Settings, m map[string]any) (Action, error) {
 	if err := validateActionFields(m, screenshotActionValidFields); err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func parseScreenshotAction(settings *Settings, m map[string]interface{}) (Action
 	return &action, nil
 }
 
-func validateActionFields(m map[string]interface{}, valid []string) error {
+func validateActionFields(m map[string]any, valid []string) error {
 	invalidFields := []string{}
 	for k := range m {
 		if !util.Contains(valid, k) {

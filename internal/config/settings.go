@@ -32,7 +32,7 @@ var settingsFields = []string{
 	"height",
 }
 
-func DecodeSettings(m map[string]interface{}) (*Settings, error) {
+func DecodeSettings(m map[string]any) (*Settings, error) {
 	stgs := Settings{
 		LoginCommand:        []string{"bash", "--login"},
 		FontSize:            22,

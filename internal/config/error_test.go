@@ -9,10 +9,10 @@ import (
 
 func TestNewErrInvalidAction(t *testing.T) {
 	tests := []struct {
-		action interface{}
+		action any
 	}{
 		{
-			map[string]interface{}{"test": "action"},
+			map[string]any{"test": "action"},
 		},
 	}
 	for i, tt := range tests {
@@ -26,11 +26,11 @@ func TestNewErrInvalidAction(t *testing.T) {
 
 func TestErrInvalidAction_Error(t *testing.T) {
 	tests := []struct {
-		action interface{}
+		action any
 		want   string
 	}{
 		{
-			map[string]interface{}{"test": "action"},
+			map[string]any{"test": "action"},
 			`invalid action {"test":"action"}`,
 		},
 	}

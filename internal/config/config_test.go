@@ -170,13 +170,13 @@ actions:
 
 func TestDecodeMap(t *testing.T) {
 	tests := []struct {
-		input   map[string]interface{}
+		input   map[string]any
 		want    *Config
 		wantErr bool
 	}{
 		{
-			map[string]interface{}{
-				"actions": []interface{}{"pause"},
+			map[string]any{
+				"actions": []any{"pause"},
 			},
 			&Config{
 				Settings: &Settings{
@@ -198,9 +198,9 @@ func TestDecodeMap(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
-				"settings": map[string]interface{}{
-					"loginCommand":        []interface{}{"hoge", "fuga"},
+			map[string]any{
+				"settings": map[string]any{
+					"loginCommand":        []any{"hoge", "fuga"},
 					"fontSize":            100,
 					"fontFamily":          "FONT_FAMILY",
 					"defaultSpeed":        200,
@@ -211,7 +211,7 @@ func TestDecodeMap(t *testing.T) {
 					"width":               1600,
 					"height":              800,
 				},
-				"actions": []interface{}{"pause"},
+				"actions": []any{"pause"},
 			},
 			&Config{
 				Settings: &Settings{
@@ -233,21 +233,21 @@ func TestDecodeMap(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{
-				"actions": []interface{}{
-					map[string]interface{}{"type": "Hello"},
-					map[string]interface{}{"type": "Hello", "count": 10, "speed": 500},
-					map[string]interface{}{"key": "enter"},
-					map[string]interface{}{"key": "enter", "count": 10, "speed": 500},
-					map[string]interface{}{"sleep": 1000},
+			map[string]any{
+				"actions": []any{
+					map[string]any{"type": "Hello"},
+					map[string]any{"type": "Hello", "count": 10, "speed": 500},
+					map[string]any{"key": "enter"},
+					map[string]any{"key": "enter", "count": 10, "speed": 500},
+					map[string]any{"sleep": 1000},
 					"pause",
-					map[string]interface{}{"pause": nil},
-					map[string]interface{}{"pause": struct{}{}},
-					map[string]interface{}{"ctrl": "c"},
-					map[string]interface{}{"ctrl": "c", "count": 10, "speed": 500},
+					map[string]any{"pause": nil},
+					map[string]any{"pause": struct{}{}},
+					map[string]any{"ctrl": "c"},
+					map[string]any{"ctrl": "c", "count": 10, "speed": 500},
 					"screenshot",
-					map[string]interface{}{"screenshot": nil},
-					map[string]interface{}{"screenshot": "SCREENSHOT"},
+					map[string]any{"screenshot": nil},
+					map[string]any{"screenshot": "SCREENSHOT"},
 				},
 			},
 			&Config{
@@ -282,22 +282,22 @@ func TestDecodeMap(t *testing.T) {
 			false,
 		},
 		{
-			map[string]interface{}{"a": "A", "actions": []interface{}{"pause"}},
+			map[string]any{"a": "A", "actions": []any{"pause"}},
 			nil,
 			true,
 		},
 		{
-			map[string]interface{}{"settings": "hello world"},
+			map[string]any{"settings": "hello world"},
 			nil,
 			true,
 		},
 		{
-			map[string]interface{}{"actions": "hello world"},
+			map[string]any{"actions": "hello world"},
 			nil,
 			true,
 		},
 		{
-			map[string]interface{}{"actions": []interface{}{map[string]interface{}{"type": "hello world", "unknownField": "value"}}},
+			map[string]any{"actions": []any{map[string]any{"type": "hello world", "unknownField": "value"}}},
 			nil,
 			true,
 		},

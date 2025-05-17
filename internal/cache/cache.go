@@ -9,11 +9,11 @@ import (
 )
 
 type Cache struct {
-	Expiration time.Time   `json:"expiration"`
-	Data       interface{} `json:"data"`
+	Expiration time.Time `json:"expiration"`
+	Data       any       `json:"data"`
 }
 
-func New(ttl time.Duration, data interface{}) *Cache {
+func New(ttl time.Duration, data any) *Cache {
 	return &Cache{
 		Expiration: time.Now().Add(ttl),
 		Data:       data,
@@ -24,7 +24,7 @@ func (c *Cache) Expired() bool {
 	return time.Now().After(c.Expiration)
 }
 
-func (c *Cache) Bind(dst interface{}) error {
+func (c *Cache) Bind(dst any) error {
 	if err := mapstructure.Decode(c.Data, dst); err != nil {
 		return err
 	}

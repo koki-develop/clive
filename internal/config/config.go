@@ -11,8 +11,8 @@ import (
 )
 
 type configYaml struct {
-	Settings map[string]interface{} `yaml:"settings"`
-	Actions  []interface{}          `yaml:"actions"`
+	Settings map[string]any `yaml:"settings"`
+	Actions  []any          `yaml:"actions"`
 }
 
 type Config struct {
@@ -36,7 +36,7 @@ func Load(name string) (*Config, error) {
 }
 
 func Decode(r io.Reader) (*Config, error) {
-	m := map[string]interface{}{}
+	m := map[string]any{}
 	if err := yaml.NewDecoder(r).Decode(&m); err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func Decode(r io.Reader) (*Config, error) {
 	return cfg, nil
 }
 
-func DecodeMap(m map[string]interface{}) (*Config, error) {
+func DecodeMap(m map[string]any) (*Config, error) {
 	invalidFields := []string{}
 	for k := range m {
 		if !util.Contains([]string{"settings", "actions"}, k) {

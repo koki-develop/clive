@@ -12,10 +12,10 @@ var (
 )
 
 type ErrInvalidAction struct {
-	action interface{}
+	action any
 }
 
-func NewErrInvalidAction(action interface{}) ErrInvalidAction {
+func NewErrInvalidAction(action any) ErrInvalidAction {
 	return ErrInvalidAction{action}
 }
 
