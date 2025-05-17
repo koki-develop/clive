@@ -29,8 +29,8 @@ Automates terminal operations.
   - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
 - [Configuration](#gear-configuration)
-  - [`actions`](#actions)
   - [`settings`](#settings)
+  - [`actions`](#actions)
 - [Examples](#book-examples)
 - [License](#memo-license)
 
@@ -173,127 +173,8 @@ Available shells:
 
 The config file consists of `actions` and `settings`.
 
-- [`actions`](#actions) - Actions to run.
 - [`settings`](#settings) - Basic settings (font size, default speed, etc.) .
-
-### `actions`
-
-Actions to run.  
-Available actions:
-
-- [`type`](#type) - Type characters.
-- [`key`](#key) - Enter special keys.
-- [`ctrl`](#ctrl) - Press the Ctrl key with other keys.
-- [`sleep`](#sleep) - Sleep for a specified number of milliseconds.
-- [`pause`](#pause) - Pause actions.
-- [`screenshot`](#screenshot) - Take a screenshot.
-
-#### `type`
-
-Type characters.
-
-| Field   | Required | Default | Description                                 |
-| ------- | -------- | ------- | ------------------------------------------- |
-| `type`  | **Yes**  | N/A     | Characters to type.                         |
-| `count` | No       | `1`     | Number of times to repeat the action.       |
-| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
-
-```yaml
-# e.g.
-actions:
-  - type: echo 'Hello World'
-    count: 10 # Optional
-    speed: 100 # Optional
-```
-
-#### `key`
-
-Enter special keys.  
-Available keys:
-
-- `esc`
-- `backspace`
-- `tab`
-- `enter`
-- `left`
-- `up`
-- `right`
-- `down`
-- `space`
-
-| Field   | Required | Default | Description                                 |
-| ------- | -------- | ------- | ------------------------------------------- |
-| `key`   | **Yes**  | N/A     | Special key to type.                        |
-| `count` | No       | `1`     | Number of times to repeat the action.       |
-| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
-
-```yaml
-# e.g.
-actions:
-  - key: enter
-    count: 10 # Optional
-    speed: 100 # Optional
-```
-
-#### `ctrl`
-
-Press the Ctrl key with other keys.
-
-| Field   | Required | Default | Description                                 |
-| ------- | -------- | ------- | ------------------------------------------- |
-| `ctrl`  | **Yes**  | N/A     | Characters to enter with the ctrl key.      |
-| `count` | No       | `1`     | Number of times to repeat the action.       |
-| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
-
-```yaml
-# e.g.
-actions:
-  - ctrl: c # Ctrl+c
-    count: 10 # Optional
-    speed: 100 # Optional
-```
-
-#### `sleep`
-
-Sleep for a specified number of milliseconds.
-
-| Field   | Required | Default | Description                   |
-| ------- | -------- | ------- | ----------------------------- |
-| `sleep` | **Yes**  | N/A     | Time to sleep (milliseconds). |
-
-```yaml
-# e.g.
-actions:
-  - sleep: 3000 # Sleep for 3 seconds.
-```
-
-#### `pause`
-
-Pause actions.  
-Press enter to continue.
-
-```yaml
-# e.g.
-actions:
-  - pause
-```
-
-#### `screenshot`
-
-Take a screenshot.  
-Screenshots are saved in `screenshots/`.  
-The directory to save the screenshots can be changed in [`settings.screenshotsDir`](#screenshotsdir).
-
-| Field        | Required | Default                               | Description                  |
-| ------------ | -------- | ------------------------------------- | ---------------------------- |
-| `screenshot` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png` | File name of the screenshot. |
-
-```yaml
-# e.g.
-actions:
-  - screenshot
-  - screenshot: foobar.png # Optional
-```
+- [`actions`](#actions) - Actions to run.
 
 ### `settings`
 
@@ -416,6 +297,125 @@ Window height.
 # e.g.
 settings:
   height: 800
+```
+
+### `actions`
+
+Actions to run.  
+Available actions:
+
+- [`type`](#type) - Type characters.
+- [`key`](#key) - Enter special keys.
+- [`ctrl`](#ctrl) - Press the Ctrl key with other keys.
+- [`sleep`](#sleep) - Sleep for a specified number of milliseconds.
+- [`pause`](#pause) - Pause actions.
+- [`screenshot`](#screenshot) - Take a screenshot.
+
+#### `type`
+
+Type characters.
+
+| Field   | Required | Default | Description                                 |
+| ------- | -------- | ------- | ------------------------------------------- |
+| `type`  | **Yes**  | N/A     | Characters to type.                         |
+| `count` | No       | `1`     | Number of times to repeat the action.       |
+| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - type: echo 'Hello World'
+    count: 10 # Optional
+    speed: 100 # Optional
+```
+
+#### `key`
+
+Enter special keys.  
+Available keys:
+
+- `esc`
+- `backspace`
+- `tab`
+- `enter`
+- `left`
+- `up`
+- `right`
+- `down`
+- `space`
+
+| Field   | Required | Default | Description                                 |
+| ------- | -------- | ------- | ------------------------------------------- |
+| `key`   | **Yes**  | N/A     | Special key to type.                        |
+| `count` | No       | `1`     | Number of times to repeat the action.       |
+| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - key: enter
+    count: 10 # Optional
+    speed: 100 # Optional
+```
+
+#### `ctrl`
+
+Press the Ctrl key with other keys.
+
+| Field   | Required | Default | Description                                 |
+| ------- | -------- | ------- | ------------------------------------------- |
+| `ctrl`  | **Yes**  | N/A     | Characters to enter with the ctrl key.      |
+| `count` | No       | `1`     | Number of times to repeat the action.       |
+| `speed` | No       | `10`    | Interval between key typing (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - ctrl: c # Ctrl+c
+    count: 10 # Optional
+    speed: 100 # Optional
+```
+
+#### `sleep`
+
+Sleep for a specified number of milliseconds.
+
+| Field   | Required | Default | Description                   |
+| ------- | -------- | ------- | ----------------------------- |
+| `sleep` | **Yes**  | N/A     | Time to sleep (milliseconds). |
+
+```yaml
+# e.g.
+actions:
+  - sleep: 3000 # Sleep for 3 seconds.
+```
+
+#### `pause`
+
+Pause actions.  
+Press enter to continue.
+
+```yaml
+# e.g.
+actions:
+  - pause
+```
+
+#### `screenshot`
+
+Take a screenshot.  
+Screenshots are saved in `screenshots/`.  
+The directory to save the screenshots can be changed in [`settings.screenshotsDir`](#screenshotsdir).
+
+| Field        | Required | Default                               | Description                  |
+| ------------ | -------- | ------------------------------------- | ---------------------------- |
+| `screenshot` | No       | `<ACTION_INDEX>_<yyyymmddHHMMSS>.png` | File name of the screenshot. |
+
+```yaml
+# e.g.
+actions:
+  - screenshot
+  - screenshot: foobar.png # Optional
 ```
 
 ## :book: Examples
