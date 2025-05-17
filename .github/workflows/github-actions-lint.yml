@@ -1,0 +1,56 @@
+name: GitHub Actions Lint
+
+permissions: {}
+
+on:
+  pull_request:
+    paths:
+      - ".github/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actionlint:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: koki-develop/github-actions-lint/actionlint@145f4a885c4e3b5d78ba1d2d5d7a927706fc531b # v1.3.0
+
+  ghalint:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: koki-develop/github-actions-lint/ghalint@145f4a885c4e3b5d78ba1d2d5d7a927706fc531b # v1.3.0
+        with:
+          action-path: ./.github/actions/**/action.yml
+
+  zizmor:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: koki-develop/github-actions-lint/zizmor@145f4a885c4e3b5d78ba1d2d5d7a927706fc531b # v1.3.0
+        with:
+          github-token: ${{ github.token }}
+          persona: auditor
