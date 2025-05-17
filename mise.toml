@@ -1,4 +1,4 @@
 [tools]
 go = "1.23.6"
 "go:github.com/golangci/golangci-lint/cmd/golangci-lint" = "1.64.8"
-"go:github.com/goreleaser/goreleaser/v2" = "2.4.8"
+"go:github.com/goreleaser/goreleaser/v2" = "2.9.0"
