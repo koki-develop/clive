@@ -73,6 +73,11 @@ $ brew install koki-develop/tap/clive
 $ go install github.com/koki-develop/clive@latest
 ```
 
+### `nix`
+```sh
+$ nix-shell -p clive
+```
+
 ### Releases
 
 Download the binary from the [releases page](https://github.com/koki-develop/clive/releases/latest).
