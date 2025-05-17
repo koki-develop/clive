@@ -1,5 +1,5 @@
-name: setup
-description: ""
+name: Setup
+description: "Setup the environment"
 
 runs:
   using: composite
