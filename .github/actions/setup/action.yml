@@ -4,6 +4,6 @@ description: ""
 runs:
   using: composite
   steps:
-    - uses: jdx/mise-action@v2
+    - uses: jdx/mise-action@c94f0bf9e520b150e34c017db785461f7e71c5fb # v2.2.2
       with:
         experimental: true
