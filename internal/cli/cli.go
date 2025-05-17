@@ -1,7 +1,17 @@
 package cli
 
-type CLI struct{}
+import "io"
 
-func New() *CLI {
-	return &CLI{}
+type CLI struct {
+	stdout io.Writer
+}
+
+type Config struct {
+	Stdout io.Writer
+}
+
+func New(cfg *Config) *CLI {
+	return &CLI{
+		stdout: cfg.Stdout,
+	}
 }

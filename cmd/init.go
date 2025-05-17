@@ -1,15 +1,11 @@
 package cmd
 
 import (
-	_ "embed"
-	"fmt"
+	"os"
 
-	"github.com/koki-develop/clive/internal/util"
+	"github.com/koki-develop/clive/internal/cli"
 	"github.com/spf13/cobra"
 )
-
-//go:embed clive.yml
-var configInitTemplate []byte
 
 var initCmd = &cobra.Command{
 	Use:   "init",
@@ -17,25 +13,12 @@ var initCmd = &cobra.Command{
 	Long:  "Create a config file.",
 	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		exists, err := util.FileExists(flagConfig)
-		if err != nil {
-			return err
-		}
-		if exists {
-			return fmt.Errorf("%s already exists", flagConfig)
-		}
+		c := cli.New(&cli.Config{
+			Stdout: os.Stdout,
+		})
 
-		f, err := util.CreateFile(flagConfig)
-		if err != nil {
-			return err
-		}
-		defer f.Close()
-
-		if _, err := f.Write(configInitTemplate); err != nil {
-			return err
-		}
-
-		_, _ = fmt.Printf("Created %s\n", flagConfig)
-		return nil
+		return c.Init(&cli.InitParams{
+			Config: flagConfig,
+		})
 	},
 }
