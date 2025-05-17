@@ -19,7 +19,7 @@ func CreateFile(p string) (*os.File, error) {
 	return f, nil
 }
 
-func Exists(p string) (bool, error) {
+func FileExists(p string) (bool, error) {
 	if _, err := os.Stat(p); err != nil {
 		if os.IsNotExist(err) {
 			return false, nil

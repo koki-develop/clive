@@ -30,7 +30,7 @@ func NewStore(ttl time.Duration) (*Store, error) {
 
 func (s *Store) Get(key string) (*Cache, error) {
 	p := s.buildPath(key)
-	exists, err := util.Exists(p)
+	exists, err := util.FileExists(p)
 	if err != nil {
 		return nil, err
 	}
