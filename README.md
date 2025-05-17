@@ -29,8 +29,8 @@ Automates terminal operations.
   - [`validate`](#clive-validate)
   - [`completion`](#clive-completion)
 - [Configuration](#gear-configuration)
-  - [`actions`](#actions)
   - [`settings`](#settings)
+  - [`actions`](#actions)
 - [Examples](#book-examples)
 - [License](#memo-license)
 
@@ -173,8 +173,131 @@ Available shells:
 
 The config file consists of `actions` and `settings`.
 
-- [`actions`](#actions) - Actions to run.
 - [`settings`](#settings) - Basic settings (font size, default speed, etc.) .
+- [`actions`](#actions) - Actions to run.
+
+### `settings`
+
+Basic settings.  
+Available settings:
+
+- [`loginCommand`](#logincommand) - Login command and args.
+- [`fontSize`](#fontsize) - Font size.
+- [`fontFamily`](#fontfamily) - Font family.
+- [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
+- [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pausing before quitting.
+- [`screenshotsDir`](#screenshotsdir) - Directory to save screenshots.
+- [`browserBin`](#browserbin) - Path to an executable browser binary.
+- [`headless`](#headless) - Whether to run the browser in headless mode.
+- [`width`](#width) - Window width.
+- [`height`](#height) - Window height.
+
+#### `loginCommand`
+
+Login command and args.  
+Default: `["bash", "--login"]`.
+
+```yaml
+# e.g.
+settings:
+  loginCommand: ["zsh", "--login"]
+```
+
+#### `fontSize`
+
+Font size.  
+Default: `22`
+
+```yaml
+# e.g.
+settings:
+  fontSize: 36
+```
+
+#### `fontFamily`
+
+Font family.
+
+```yaml
+# e.g.
+settings:
+  fontFamily: monospace
+```
+
+#### `defaultSpeed`
+
+Default interval between key typing.  
+Default: `10`
+
+```yaml
+# e.g.
+settings:
+  defaultSpeed: 100
+```
+
+#### `skipPauseBeforeQuit`
+
+Whether to skip pausing before quitting.  
+Default: `false`
+
+```yaml
+# e.g.
+settings:
+  skipPauseBeforeQuit: true
+```
+
+#### `screenshotsDir`
+
+Directory to save screenshots.  
+Default: `screenshots`
+
+```yaml
+# e.g.
+settings:
+  screenshotsDir: path/to/pictures
+```
+
+#### `browserBin`
+
+Path to an executable browser binary.  
+See the [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
+
+```yaml
+# e.g.
+settings:
+  browserBin: /Applications/Vivaldi.app/Contents/MacOS/Vivaldi # use Vivaldi
+```
+
+#### `headless`
+
+Whether to run the browser in headless mode.  
+Default: `false`
+
+```yaml
+# e.g.
+settings:
+  headless: true
+```
+
+#### `width`
+
+Window width.
+
+```yaml
+# e.g.
+settings:
+  width: 1600
+```
+
+#### `height`
+
+Window height.
+
+```yaml
+# e.g.
+settings:
+  height: 800
+```
 
 ### `actions`
 
@@ -293,129 +416,6 @@ The directory to save the screenshots can be changed in [`settings.screenshotsDi
 actions:
   - screenshot
   - screenshot: foobar.png # Optional
-```
-
-### `settings`
-
-Basic settings.  
-Available settings:
-
-- [`loginCommand`](#logincommand) - Login command and args.
-- [`fontSize`](#fontsize) - Font size.
-- [`fontFamily`](#fontfamily) - Font family.
-- [`defaultSpeed`](#defaultspeed) - Default interval between key typing.
-- [`skipPauseBeforeQuit`](#skippausebeforequit) - Whether to skip pausing before quitting.
-- [`screenshotsDir`](#screenshotsdir) - Directory to save screenshots.
-- [`browserBin`](#browserbin) - Path to an executable browser binary.
-- [`headless`](#headless) - Whether to run the browser in headless mode.
-- [`width`](#width) - Window width.
-- [`height`](#height) - Window height.
-
-#### `loginCommand`
-
-Login command and args.  
-Default: `["bash", "--login"]`.
-
-```yaml
-# e.g.
-settings:
-  loginCommand: ["zsh", "--login"]
-```
-
-#### `fontSize`
-
-Font size.  
-Default: `22`
-
-```yaml
-# e.g.
-settings:
-  fontSize: 36
-```
-
-#### `fontFamily`
-
-Font family.
-
-```yaml
-# e.g.
-settings:
-  fontFamily: monospace
-```
-
-#### `defaultSpeed`
-
-Default interval between key typing.  
-Default: `10`
-
-```yaml
-# e.g.
-settings:
-  defaultSpeed: 100
-```
-
-#### `skipPauseBeforeQuit`
-
-Whether to skip pausing before quitting.  
-Default: `false`
-
-```yaml
-# e.g.
-settings:
-  skipPauseBeforeQuit: true
-```
-
-#### `screenshotsDir`
-
-Directory to save screenshots.  
-Default: `screenshots`
-
-```yaml
-# e.g.
-settings:
-  screenshotsDir: path/to/pictures
-```
-
-#### `browserBin`
-
-Path to an executable browser binary.  
-See the [go-rod documentation](https://github.com/go-rod/go-rod.github.io/blob/master/compatibility.md#supported-browsers) for supported browsers.
-
-```yaml
-# e.g.
-settings:
-  browserBin: /Applications/Sidekick.app/Contents/MacOS/Sidekick # use Sidekick
-```
-
-#### `headless`
-
-Whether to run the browser in headless mode.  
-Default: `false`
-
-```yaml
-# e.g.
-settings:
-  headless: true
-```
-
-#### `width`
-
-Window width.
-
-```yaml
-# e.g.
-settings:
-  width: 1600
-```
-
-#### `height`
-
-Window height.
-
-```yaml
-# e.g.
-settings:
-  height: 800
 ```
 
 ## :book: Examples
