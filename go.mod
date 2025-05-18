@@ -9,7 +9,7 @@ require (
 	github.com/charmbracelet/bubbletea v1.3.5
 	github.com/charmbracelet/lipgloss v1.1.0
 	github.com/go-rod/rod v0.116.2
-	github.com/google/go-github/v55 v55.0.0
+	github.com/google/go-github/v72 v72.0.0
 	github.com/google/go-github/v72 v72.0.0
 	github.com/jedib0t/go-pretty/v6 v6.6.7
 	github.com/mitchellh/mapstructure v1.5.0
