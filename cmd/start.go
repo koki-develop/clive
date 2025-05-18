@@ -14,7 +14,7 @@ var startCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(0),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		m := ui.New(flagConfig)
-		defer m.Close()
+		defer func() { _ = m.Close() }()
 
 		p := tea.NewProgram(m)
 		if _, err := p.Run(); err != nil {

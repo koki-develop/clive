@@ -343,7 +343,7 @@ func (m *Model) runScreenshot(action *config.ScreenshotAction) tea.Msg {
 	if err != nil {
 		return errMsg{err}
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	if _, err := f.Write(buf); err != nil {
 		return errMsg{err}
