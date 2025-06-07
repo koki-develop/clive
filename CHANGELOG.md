@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.12](https://github.com/koki-develop/clive/compare/v0.12.11...v0.12.12) (2025-06-07)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/google/go-github/v55 to v72 ([#163](https://github.com/koki-develop/clive/issues/163)) ([127d774](https://github.com/koki-develop/clive/commit/127d7747424001cb1e8450d436febabe4ab243ff))
+
 ## [0.12.11](https://github.com/koki-develop/clive/compare/v0.12.10...v0.12.11) (2025-05-18)
 
 
