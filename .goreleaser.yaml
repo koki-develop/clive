@@ -1,5 +1,10 @@
 version: 2
 
+before:
+  hooks:
+    - go mod tidy
+    - ./scripts/build-completions.sh
+
 builds:
   - ldflags:
       - -s -w -X github.com/koki-develop/clive/cmd.version=v{{.Version}}
@@ -15,6 +20,8 @@ source:
 
 archives:
   - formats: [tar.gz]
+    files:
+      - completions/*
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -34,10 +41,16 @@ brews:
       owner: koki-develop
       name: homebrew-tap
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+    directory: Formula
     homepage: https://github.com/koki-develop/clive
     description: Automates terminal operations and lets you view them live via a browser
     dependencies:
       - name: ttyd
+    install: |
+      bin.install "clive"
+      bash_completion.install "completions/clive.bash" => "clive"
+      zsh_completion.install "completions/clive.zsh" => "_clive"
+      fish_completion.install "completions/clive.fish"
     test: |
       system "#{bin}/clive", "init"
       system "#{bin}/clive", "validate"
