@@ -1,0 +1,35 @@
+name: Claude Renovate Review
+
+permissions: {}
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  claude-renovate-review:
+    if: github.event.pull_request.user.login == 'renovate[bot]'
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - uses: koki-develop/claude-renovate-review@cda94ca660ec4eb22dc7808745e6e511b98b6ebc # v1.0.7
+        with:
+          claude-code-oauth-token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed-tools: |
+            WebFetch(domain:github.com)
+            WebFetch(domain:raw.githubusercontent.com)
+            WebFetch(domain:pkg.go.dev)
+            WebFetch(domain:golang.org)
+            WebFetch(domain:go.dev)
