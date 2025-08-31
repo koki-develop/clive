@@ -50,16 +50,16 @@ See the [ttyd documentation](https://github.com/tsl0922/ttyd#installation) for m
 > [!NOTE]
 > There are prerequisites for using cLive. See [`Prerequisite`](#information_source-prerequisite) for details.
 
+### Homebrew Tap (Recommended)
+
+```sh
+$ brew install koki-develop/tap/clive
+```
+
 ### Homebrew
 
 ```sh
 $ brew install clive
-```
-
-### Homebrew Tap
-
-```sh
-$ brew install koki-develop/tap/clive
 ```
 
 ### `go install`
