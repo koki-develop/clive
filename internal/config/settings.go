@@ -16,7 +16,7 @@ type Settings struct {
 	BrowserBin          *string  `mapstructure:"browserBin"`
 	Headless            bool     `mapstructure:"headless"`
 	Width               *int     `mapstructure:"width"`
-	Height              *int     `mapstructre:"height"`
+	Height              *int     `mapstructure:"height"`
 }
 
 var settingsFields = []string{
