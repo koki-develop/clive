@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           persist-credentials: false
-      - uses: koki-develop/claude-renovate-review@cda94ca660ec4eb22dc7808745e6e511b98b6ebc # v1.0.7
+      - uses: koki-develop/claude-renovate-review@e3b6fc8f6ce1460c17b70ad0e106ba774d4efc62 # v1.0.8
         with:
           claude-code-oauth-token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed-tools: |
