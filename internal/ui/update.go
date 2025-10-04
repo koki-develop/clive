@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/charmbracelet/bubbles/spinner"
@@ -145,8 +146,8 @@ func (m *Model) setupPage(page *rod.Page) error {
 	}
 
 	// font family
-	if m.config.Settings.FontFamily != nil {
-		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = '%s'", *m.config.Settings.FontFamily)); err != nil {
+	if ff := m.config.Settings.FontFamily; ff != nil {
+		if _, err := page.Eval(fmt.Sprintf("() => term.options.fontFamily = %s", strconv.Quote(*ff))); err != nil {
 			return err
 		}
 	}
