@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.13](https://github.com/koki-develop/clive/compare/v0.12.12...v0.12.13) (2025-10-04)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/charmbracelet/bubbletea to v1.3.6 ([#174](https://github.com/koki-develop/clive/issues/174)) ([1c49dc7](https://github.com/koki-develop/clive/commit/1c49dc7c5d4f905bb8e93a1954b0d1c9c1026bba))
+* **deps:** update module github.com/jedib0t/go-pretty/v6 to v6.6.8 ([#175](https://github.com/koki-develop/clive/issues/175)) ([a820549](https://github.com/koki-develop/clive/commit/a820549fcfec9eae1f95230a30cd11b391a2644e))
+* **deps:** update module github.com/spf13/cobra to v1.10.1 ([#185](https://github.com/koki-develop/clive/issues/185)) ([ebb6b2f](https://github.com/koki-develop/clive/commit/ebb6b2f6a9ae8a7dda293a90a7acbd9a908327d1))
+* **deps:** update module github.com/stretchr/testify to v1.11.1 ([#181](https://github.com/koki-develop/clive/issues/181)) ([0b7f01a](https://github.com/koki-develop/clive/commit/0b7f01a78b72de3d42455aaa7ae848a9517eb474))
+* Fixed typo ([db67b51](https://github.com/koki-develop/clive/commit/db67b5169ea28af46075927f06b6f6f46d3bc147))
+* Prevent JavaScript injection in fontFamily configuration ([3e9babe](https://github.com/koki-develop/clive/commit/3e9babe037457d6f826bd879dc61ebe3de487039))
+
 ## [0.12.12](https://github.com/koki-develop/clive/compare/v0.12.11...v0.12.12) (2025-08-31)
 
 
