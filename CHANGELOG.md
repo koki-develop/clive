@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.14](https://github.com/koki-develop/clive/compare/v0.12.13...v0.12.14) (2025-11-24)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/charmbracelet/bubbletea to v1.3.10 ([#189](https://github.com/koki-develop/clive/issues/189)) ([2a88323](https://github.com/koki-develop/clive/commit/2a883230b2fe78d7c23ac65f7148595d6d70b1a8))
+
 ## [0.12.13](https://github.com/koki-develop/clive/compare/v0.12.12...v0.12.13) (2025-10-04)
 
 
