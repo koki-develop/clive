@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   test:
+    name: Test
     timeout-minutes: 10
     permissions:
       contents: read
@@ -31,6 +32,7 @@ jobs:
       - uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
 
   build:
+    name: Build
     timeout-minutes: 10
     permissions:
       contents: read
@@ -43,6 +45,7 @@ jobs:
       - run: go build .
 
   lint:
+    name: Lint
     timeout-minutes: 10
     permissions:
       contents: read
@@ -55,6 +58,7 @@ jobs:
       - run: golangci-lint run --verbose ./...
 
   goreleaser:
+    name: GoReleaser Check
     timeout-minutes: 10
     permissions:
       contents: read

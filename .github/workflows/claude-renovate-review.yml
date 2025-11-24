@@ -14,12 +14,13 @@ concurrency:
 
 jobs:
   claude-renovate-review:
+    name: Claude Renovate Review
     if: github.event.pull_request.user.login == 'renovate[bot]'
     timeout-minutes: 30
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      pull-requests: write
+      pull-requests: write # for comment on pull requests
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:

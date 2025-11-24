@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   actionlint:
+    name: Actionlint
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
@@ -29,6 +30,7 @@ jobs:
       - uses: koki-develop/github-actions-lint/actionlint@62dfef5c9854a07712bad7af3bee7edb0c1109b1 # v1.4.1
 
   ghalint:
+    name: Ghalint
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
@@ -42,6 +44,7 @@ jobs:
           action-path: ./.github/actions/**/action.yml
 
   zizmor:
+    name: Zizmor
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
