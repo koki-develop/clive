@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.12.15](https://github.com/koki-develop/clive/compare/v0.12.14...v0.12.15) (2025-11-25)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/google/go-github/v72 to v79 ([#200](https://github.com/koki-develop/clive/issues/200)) ([46c4248](https://github.com/koki-develop/clive/commit/46c424808012df541d737e10ec7c4f4657eb0b18))
+* **deps:** update module github.com/jedib0t/go-pretty/v6 to v6.7.5 ([#197](https://github.com/koki-develop/clive/issues/197)) ([d4212a3](https://github.com/koki-develop/clive/commit/d4212a3972ef63d40d0149bc1b904e43587a3b60))
+* **deps:** update module golang.org/x/mod to v0.30.0 ([#199](https://github.com/koki-develop/clive/issues/199)) ([4323ae1](https://github.com/koki-develop/clive/commit/4323ae11021a249e6250cc42399a3e6132ee5b46))
+
 ## [0.12.14](https://github.com/koki-develop/clive/compare/v0.12.13...v0.12.14) (2025-11-24)
 
 
