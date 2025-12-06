@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.16](https://github.com/koki-develop/clive/compare/v0.12.15...v0.12.16) (2025-12-06)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/spf13/cobra to v1.10.2 ([#205](https://github.com/koki-develop/clive/issues/205)) ([b94da58](https://github.com/koki-develop/clive/commit/b94da584a77cc64d2bb355c06989e14976a8167c))
+
 ## [0.12.15](https://github.com/koki-develop/clive/compare/v0.12.14...v0.12.15) (2025-11-25)
 
 
