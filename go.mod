@@ -13,7 +13,7 @@ require (
 	github.com/jedib0t/go-pretty/v6 v6.7.5
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/errors v0.9.1
-	github.com/spf13/cobra v1.10.1
+	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/mod v0.30.0
 	gopkg.in/yaml.v3 v3.0.1
