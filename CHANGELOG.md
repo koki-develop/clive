@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.17](https://github.com/koki-develop/clive/compare/v0.12.16...v0.12.17) (2026-04-28)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/jedib0t/go-pretty/v6 to v6.7.9 ([#212](https://github.com/koki-develop/clive/issues/212)) ([b612bbd](https://github.com/koki-develop/clive/commit/b612bbd806a9bb713195940de735ed74e510d101))
+
 ## [0.12.16](https://github.com/koki-develop/clive/compare/v0.12.15...v0.12.16) (2025-12-06)
 
 
